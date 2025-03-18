@@ -93,6 +93,7 @@
             Name = "Form1";
             StartPosition = FormStartPosition.Manual;
             Text = "Galiga";
+            ResizeEnd += Form1_ResizeEnd;
             KeyPress += Form1_KeyPress;
             ((System.ComponentModel.ISupportInitialize)playerBulletTest).EndInit();
             backgroundPanel.ResumeLayout(false);

@@ -2,7 +2,7 @@ namespace final_project
 {
     public partial class Form1 : Form
     {
-        Size oldSize; //form size
+        //form size
         const int HEIGHT_OFFSET = 39;
         const int WIDTH_OFFSET = 16;
 
@@ -101,6 +101,14 @@ namespace final_project
 
             backgroundPanel.Location = new Point(leftCoord, topCoord);
             scorePanel.Height = backgroundPanel.Height - bottomCoord;
+        }
+
+        private void Form1_ResizeEnd(object sender, EventArgs e)
+        {
+            if(this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
+            {
+                this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
+            }
         }
     }
 }
