@@ -2,6 +2,16 @@ namespace final_project
 {
     public partial class Form1 : Form
     {
+        Size oldSize; //form size
+        const int HEIGHT_OFFSET = 39;
+        const int WIDTH_OFFSET = 16;
+
+        //for OBJECT PLACEMENT
+        int topCoord = 0;
+        int bottomCoord;
+        int leftCoord;
+        int rightCoord;
+
         internal class Bullet
         {
             private int x, y, vX, vY; //x position, y position, velocity
@@ -71,6 +81,26 @@ namespace final_project
                     playerBullet.UpdatePos();
                 }
             }
+        }
+
+        private void playerBulletTest_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+            backgroundPanel.Width = backgroundPanel.Height;
+
+            leftCoord = (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2;
+            rightCoord = 1 - (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2;
+            bottomCoord = Convert.ToInt32(backgroundPanel.Width / 1.2);
+
+            backgroundPanel.Location = new Point(leftCoord, topCoord);
+            scorePanel.Height = backgroundPanel.Height - bottomCoord;
         }
     }
 }

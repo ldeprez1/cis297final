@@ -15,3 +15,21 @@ C:\Users\louis\source\cis297\final_project\obj\Debug\net8.0-windows\refint\final
 C:\Users\louis\source\cis297\final_project\obj\Debug\net8.0-windows\final_project.pdb
 C:\Users\louis\source\cis297\final_project\obj\Debug\net8.0-windows\final_project.genruntimeconfig.cache
 C:\Users\louis\source\cis297\final_project\obj\Debug\net8.0-windows\ref\final_project.dll
+D:\Lyla\School\CIS 297\final project\final_project\bin\Debug\net8.0-windows\final_project.exe
+D:\Lyla\School\CIS 297\final project\final_project\bin\Debug\net8.0-windows\final_project.deps.json
+D:\Lyla\School\CIS 297\final project\final_project\bin\Debug\net8.0-windows\final_project.runtimeconfig.json
+D:\Lyla\School\CIS 297\final project\final_project\bin\Debug\net8.0-windows\final_project.dll
+D:\Lyla\School\CIS 297\final project\final_project\bin\Debug\net8.0-windows\final_project.pdb
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\final_project.Form1.resources
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\final_project.Properties.Resources.resources
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\final_project.csproj.GenerateResource.cache
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\final_project.GeneratedMSBuildEditorConfig.editorconfig
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\final_project.AssemblyInfoInputs.cache
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\final_project.AssemblyInfo.cs
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\final_project.csproj.CoreCompileInputs.cache
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\final_project.sourcelink.json
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\final_project.dll
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\refint\final_project.dll
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\final_project.pdb
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\final_project.genruntimeconfig.cache
+D:\Lyla\School\CIS 297\final project\final_project\obj\Debug\net8.0-windows\ref\final_project.dll
