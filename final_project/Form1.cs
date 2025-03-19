@@ -2,6 +2,7 @@ namespace final_project
 {
     public partial class Form1 : Form
     {
+        //test 1
         //form size
         const int HEIGHT_OFFSET = 39;
         const int WIDTH_OFFSET = 16;
