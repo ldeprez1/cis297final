@@ -6,11 +6,11 @@ namespace final_project
         const int HEIGHT_OFFSET = 39;
         const int WIDTH_OFFSET = 16;
 
-        //for OBJECT PLACEMENT
+        //for OBJECT PLACEMENT ==> CHANGE if default window size changes
         int topCoord = 0;
-        int bottomCoord;
-        int leftCoord;
-        int rightCoord;
+        int bottomCoord = 500;
+        int leftCoord = 0;
+        int rightCoord = 600;
 
         internal class Bullet
         {
