@@ -13,6 +13,12 @@ namespace final_project
         int leftCoord = 0;
         int rightCoord = 600;
 
+        //for player movement
+        public bool moveLeft;
+        public bool moveRight;
+        public int playerSpeed = 12;
+
+
         internal class Bullet
         {
             private int x, y, vX, vY; //x position, y position, velocity
@@ -70,6 +76,7 @@ namespace final_project
         public Form1()
         {
             InitializeComponent();
+            mainTimer.Start();
             playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 1, -2, playerBulletTest, this.Width, this.Height);
         }
 
@@ -106,10 +113,51 @@ namespace final_project
 
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
-            if(this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
+            if (this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
             {
                 this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
             }
         }
+
+        private void mainEventTimer(object sender, EventArgs e)
+        {
+            if (moveLeft)
+            {
+                player.Left -= playerSpeed;
+            }
+            if (moveRight)
+            {
+                player.Left += playerSpeed;
+            }
+
+        }
+
+        private void Key_Down(object sender, KeyEventArgs e) // When Key is pressed
+        {
+            if (e.KeyCode == Keys.Left)
+            {
+                moveLeft = true;
+            }
+            if (e.KeyCode == Keys.Right)
+            {
+                moveRight = true;
+            }
+
+        }
+
+        private void Key_Up(object sender, KeyEventArgs e) // When Key is let go
+        {
+
+            if (e.KeyCode == Keys.Left)
+            {
+                moveLeft = false;
+            }
+            if (e.KeyCode == Keys.Right)
+            {
+                moveRight = false;
+            }
+
+        }
+
     }
 }
