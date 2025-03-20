@@ -25,18 +25,18 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
 
     protected PictureBox spriteObject;
 
-    public GameEntity(int x, int y, PictureBox spriteObject) // create at location
+    public GameEntity(int x, int y, PictureBox sprite) // create at location
     {
         xCoord = x;
         yCoord = y;
-        this.spriteObject = spriteObject;
+        spriteObject = sprite;
     }
 
-    public GameEntity(PictureBox spriteObject) // create offscreen
+    public GameEntity(PictureBox sprite) // create offscreen
     {
         xCoord = -1000; 
         yCoord = -1000;
-        this.spriteObject = spriteObject;
+        spriteObject = sprite;
     }
 
     public void UpdatePos(int x, int y) // CALL THIS FUNCTION FOR UPDATING POSITION
@@ -49,7 +49,11 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
 
         spriteObject.Location = new Point(realX, realY);
     }
-
+    
+    public void UpdatePosRelative(int x, int y) // CALL THIS TO MOVE BY AN AMOUNT RELATIVE TO CURRENT LOCATION
+    {
+        UpdatePos(xCoord + x, yCoord + y);
+    }
     public void RefreshPos()
     {
         UpdatePos(xCoord, yCoord);

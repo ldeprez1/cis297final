@@ -21,6 +21,8 @@ namespace final_project
 
 
         List<GameEntity> allEntities; // PLEASE ADD ALL ENTITIES TO THIS LIST WHEN CREATED
+        //Test
+        GameEntity playerEntity;
 
 
 
@@ -83,12 +85,23 @@ namespace final_project
             InitializeComponent();
             mainTimer.Start();
             playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 1, -2, playerBulletTest, this.Width, this.Height);
+
+
+            //TEST
+            playerEntity = new GameEntity(52, 43, player);
+            allEntities = new List<GameEntity> { playerEntity };
+            //TEST END
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         { //test to see
             if (e.KeyChar == ' ')
             {
+                // TESTING
+                {
+                    playerEntity.UpdatePosRelative(3, 2);
+                }
+
                 while (playerBullet.WallCheck())
                 {
                     playerBullet.UpdatePos();
