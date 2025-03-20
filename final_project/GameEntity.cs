@@ -47,7 +47,7 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
         realX = ((rightCoord - leftCoord) / 120) * xCoord + leftCoord;
         realY = ((bottomCoord - topCoord) / 100) * yCoord + topCoord;
 
-        // draw at location (code goes here)
+        spriteObject.Location = new Point(realX, realY);
     }
 
     public void RefreshPos()

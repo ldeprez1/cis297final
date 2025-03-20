@@ -129,6 +129,10 @@ namespace final_project
             {
                 this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
             }
+            foreach(GameEntity curEntity in allEntities)
+            {
+                curEntity.RefreshPos();
+            }
         }
 
         private void mainEventTimer(object sender, EventArgs e)
