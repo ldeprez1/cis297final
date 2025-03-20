@@ -8,15 +8,20 @@ namespace final_project
         const int WIDTH_OFFSET = 16;
 
         //for OBJECT PLACEMENT ==> CHANGE if default window size changes
-        int topCoord = 0;
-        int bottomCoord = 500;
-        int leftCoord = 0;
-        int rightCoord = 600;
+        //int topCoord = 0;
+        //int bottomCoord = 500;
+        //int leftCoord = 0;
+        //int rightCoord = 600;
 
         //for player movement
         public bool moveLeft;
         public bool moveRight;
         public int playerSpeed = 12;
+
+
+
+        List<GameEntity> allEntities; // PLEASE ADD ALL ENTITIES TO THIS LIST WHEN CREATED
+
 
 
         internal class Bullet
@@ -103,12 +108,19 @@ namespace final_project
         {
             backgroundPanel.Width = backgroundPanel.Height;
 
-            leftCoord = (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2;
-            rightCoord = 1 - (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2;
-            bottomCoord = Convert.ToInt32(backgroundPanel.Width / 1.2);
+            GameEntity.Setleft((this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
+            //leftCoord = (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2; 
 
-            backgroundPanel.Location = new Point(leftCoord, topCoord);
-            scorePanel.Height = backgroundPanel.Height - bottomCoord;
+            GameEntity.SetRight(1 - (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
+            //rightCoord = 1 - (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2;
+
+            GameEntity.SetBottom(Convert.ToInt32(backgroundPanel.Width / 1.2));
+            //bottomCoord = Convert.ToInt32(backgroundPanel.Width / 1.2);
+
+            backgroundPanel.Location = new Point(GameEntity.GetLeft(), GameEntity.GetTop());
+            //backgroundPanel.Location = new Point(leftCoord, topCoord);
+            scorePanel.Height = backgroundPanel.Height - GameEntity.GetBottom();
+            //scorePanel.Height = backgroundPanel.Height - bottomCoord;
         }
 
         private void Form1_ResizeEnd(object sender, EventArgs e)
@@ -158,6 +170,9 @@ namespace final_project
             }
 
         }
+
+
+        
 
     }
 }
