@@ -4,6 +4,7 @@
 
 /.vs/final project/v17
 /final_project/.vs/final_project
+<<<<<<< HEAD
 /final_project/bin/Debug/net8.0-windows/final_project.dll
 /final_project/bin/Debug/net8.0-windows/final_project.pdb
 /final_project/bin/Debug/net8.0-windows/final_project.exe
@@ -15,5 +16,30 @@
 /final_project/obj/Debug/net8.0-windows/final_project.AssemblyInfo.cs
 /final_project/obj/Debug/net8.0-windows/final_project.AssemblyInfoInputs.cache
 /final_project/obj/Debug/net8.0-windows/final_project.sourcelink.json
+=======
+/final_project/bin/Debug/
+/.vs/cis297final/v17
+>>>>>>> 747947557c466e1daef34a9354b529fa2d9f0c79
 /.vs
 /final_project/.vs/ProjectEvaluation
+/final_project/obj/Debug/net8.0-windows/apphost.exe
+/final_project/obj/Debug/net8.0-windows/final_project.GeneratedMSBuildEditorConfig.editorconfig
+/final_project/obj/Debug/net8.0-windows/final_project.AssemblyInfoInputs.cache
+/final_project/obj/Debug/net8.0-windows/final_project.assets.cache
+/final_project/obj/Debug/net8.0-windows/final_project.dll
+/final_project/obj/Debug/net8.0-windows/final_project.designer.runtimeconfig.json
+/final_project/obj/Debug/net8.0-windows/final_project.csproj.GenerateResource.cache
+/final_project/bin/Debug/net8.0-windows/final_project.runtimeconfig.json
+/final_project/obj/Debug/net8.0-windows/ref/final_project.dll
+/final_project/obj/Debug/net8.0-windows/refint/final_project.dll
+/final_project/obj/Debug/net8.0-windows/final_project.csproj.CoreCompileInputs.cache
+/final_project/obj/Debug/net8.0-windows/final_project.genruntimeconfig.cache
+/final_project/obj/Debug/net8.0-windows/final_project.sourcelink.json
+/final_project/obj/Debug/net8.0-windows/final_project.pdb
+/final_project/obj/Release/net8.0-windows/final_project.AssemblyInfoInputs.cache
+/final_project/obj/Release/net8.0-windows/final_project.assets.cache
+/final_project/obj/Release/net8.0-windows/final_project.GeneratedMSBuildEditorConfig.editorconfig
+/final_project/obj/final_project.csproj.nuget.dgspec.json
+/final_project/obj/project.assets.json
+/final_project/obj/project.nuget.cache
+/.vs/cis297final/v17/DocumentLayout.json
