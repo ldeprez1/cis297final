@@ -12,7 +12,6 @@ namespace final_project
         //int bottomCoord = 500;
         //int leftCoord = 0;
         //int rightCoord = 600;
-
         //for player movement
         public bool moveLeft;
         public bool moveRight;
@@ -22,53 +21,49 @@ namespace final_project
 
         List<GameEntity> allEntities; // PLEASE ADD ALL ENTITIES TO THIS LIST WHEN CREATED
 
+     
 
-
-        internal class Bullet
+        internal class Bullet : GameEntity
         {
             private int x, y, vX, vY; //x position, y position, velocity
-            private int wW, wH; //window width and height
             private PictureBox icon; //visually represents the bullet
-            public Bullet()
+            public Bullet() : base(0, 0, new PictureBox())
             { // basic constructor
-                x = 0; y = 0; vX = 0; vY = 0; wW = 0; wH = 0;
-                icon = new PictureBox();
+                x = 0; y = 0; vX = 0; vY = 0;
+                icon = base.spriteObject;
             }
-            public Bullet(int x, int y, int vX, int vY, PictureBox icon, int wW, int wH)
+            public Bullet(int x, int y, int vX, int vY, PictureBox icon) : base(x, y, icon)
             { //specific constructor
                 this.x = x;
                 this.y = y;
                 this.vX = vX;
                 this.vY = vY;
                 this.icon = icon;
-                this.wW = wW;
-                this.wH = wH;
             }
-            public void SetAll(int x, int y, int vX, int vY, PictureBox icon, int wW, int wH)
+            public void SetAll(int x, int y, int vX, int vY, PictureBox icon)
             {
                 this.x = x;
                 this.y = y;
                 this.vX = vX;
                 this.vY = vY;
                 this.icon = icon;
-                this.wW = wW;
-                this.wH = wH;
             }
             public void SetPos(int x, int y)
             { //manually set position
                 this.x = x;
                 this.y = y;
+                base.UpdatePos(x, y);
             }
             public void UpdatePos()
             { //update the position based on the velocity of a the bullet, then sees if they hit a wall
                 x += vX;
                 y += vY;
-                icon.Location = new Point(x, y);
+                base.UpdatePos(x, y);
             }
             public bool WallCheck()
             { //when a bullet passes a wall, it will be teleported off screen in the top left corner of the screen until needed
                 //returns true if bullet is still onScreen, else returns false
-                if ((x + icon.Width < 0 || y + icon.Height < 0) || (x > wW || y > wH))
+                if ((x + icon.Width < GetLeft() || y + icon.Height < GetTop()) || (x > GetRight() || y > GetBottom()))
                 {
                     x = 0 - icon.Width;
                     y = 0 - icon.Height;
@@ -82,7 +77,7 @@ namespace final_project
         {
             InitializeComponent();
             mainTimer.Start();
-            playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 1, -2, playerBulletTest, this.Width, this.Height);
+            playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 0, -1, playerBulletTest);
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
