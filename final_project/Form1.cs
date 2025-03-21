@@ -21,18 +21,23 @@ namespace final_project
 
         List<GameEntity> allEntities; // PLEASE ADD ALL ENTITIES TO THIS LIST WHEN CREATED
 
-     
+        //debug
+        GameEntity testEntity;
+
+
+
+
 
         internal class Bullet : GameEntity
         {
             private int x, y, vX, vY; //x position, y position, velocity
             private PictureBox icon; //visually represents the bullet
-            public Bullet() : base(0, 0, new PictureBox())
+            public Bullet() : base(0, 0, new PictureBox(), 10, 10)
             { // basic constructor
                 x = 0; y = 0; vX = 0; vY = 0;
                 icon = base.spriteObject;
             }
-            public Bullet(int x, int y, int vX, int vY, PictureBox icon) : base(x, y, icon)
+            public Bullet(int x, int y, int vX, int vY, PictureBox icon) : base(x, y, icon, 10, 10)
             { //specific constructor
                 this.x = x;
                 this.y = y;
@@ -78,6 +83,43 @@ namespace final_project
             InitializeComponent();
             mainTimer.Start();
             playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 0, -1, playerBulletTest);
+            allEntities = new List<GameEntity> { };
+
+            backgroundPanel.Width = backgroundPanel.Height;
+
+            GameEntity.Setleft((this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
+            //leftCoord = (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2; 
+
+            GameEntity.SetRight(GameEntity.GetLeft() + backgroundPanel.Width);
+            //rightCoord = 1 - (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2;
+
+            GameEntity.SetBottom(Convert.ToInt32(backgroundPanel.Width / 1.2));
+            //bottomCoord = Convert.ToInt32(backgroundPanel.Width / 1.2);
+
+            backgroundPanel.Location = new Point(((int)GameEntity.GetLeft()), ((int)GameEntity.GetTop()));
+            //backgroundPanel.Location = new Point(leftCoord, topCoord);
+            scorePanel.Height = ((int)(backgroundPanel.Height - GameEntity.GetBottom()));
+            //scorePanel.Height = backgroundPanel.Height - bottomCoord;
+
+            if (this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
+            {
+                this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
+            }
+            foreach (GameEntity curEntity in allEntities)
+            {
+                curEntity.RefreshPos();
+            }
+
+            //debug
+            player.Location = new Point(((int)GameEntity.GetRight()), 50);
+            label1.Text = "Left: " + GameEntity.GetLeft() + " Right: " + GameEntity.GetRight();
+
+
+
+
+            //debug
+            testEntity = new GameEntity(100, 500, testBox1, 10, 10);
+            allEntities.Add(testEntity);
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
@@ -106,21 +148,34 @@ namespace final_project
             GameEntity.Setleft((this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
             //leftCoord = (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2; 
 
-            GameEntity.SetRight(1 - (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
+            GameEntity.SetRight(GameEntity.GetLeft() + backgroundPanel.Width);
             //rightCoord = 1 - (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2;
 
             GameEntity.SetBottom(Convert.ToInt32(backgroundPanel.Width / 1.2));
             //bottomCoord = Convert.ToInt32(backgroundPanel.Width / 1.2);
 
-            backgroundPanel.Location = new Point(GameEntity.GetLeft(), GameEntity.GetTop());
+            backgroundPanel.Location = new Point(((int)GameEntity.GetLeft()), ((int)GameEntity.GetTop()));
             //backgroundPanel.Location = new Point(leftCoord, topCoord);
-            scorePanel.Height = backgroundPanel.Height - GameEntity.GetBottom();
+            scorePanel.Height = ((int)(backgroundPanel.Height - GameEntity.GetBottom()));
             //scorePanel.Height = backgroundPanel.Height - bottomCoord;
+
+            if (this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
+            {
+                this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
+            }
+            foreach (GameEntity curEntity in allEntities)
+            {
+                curEntity.RefreshPos();
+            }
+            //debug
+            player.Location = new Point(((int)GameEntity.GetRight()), 50);
+            label1.Text = "Left: " + GameEntity.GetLeft() + " Right: " + GameEntity.GetRight();
+
         }
 
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
-            if (this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
+            /*if (this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
             {
                 this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
             }
@@ -128,6 +183,9 @@ namespace final_project
             {
                 curEntity.RefreshPos();
             }
+            //debug
+            player.Location = new Point(((int)GameEntity.GetRight()), 50);
+            label1.Text = "Left: " + GameEntity.GetLeft() + " Right: " + GameEntity.GetRight();*/
         }
 
         private void mainEventTimer(object sender, EventArgs e)
@@ -147,11 +205,15 @@ namespace final_project
         {
             if (e.KeyCode == Keys.Left)
             {
-                moveLeft = true;
+                //moveLeft = true;
+                //debug code
+                testEntity.UpdatePosRelative(-100, 0);
+               // testBox1.Size = new Size(testBox1.Width + 1, testBox1.Height + 1);
             }
             if (e.KeyCode == Keys.Right)
             {
-                moveRight = true;
+                //moveRight = true;
+                testEntity.UpdatePosRelative(100, 0);
             }
 
         }
