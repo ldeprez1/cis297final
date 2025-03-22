@@ -8,3 +8,7 @@
 /.vs/cis297final/v17
 /.vs
 /final_project/.vs/ProjectEvaluation
+/final_project/obj/Debug/net8.0-windows/final_project.GeneratedMSBuildEditorConfig.editorconfig
+/final_project/obj/Debug/net8.0-windows/final_project.AssemblyInfo.cs
+/final_project/obj/Debug/net8.0-windows/final_project.AssemblyInfoInputs.cache
+/final_project/obj/Debug/net8.0-windows/final_project.assets.cache
