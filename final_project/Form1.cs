@@ -1,11 +1,15 @@
+using System.Drawing.Text;
+using System.Runtime.InteropServices;
+
 namespace final_project
 {
     public partial class Form1 : Form
     {
-        //test 1
+        
         //form size
         const int HEIGHT_OFFSET = 39;
         const int WIDTH_OFFSET = 16;
+        float scoreHeight;
 
         //for OBJECT PLACEMENT ==> CHANGE if default window size changes
         //int topCoord = 0;
@@ -85,35 +89,8 @@ namespace final_project
             playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 0, -1, playerBulletTest);
             allEntities = new List<GameEntity> { };
 
-            backgroundPanel.Width = backgroundPanel.Height;
 
-            GameEntity.Setleft((this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
-            //leftCoord = (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2; 
-
-            GameEntity.SetRight(GameEntity.GetLeft() + backgroundPanel.Width);
-            //rightCoord = 1 - (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2;
-
-            GameEntity.SetBottom(Convert.ToInt32(backgroundPanel.Width / 1.2));
-            //bottomCoord = Convert.ToInt32(backgroundPanel.Width / 1.2);
-
-            backgroundPanel.Location = new Point(((int)GameEntity.GetLeft()), ((int)GameEntity.GetTop()));
-            //backgroundPanel.Location = new Point(leftCoord, topCoord);
-            scorePanel.Height = ((int)(backgroundPanel.Height - GameEntity.GetBottom()));
-            //scorePanel.Height = backgroundPanel.Height - bottomCoord;
-
-            if (this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
-            {
-                this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
-            }
-            foreach (GameEntity curEntity in allEntities)
-            {
-                curEntity.RefreshPos();
-            }
-
-            //debug
-            player.Location = new Point(((int)GameEntity.GetRight()), 50);
-            label1.Text = "Left: " + GameEntity.GetLeft() + " Right: " + GameEntity.GetRight();
-
+            ResizeThings();
 
 
 
@@ -143,33 +120,10 @@ namespace final_project
 
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
-            backgroundPanel.Width = backgroundPanel.Height;
-
-            GameEntity.Setleft((this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
-            //leftCoord = (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2; 
-
-            GameEntity.SetRight(GameEntity.GetLeft() + backgroundPanel.Width);
-            //rightCoord = 1 - (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2;
-
-            GameEntity.SetBottom(Convert.ToInt32(backgroundPanel.Width / 1.2));
-            //bottomCoord = Convert.ToInt32(backgroundPanel.Width / 1.2);
-
-            backgroundPanel.Location = new Point(((int)GameEntity.GetLeft()), ((int)GameEntity.GetTop()));
-            //backgroundPanel.Location = new Point(leftCoord, topCoord);
-            scorePanel.Height = ((int)(backgroundPanel.Height - GameEntity.GetBottom()));
-            //scorePanel.Height = backgroundPanel.Height - bottomCoord;
-
-            if (this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
-            {
-                this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
-            }
-            foreach (GameEntity curEntity in allEntities)
-            {
-                curEntity.RefreshPos();
-            }
+            ResizeThings();
             //debug
             player.Location = new Point(((int)GameEntity.GetRight()), 50);
-            label1.Text = "Left: " + GameEntity.GetLeft() + " Right: " + GameEntity.GetRight();
+            //livesLabel.Text = "Left: " + GameEntity.GetLeft() + " Right: " + GameEntity.GetRight();
 
         }
 
@@ -208,7 +162,7 @@ namespace final_project
                 //moveLeft = true;
                 //debug code
                 testEntity.UpdatePosRelative(-100, 0);
-               // testBox1.Size = new Size(testBox1.Width + 1, testBox1.Height + 1);
+                // testBox1.Size = new Size(testBox1.Width + 1, testBox1.Height + 1);
             }
             if (e.KeyCode == Keys.Right)
             {
@@ -232,8 +186,43 @@ namespace final_project
 
         }
 
+        private void ResizeThings()
+        {
+            backgroundPanel.Width = backgroundPanel.Height;
 
-        
+            GameEntity.Setleft((this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
+            //leftCoord = (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2; 
+
+            GameEntity.SetRight(GameEntity.GetLeft() + backgroundPanel.Width);
+            //rightCoord = 1 - (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2;
+
+            GameEntity.SetBottom(Convert.ToInt32(backgroundPanel.Width / 1.2));
+            //bottomCoord = Convert.ToInt32(backgroundPanel.Width / 1.2);
+
+            backgroundPanel.Location = new Point(((int)GameEntity.GetLeft()), ((int)GameEntity.GetTop()));
+            //backgroundPanel.Location = new Point(leftCoord, topCoord);
+            scorePanel.Height = ((int)(backgroundPanel.Height - GameEntity.GetBottom()));
+            //scorePanel.Height = backgroundPanel.Height - bottomCoord;
+
+            if (this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
+            {
+                this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
+            }
+            foreach (GameEntity curEntity in allEntities)
+            {
+                curEntity.RefreshPos();
+            }
+
+            if (scorePanel.Height > 0)
+            {
+                livesLabel.Font = new Font(livesLabel.Font.Name, ((float)(scorePanel.Height * 0.15)), livesLabel.Font.Style);
+                livesLabel.Padding = new Padding(((int)(scorePanel.Width * 0.2)), ((int)(scorePanel.Height * 0.1)), 0, 0);
+
+                scoreLabel.Font = new Font(scoreLabel.Font.Name, ((float)(scorePanel.Height * 0.15)), scoreLabel.Font.Style);
+                scoreLabel.Padding = new Padding(0, ((int)(scorePanel.Height * 0.1)), ((int)(scorePanel.Width * 0.2)), 0);
+            }
+        }
+
 
     }
 }
