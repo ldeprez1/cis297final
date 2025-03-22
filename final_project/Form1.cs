@@ -208,9 +208,12 @@ namespace final_project
             {
                 this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
             }
-            foreach (GameEntity curEntity in allEntities)
+            if (allEntities != null)
             {
-                curEntity.RefreshPos();
+                foreach (GameEntity curEntity in allEntities)
+                {
+                    curEntity.RefreshPos();
+                }
             }
 
             if (scorePanel.Height > 0)
