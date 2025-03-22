@@ -195,6 +195,8 @@ namespace final_project
 
         private void ResizeThings()
         {
+            this.MinimumSize = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, 0);
+
             backgroundPanel.Width = backgroundPanel.Height;
 
             GameEntity.Setleft((this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
