@@ -35,27 +35,34 @@ namespace final_project
         internal class Bullet : GameEntity
         {
             private int x, y, vX, vY; //x position, y position, velocity
-            private PictureBox icon; //visually represents the bullet
+            private PictureBox icon, source; //visually represents the bullet
+            private bool returnToSender;
             public Bullet() : base(0, 0, new PictureBox(), 10, 10)
             { // basic constructor
                 x = 0; y = 0; vX = 0; vY = 0;
                 icon = base.spriteObject;
+                source = base.spriteObject;
+                returnToSender = false;
             }
-            public Bullet(int x, int y, int vX, int vY, PictureBox icon) : base(x, y, icon, 10, 10)
+            public Bullet(int x, int y, int vX, int vY, PictureBox icon, PictureBox source, bool r2s) : base(x, y, icon, 10, 10)
             { //specific constructor
                 this.x = x;
                 this.y = y;
                 this.vX = vX;
                 this.vY = vY;
                 this.icon = icon;
+                this.source = source;
+                returnToSender = r2s;
             }
-            public void SetAll(int x, int y, int vX, int vY, PictureBox icon)
+            public void SetAll(int x, int y, int vX, int vY, PictureBox icon, PictureBox source, bool r2s)
             {
                 this.x = x;
                 this.y = y;
                 this.vX = vX;
                 this.vY = vY;
                 this.icon = icon;
+                this.source = source;
+                returnToSender = r2s;
             }
             public void SetPos(int x, int y)
             { //manually set position
@@ -70,12 +77,23 @@ namespace final_project
                 base.UpdatePos(x, y);
             }
             public bool WallCheck()
-            { //when a bullet passes a wall, it will be teleported off screen in the top left corner of the screen until needed
-                //returns true if bullet is still onScreen, else returns false
+            { /*
+               * when a bullet passes the screen it will either be warped offscreen to the top right of the screen if returnToSender is
+               * false, or to (x = Middle of Source, y = Same as source). To make sure things look right visually, make sure that
+               * all sources are layered above their respective bullets
+               */
                 if ((x + icon.Width < GetLeft() || y + icon.Height < GetTop()) || (x > GetRight() || y > GetBottom()))
                 {
-                    x = 0 - icon.Width;
-                    y = 0 - icon.Height;
+                    if (!returnToSender)
+                    {
+                        x = 0 - icon.Width;
+                        y = 0 - icon.Height;
+                    } else
+                    {
+                        x = source.Location.X + source.Width / 2;
+                        y = source.Location.Y;
+                    }
+                    SetPos(x, y);
                     return false;
                 }
                 return true;
@@ -86,7 +104,7 @@ namespace final_project
         {
             InitializeComponent();
             mainTimer.Start();
-            playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 0, -1, playerBulletTest);
+            playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 0, -1, playerBulletTest, player ,true);
             allEntities = new List<GameEntity> { };
 
 

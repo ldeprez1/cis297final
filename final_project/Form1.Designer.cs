@@ -52,10 +52,10 @@
             playerBulletTest.BackColor = SystemColors.ActiveCaption;
             playerBulletTest.Image = (Image)resources.GetObject("playerBulletTest.Image");
             playerBulletTest.InitialImage = (Image)resources.GetObject("playerBulletTest.InitialImage");
-            playerBulletTest.Location = new Point(294, 678);
+            playerBulletTest.Location = new Point(382, 868);
             playerBulletTest.Margin = new Padding(0);
             playerBulletTest.Name = "playerBulletTest";
-            playerBulletTest.Size = new Size(79, 83);
+            playerBulletTest.Size = new Size(103, 106);
             playerBulletTest.TabIndex = 0;
             playerBulletTest.TabStop = false;
             playerBulletTest.Click += playerBulletTest_Click;
@@ -68,19 +68,19 @@
             backgroundPanel.Controls.Add(scorePanel);
             backgroundPanel.Controls.Add(playerBulletTest);
             backgroundPanel.Controls.Add(panel2);
-            backgroundPanel.Location = new Point(94, 0);
-            backgroundPanel.Margin = new Padding(4, 5, 4, 5);
+            backgroundPanel.Location = new Point(122, 0);
+            backgroundPanel.Margin = new Padding(5, 6, 5, 6);
             backgroundPanel.Name = "backgroundPanel";
-            backgroundPanel.Size = new Size(857, 1000);
+            backgroundPanel.Size = new Size(1114, 1280);
             backgroundPanel.TabIndex = 1;
             // 
             // testBox1
             // 
             testBox1.BackColor = SystemColors.ActiveCaptionText;
-            testBox1.Location = new Point(319, 382);
-            testBox1.Margin = new Padding(4, 5, 4, 5);
+            testBox1.Location = new Point(415, 489);
+            testBox1.Margin = new Padding(5, 6, 5, 6);
             testBox1.Name = "testBox1";
-            testBox1.Size = new Size(81, 62);
+            testBox1.Size = new Size(105, 79);
             testBox1.TabIndex = 2;
             testBox1.TabStop = false;
             // 
@@ -91,22 +91,22 @@
             scorePanel.Controls.Add(livesLabel);
             scorePanel.Cursor = Cursors.SizeAll;
             scorePanel.Dock = DockStyle.Bottom;
-            scorePanel.Location = new Point(0, 833);
-            scorePanel.Margin = new Padding(4, 5, 4, 5);
+            scorePanel.Location = new Point(0, 1066);
+            scorePanel.Margin = new Padding(5, 6, 5, 6);
             scorePanel.Name = "scorePanel";
-            scorePanel.Size = new Size(857, 167);
+            scorePanel.Size = new Size(1114, 214);
             scorePanel.TabIndex = 1;
             // 
             // scoreLabel
             // 
             scoreLabel.AutoSize = true;
             scoreLabel.Dock = DockStyle.Right;
-            scoreLabel.Font = new Font("Karmatic Arcade", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
+            scoreLabel.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             scoreLabel.ForeColor = SystemColors.ControlLight;
-            scoreLabel.Location = new Point(712, 0);
-            scoreLabel.Margin = new Padding(4, 0, 4, 0);
+            scoreLabel.Location = new Point(994, 0);
+            scoreLabel.Margin = new Padding(5, 0, 5, 0);
             scoreLabel.Name = "scoreLabel";
-            scoreLabel.Size = new Size(145, 66);
+            scoreLabel.Size = new Size(120, 72);
             scoreLabel.TabIndex = 1;
             scoreLabel.Text = "SCORE\r\n67986\r\n";
             scoreLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -115,12 +115,12 @@
             // 
             livesLabel.AutoSize = true;
             livesLabel.Dock = DockStyle.Left;
-            livesLabel.Font = new Font("Karmatic Arcade", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
+            livesLabel.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             livesLabel.ForeColor = SystemColors.ControlLight;
             livesLabel.Location = new Point(0, 0);
-            livesLabel.Margin = new Padding(4, 0, 4, 0);
+            livesLabel.Margin = new Padding(5, 0, 5, 0);
             livesLabel.Name = "livesLabel";
-            livesLabel.Size = new Size(128, 66);
+            livesLabel.Size = new Size(101, 72);
             livesLabel.TabIndex = 0;
             livesLabel.Text = "LIVES\r\n9\r\n";
             livesLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -129,19 +129,19 @@
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             panel2.BackColor = SystemColors.ButtonHighlight;
-            panel2.Location = new Point(29, 0);
-            panel2.Margin = new Padding(4, 5, 4, 5);
+            panel2.Location = new Point(38, 0);
+            panel2.Margin = new Padding(5, 6, 5, 6);
             panel2.Name = "panel2";
-            panel2.Size = new Size(0, 472);
+            panel2.Size = new Size(0, 604);
             panel2.TabIndex = 0;
             // 
             // player
             // 
             player.BackColor = SystemColors.ActiveCaptionText;
-            player.Location = new Point(963, 467);
-            player.Margin = new Padding(4, 3, 4, 3);
+            player.Location = new Point(1252, 598);
+            player.Margin = new Padding(5, 4, 5, 4);
             player.Name = "player";
-            player.Size = new Size(66, 62);
+            player.Size = new Size(86, 79);
             player.TabIndex = 2;
             player.TabStop = false;
             // 
@@ -152,12 +152,12 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1046, 1000);
+            ClientSize = new Size(1360, 1280);
             Controls.Add(player);
             Controls.Add(backgroundPanel);
-            Margin = new Padding(3, 2, 3, 2);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "Form1";
             StartPosition = FormStartPosition.Manual;
             Text = "Galiga";
