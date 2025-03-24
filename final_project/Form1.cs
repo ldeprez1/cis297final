@@ -27,7 +27,7 @@ namespace final_project
 
         //debug
         GameEntity testEntity;
-
+        PrivateFontCollection customFonts;
 
 
 
@@ -108,13 +108,20 @@ namespace final_project
             allEntities = new List<GameEntity> { };
 
 
+            //FONT
+            customFonts = new PrivateFontCollection();
+            customFonts.AddFontFile("Resources\\ka1.ttf");
+
+
             ResizeThings();
 
 
-
+           
             //debug
             testEntity = new GameEntity(100, 500, testBox1, 10, 10);
             allEntities.Add(testEntity);
+            label1.Text = AppDomain.CurrentDomain.BaseDirectory;
+
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
@@ -206,6 +213,8 @@ namespace final_project
 
         private void ResizeThings()
         {
+            this.MinimumSize = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, 0);
+
             backgroundPanel.Width = backgroundPanel.Height;
 
             GameEntity.Setleft((this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
@@ -236,10 +245,10 @@ namespace final_project
 
             if (scorePanel.Height > 0)
             {
-                livesLabel.Font = new Font(livesLabel.Font.Name, ((float)(scorePanel.Height * 0.15)), livesLabel.Font.Style);
+                livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.15)), livesLabel.Font.Style);
                 livesLabel.Padding = new Padding(((int)(scorePanel.Width * 0.2)), ((int)(scorePanel.Height * 0.1)), 0, 0);
 
-                scoreLabel.Font = new Font(scoreLabel.Font.Name, ((float)(scorePanel.Height * 0.15)), scoreLabel.Font.Style);
+                scoreLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.15)), scoreLabel.Font.Style);
                 scoreLabel.Padding = new Padding(0, ((int)(scorePanel.Height * 0.1)), ((int)(scorePanel.Width * 0.2)), 0);
             }
         }

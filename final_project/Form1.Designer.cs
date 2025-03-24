@@ -33,6 +33,7 @@
             fontDialog1 = new FontDialog();
             playerBulletTest = new PictureBox();
             backgroundPanel = new Panel();
+            label1 = new Label();
             testBox1 = new PictureBox();
             scorePanel = new Panel();
             scoreLabel = new Label();
@@ -52,10 +53,10 @@
             playerBulletTest.BackColor = SystemColors.ActiveCaption;
             playerBulletTest.Image = (Image)resources.GetObject("playerBulletTest.Image");
             playerBulletTest.InitialImage = (Image)resources.GetObject("playerBulletTest.InitialImage");
-            playerBulletTest.Location = new Point(382, 868);
+            playerBulletTest.Location = new Point(206, 407);
             playerBulletTest.Margin = new Padding(0);
             playerBulletTest.Name = "playerBulletTest";
-            playerBulletTest.Size = new Size(103, 106);
+            playerBulletTest.Size = new Size(55, 50);
             playerBulletTest.TabIndex = 0;
             playerBulletTest.TabStop = false;
             playerBulletTest.Click += playerBulletTest_Click;
@@ -64,23 +65,31 @@
             // 
             backgroundPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             backgroundPanel.BackColor = SystemColors.ActiveCaption;
+            backgroundPanel.Controls.Add(label1);
             backgroundPanel.Controls.Add(testBox1);
             backgroundPanel.Controls.Add(scorePanel);
             backgroundPanel.Controls.Add(playerBulletTest);
             backgroundPanel.Controls.Add(panel2);
-            backgroundPanel.Location = new Point(122, 0);
-            backgroundPanel.Margin = new Padding(5, 6, 5, 6);
+            backgroundPanel.Location = new Point(66, 0);
             backgroundPanel.Name = "backgroundPanel";
-            backgroundPanel.Size = new Size(1114, 1280);
+            backgroundPanel.Size = new Size(600, 600);
             backgroundPanel.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(20, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(38, 15);
+            label1.TabIndex = 3;
+            label1.Text = "label1";
             // 
             // testBox1
             // 
             testBox1.BackColor = SystemColors.ActiveCaptionText;
-            testBox1.Location = new Point(415, 489);
-            testBox1.Margin = new Padding(5, 6, 5, 6);
+            testBox1.Location = new Point(223, 229);
             testBox1.Name = "testBox1";
-            testBox1.Size = new Size(105, 79);
+            testBox1.Size = new Size(57, 37);
             testBox1.TabIndex = 2;
             testBox1.TabStop = false;
             // 
@@ -91,10 +100,9 @@
             scorePanel.Controls.Add(livesLabel);
             scorePanel.Cursor = Cursors.SizeAll;
             scorePanel.Dock = DockStyle.Bottom;
-            scorePanel.Location = new Point(0, 1066);
-            scorePanel.Margin = new Padding(5, 6, 5, 6);
+            scorePanel.Location = new Point(0, 500);
             scorePanel.Name = "scorePanel";
-            scorePanel.Size = new Size(1114, 214);
+            scorePanel.Size = new Size(600, 100);
             scorePanel.TabIndex = 1;
             // 
             // scoreLabel
@@ -103,8 +111,7 @@
             scoreLabel.Dock = DockStyle.Right;
             scoreLabel.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             scoreLabel.ForeColor = SystemColors.ControlLight;
-            scoreLabel.Location = new Point(994, 0);
-            scoreLabel.Margin = new Padding(5, 0, 5, 0);
+            scoreLabel.Location = new Point(480, 0);
             scoreLabel.Name = "scoreLabel";
             scoreLabel.Size = new Size(120, 72);
             scoreLabel.TabIndex = 1;
@@ -118,7 +125,6 @@
             livesLabel.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             livesLabel.ForeColor = SystemColors.ControlLight;
             livesLabel.Location = new Point(0, 0);
-            livesLabel.Margin = new Padding(5, 0, 5, 0);
             livesLabel.Name = "livesLabel";
             livesLabel.Size = new Size(101, 72);
             livesLabel.TabIndex = 0;
@@ -129,19 +135,18 @@
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             panel2.BackColor = SystemColors.ButtonHighlight;
-            panel2.Location = new Point(38, 0);
-            panel2.Margin = new Padding(5, 6, 5, 6);
+            panel2.Location = new Point(20, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(0, 604);
+            panel2.Size = new Size(0, 283);
             panel2.TabIndex = 0;
             // 
             // player
             // 
             player.BackColor = SystemColors.ActiveCaptionText;
-            player.Location = new Point(1252, 598);
-            player.Margin = new Padding(5, 4, 5, 4);
+            player.Location = new Point(674, 280);
+            player.Margin = new Padding(3, 2, 3, 2);
             player.Name = "player";
-            player.Size = new Size(86, 79);
+            player.Size = new Size(46, 37);
             player.TabIndex = 2;
             player.TabStop = false;
             // 
@@ -152,12 +157,12 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1360, 1280);
+            ClientSize = new Size(732, 600);
             Controls.Add(player);
             Controls.Add(backgroundPanel);
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new Padding(2, 1, 2, 1);
             Name = "Form1";
             StartPosition = FormStartPosition.Manual;
             Text = "Galiga";
@@ -168,6 +173,7 @@
             KeyUp += Key_Up;
             ((System.ComponentModel.ISupportInitialize)playerBulletTest).EndInit();
             backgroundPanel.ResumeLayout(false);
+            backgroundPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)testBox1).EndInit();
             scorePanel.ResumeLayout(false);
             scorePanel.PerformLayout();
@@ -186,5 +192,6 @@
         private Label livesLabel;
         private PictureBox testBox1;
         private Label scoreLabel;
+        private Label label1;
     }
 }
