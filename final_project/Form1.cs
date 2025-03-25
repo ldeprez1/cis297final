@@ -11,22 +11,12 @@ namespace final_project
         const int WIDTH_OFFSET = 16;
         float scoreHeight;
 
-        //for OBJECT PLACEMENT ==> CHANGE if default window size changes
-        //int topCoord = 0;
-        //int bottomCoord = 500;
-        //int leftCoord = 0;
-        //int rightCoord = 600;
         //for player movement
         public bool moveLeft;
         public bool moveRight;
         public int playerSpeed = 12;
 
-
-
-       
-
-        //debug
-        GameEntity testEntity;
+        //for custom fonts
         PrivateFontCollection customFonts;
 
 
@@ -40,8 +30,8 @@ namespace final_project
             public Bullet() : base(0, 0, new PictureBox(), 10, 10)
             { // basic constructor
                 x = 0; y = 0; vX = 0; vY = 0;
-                icon = base.spriteObject;
-                source = base.spriteObject;
+                icon = base.SpriteObject;
+                source = base.SpriteObject;
                 returnToSender = false;
             }
             public Bullet(int x, int y, int vX, int vY, PictureBox icon, PictureBox source, bool r2s) : base(x, y, icon, 10, 10)
@@ -82,7 +72,7 @@ namespace final_project
                * false, or to (x = Middle of Source, y = Same as source). To make sure things look right visually, make sure that
                * all sources are layered above their respective bullets
                */
-                if ((x + icon.Width < GetLeft() || y + icon.Height < GetTop()) || (x > GetRight() || y > GetBottom()))
+                if ((x + icon.Width < LeftCoord || y + icon.Height < TopCoord) || (x > RightCoord || y > BottomCoord))
                 {
                     if (!returnToSender)
                     {
@@ -100,27 +90,20 @@ namespace final_project
             }
         }
         Bullet playerBullet = new Bullet();
+
         public Form1()
         {
             InitializeComponent();
             mainTimer.Start();
             playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 0, -1, playerBulletTest, player ,true);
-            //allEntities = new List<GameEntity> { };
-
 
             //FONT
             customFonts = new PrivateFontCollection();
             customFonts.AddFontFile("Resources\\ka1.ttf");
 
-
             ResizeThings();
 
 
-           
-            //debug
-            testEntity = new GameEntity(100, 500, testBox1, 10, 10);
-            //allEntities.Add(testEntity);
-            label1.Text = AppDomain.CurrentDomain.BaseDirectory;
 
         }
 
@@ -135,37 +118,14 @@ namespace final_project
             }
         }
 
-        private void playerBulletTest_Click(object sender, EventArgs e)
-        {
-
-        }
-
 
 
 
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
             ResizeThings();
-            //debug
-            player.Location = new Point(((int)GameEntity.GetRight()), 50);
-            //livesLabel.Text = "Left: " + GameEntity.GetLeft() + " Right: " + GameEntity.GetRight();
-
         }
 
-        private void Form1_ResizeEnd(object sender, EventArgs e)
-        {
-            /*if (this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
-            {
-                this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
-            }
-            foreach(GameEntity curEntity in allEntities)
-            {
-                curEntity.RefreshPos();
-            }
-            //debug
-            player.Location = new Point(((int)GameEntity.GetRight()), 50);
-            label1.Text = "Left: " + GameEntity.GetLeft() + " Right: " + GameEntity.GetRight();*/
-        }
 
         private void mainEventTimer(object sender, EventArgs e)
         {
@@ -184,15 +144,12 @@ namespace final_project
         {
             if (e.KeyCode == Keys.Left)
             {
-                //moveLeft = true;
-                //debug code
-                testEntity.UpdatePosRelative(-100, 0);
-                // testBox1.Size = new Size(testBox1.Width + 1, testBox1.Height + 1);
+                moveLeft = true;
+               
             }
             if (e.KeyCode == Keys.Right)
             {
-                //moveRight = true;
-                testEntity.UpdatePosRelative(100, 0);
+                moveRight = true;
             }
 
         }
@@ -217,18 +174,18 @@ namespace final_project
 
             backgroundPanel.Width = backgroundPanel.Height;
 
-            GameEntity.Setleft((this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
+            GameEntity.LeftCoord = ((this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
             //leftCoord = (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2; 
 
-            GameEntity.SetRight(GameEntity.GetLeft() + backgroundPanel.Width);
+            GameEntity.RightCoord = (GameEntity.LeftCoord + backgroundPanel.Width);
             //rightCoord = 1 - (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2;
 
-            GameEntity.SetBottom(Convert.ToInt32(backgroundPanel.Width / 1.2));
+            GameEntity.BottomCoord = (Convert.ToInt32(backgroundPanel.Width / 1.2));
             //bottomCoord = Convert.ToInt32(backgroundPanel.Width / 1.2);
 
-            backgroundPanel.Location = new Point(((int)GameEntity.GetLeft()), ((int)GameEntity.GetTop()));
+            backgroundPanel.Location = new Point(((int)GameEntity.LeftCoord), ((int)GameEntity.TopCoord));
             //backgroundPanel.Location = new Point(leftCoord, topCoord);
-            scorePanel.Height = ((int)(backgroundPanel.Height - GameEntity.GetBottom()));
+            scorePanel.Height = ((int)(backgroundPanel.Height - GameEntity.BottomCoord));
             //scorePanel.Height = backgroundPanel.Height - bottomCoord;
 
 
@@ -236,9 +193,9 @@ namespace final_project
             {
                 this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
             }
-            if (GameEntity.allEntities != null)
+            if (GameEntity.AllEntities != null)
             {
-                foreach (GameEntity curEntity in GameEntity.allEntities)
+                foreach (GameEntity curEntity in GameEntity.AllEntities)
                 {
                     if (curEntity != null)
                     {
