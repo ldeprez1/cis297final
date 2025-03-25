@@ -59,7 +59,6 @@
             playerBulletTest.Size = new Size(102, 107);
             playerBulletTest.TabIndex = 0;
             playerBulletTest.TabStop = false;
-            playerBulletTest.Click += playerBulletTest_Click;
             // 
             // backgroundPanel
             // 
@@ -173,7 +172,6 @@
             Name = "Form1";
             StartPosition = FormStartPosition.Manual;
             Text = "Galiga";
-            ResizeEnd += Form1_ResizeEnd;
             SizeChanged += Form1_SizeChanged;
             KeyDown += Key_Down;
             KeyPress += Form1_KeyPress;
