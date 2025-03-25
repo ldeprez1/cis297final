@@ -16,6 +16,10 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
     public static double LeftCoord { get; set; } = 0;
     public static double RightCoord { get; set; } = 0;
 
+    public const int MAX_XCOORD = 12000;
+    public const int MAX_YCOORD = 10000;
+    public const int MAX_WIDTH = 120;
+    public const int MAX_HEIGHT = 100;
     public double xCoord { get; private set; } // 0 - 12000
     public double yCoord { get; private set; } // 0 - 10000
     public double width { get; private set; } // 0 - 120
@@ -27,8 +31,8 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
         xCoord = x;
         yCoord = y;
 
-        realX = ((RightCoord - LeftCoord)) * xCoord / 12000;
-        realY = ((BottomCoord - TopCoord)) * yCoord / 10000;
+        realX = ((RightCoord - LeftCoord)) * xCoord / MAX_XCOORD;
+        realY = ((BottomCoord - TopCoord)) * yCoord / MAX_YCOORD;
 
         SpriteObject.Location = new Point(((int)realX), ((int)realY));
     }
@@ -43,7 +47,7 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
 
         //size
 
-        SpriteObject.Size = new Size(((int)(((RightCoord - LeftCoord)) * width / 120)), ((int)(((BottomCoord - TopCoord)) * height / 100)));
+        SpriteObject.Size = new Size(((int)(((RightCoord - LeftCoord)) * width / MAX_WIDTH)), ((int)(((BottomCoord - TopCoord)) * height / MAX_HEIGHT)));
 
     }
 
