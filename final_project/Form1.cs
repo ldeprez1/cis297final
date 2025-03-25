@@ -23,7 +23,7 @@ namespace final_project
 
 
 
-        List<GameEntity> allEntities; // PLEASE ADD ALL ENTITIES TO THIS LIST WHEN CREATED
+       
 
         //debug
         GameEntity testEntity;
@@ -105,7 +105,7 @@ namespace final_project
             InitializeComponent();
             mainTimer.Start();
             playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 0, -1, playerBulletTest, player ,true);
-            allEntities = new List<GameEntity> { };
+            //allEntities = new List<GameEntity> { };
 
 
             //FONT
@@ -119,7 +119,7 @@ namespace final_project
            
             //debug
             testEntity = new GameEntity(100, 500, testBox1, 10, 10);
-            allEntities.Add(testEntity);
+            //allEntities.Add(testEntity);
             label1.Text = AppDomain.CurrentDomain.BaseDirectory;
 
         }
@@ -231,15 +231,19 @@ namespace final_project
             scorePanel.Height = ((int)(backgroundPanel.Height - GameEntity.GetBottom()));
             //scorePanel.Height = backgroundPanel.Height - bottomCoord;
 
+
             if (this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
             {
                 this.Size = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, this.Height);
             }
-            if (allEntities != null)
+            if (GameEntity.allEntities != null)
             {
-                foreach (GameEntity curEntity in allEntities)
+                foreach (GameEntity curEntity in GameEntity.allEntities)
                 {
-                    curEntity.RefreshPos();
+                    if (curEntity != null)
+                    {
+                        curEntity.RefreshPos();
+                    }
                 }
             }
 
