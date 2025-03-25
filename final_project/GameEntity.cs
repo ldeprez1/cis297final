@@ -16,6 +16,11 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
     public static double LeftCoord { get; set; } = 0;
     public static double RightCoord { get; set; } = 0;
 
+    public double xCoord { get; private set; } // 0 - 12000
+    public double yCoord { get; private set; } // 0 - 10000
+    public double width { get; private set; } // 0 - 120
+    public double height { get; private set; } // 0 - 100
+
 
     public void UpdatePos(double x, double y) // CALL THIS FUNCTION FOR UPDATING POSITION
     {
@@ -83,14 +88,9 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
 
 
     //internal use only
-    double xCoord; // 0 - 12000
-    double yCoord; // 0 - 10000
+    
     double realX;
     double realY;
-
-
-    double width; // 0 - 120
-    double height; // 0 - 100
 
 
     private void AddToList() //adds new game entity to list
