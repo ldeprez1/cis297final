@@ -70,7 +70,7 @@
             backgroundPanel.Controls.Add(playerBulletTest);
             backgroundPanel.Controls.Add(panel2);
             backgroundPanel.Location = new Point(123, 0);
-            backgroundPanel.Margin = new Padding(6, 6, 6, 6);
+            backgroundPanel.Margin = new Padding(6);
             backgroundPanel.Name = "backgroundPanel";
             backgroundPanel.Size = new Size(1114, 1280);
             backgroundPanel.TabIndex = 1;
@@ -89,7 +89,7 @@
             // 
             testBox1.BackColor = SystemColors.ActiveCaptionText;
             testBox1.Location = new Point(414, 489);
-            testBox1.Margin = new Padding(6, 6, 6, 6);
+            testBox1.Margin = new Padding(6);
             testBox1.Name = "testBox1";
             testBox1.Size = new Size(106, 79);
             testBox1.TabIndex = 2;
@@ -103,7 +103,7 @@
             scorePanel.Cursor = Cursors.SizeAll;
             scorePanel.Dock = DockStyle.Bottom;
             scorePanel.Location = new Point(0, 1067);
-            scorePanel.Margin = new Padding(6, 6, 6, 6);
+            scorePanel.Margin = new Padding(6);
             scorePanel.Name = "scorePanel";
             scorePanel.Size = new Size(1114, 213);
             scorePanel.TabIndex = 1;
@@ -141,7 +141,7 @@
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             panel2.BackColor = SystemColors.ButtonHighlight;
             panel2.Location = new Point(37, 0);
-            panel2.Margin = new Padding(6, 6, 6, 6);
+            panel2.Margin = new Padding(6);
             panel2.Name = "panel2";
             panel2.Size = new Size(0, 604);
             panel2.TabIndex = 0;

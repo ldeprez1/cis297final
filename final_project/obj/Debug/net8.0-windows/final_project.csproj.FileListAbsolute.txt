@@ -88,3 +88,4 @@ C:\Users\louis\Source\Repos\ldeprez1\cis297final\final_project\bin\Debug\net8.0-
 C:\Users\louis\Source\Repos\ldeprez1\cis297final\final_project\obj\Debug\net8.0-windows\final_project.genruntimeconfig.cache
 C:\Users\louis\Source\Repos\ldeprez1\cis297final\final_project\obj\Debug\net8.0-windows\ref\final_project.dll
 D:\Lyla\School\CIS 297\final project\final_project\bin\Debug\net8.0-windows\Resources\ka1.ttf
+C:\Users\louis\source\repos\ldeprez1\cis297final\final_project\bin\Debug\net8.0-windows\Resources\ka1.ttf

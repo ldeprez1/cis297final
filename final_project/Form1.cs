@@ -86,7 +86,8 @@ namespace final_project
                 this.y = y;
                 this.vX = vX;
                 this.vY = vY;
-                this.icon = icon;
+                this.icon = icon; base.SpriteObject = icon;
+                base.UpdatePos(x, y);
                 this.source = source;
                 returnToSender = r2s;
             }
@@ -97,6 +98,8 @@ namespace final_project
                 this.vX = vX;
                 this.vY = vY;
                 this.icon = icon;
+                base.SpriteObject = icon;
+                base.UpdatePos(x, y);
                 this.source = source;
                 returnToSender = r2s;
             }
