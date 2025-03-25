@@ -6,27 +6,15 @@ using System.Security.Policy;
 
 public class GameEntity         // class for entities USE THIS FOR ENTITIES
 {
-    static int entityListSize = 20; //default list size
+    static protected int entityListSize = 20; //default list size
     public static GameEntity[] AllEntities { get; private set; } = new GameEntity[entityListSize];
 
-    protected PictureBox SpriteObject { get; set; }
+    public PictureBox SpriteObject { get; set; }
 
     public static double TopCoord { get; set; } = 0;
     public static double BottomCoord { get; set; } = 0;
     public static double LeftCoord { get; set; } = 0;
     public static double RightCoord { get; set; } = 0;
-
-
-    double xCoord; // 0 - 12000
-    double yCoord; // 0 - 10000
-    double realX;
-    double realY;
-
-
-    double width; // 0 - 120
-    double height; // 0 - 100
-
-
 
 
     public void UpdatePos(double x, double y) // CALL THIS FUNCTION FOR UPDATING POSITION
@@ -91,10 +79,19 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
     }
 
 
-    
+
 
 
     //internal use only
+    double xCoord; // 0 - 12000
+    double yCoord; // 0 - 10000
+    double realX;
+    double realY;
+
+
+    double width; // 0 - 120
+    double height; // 0 - 100
+
 
     private void AddToList() //adds new game entity to list
     {
