@@ -42,7 +42,7 @@ namespace final_project
             this.score = score;
         }
         public void UpdatePos()
-        {
+        { //velocity change
             base.UpdatePos(xCoord + vX, yCoord + vY); 
         }
         
