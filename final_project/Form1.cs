@@ -69,36 +69,7 @@ namespace final_project
             }
 
         }
-        public class EnemyEntity : DamagableEntity {
-            private int scoreValue;
-            private int vX, vY;
-            double x, y, width, height;
-            public EnemyEntity(): base (new PictureBox(), 0, 0)
-            {
-                SpriteObject = base.SpriteObject;
-                scoreValue = 0;
-                vX = 0; vY = 0;
-                x = 0; y = 0; width = 0; height = 0;
-            }
-            public EnemyEntity(double x, double y, PictureBox sprite, double width, double height, int score, int vx, int vy) : base(x, y, sprite, width, height)
-            {
-                SpriteObject = sprite;
-                scoreValue = score;
-                vX = vx; vY = vy;
-                this.x = x; this.y = y; this.width = width; this.height = height;
-            }
-            override public void Hit()
-            {
-                playerScore += scoreValue;
-                base.UpdatePos(0 - SpriteObject.Width, 0 - SpriteObject.Height); //sets object to be offscreen
-            }
-            public void UpdatePos()
-            {
-                x += vX; y += vY;
-                base.UpdatePos(xCoord + vX, yCoord + vY);
-            }
-            
-        }
+       
 
 
         internal class Bullet : GameEntity
