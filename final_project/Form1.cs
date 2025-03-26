@@ -25,6 +25,8 @@ namespace final_project
 
         //for enemy management
         List<Enemy> currentEnemies;
+        //for bullet checking
+        List<Bullet> bullets;
         
 
         internal class Bullet : GameEntity
@@ -104,29 +106,23 @@ namespace final_project
         {
             InitializeComponent();
             mainTimer.Start();
-            playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 0, -1, playerBulletTest, player ,true);
-            testEnemy = new Enemy(testEnemyBox.Location.X, testEnemyBox.Location.Y, testEnemyBox, testEnemyBox.Width, testEnemyBox.Height, 500, 1, 0);
+            playerBullet.SetAll(playerBulletTest.Location.X*20, playerBulletTest.Location.Y*10, 0, -50, playerBulletTest, player ,true);
             Enemy.ScoreLabel = scoreLabel;
             currentEnemies = new List<Enemy> { };
-
+            currentEnemies.Add(new Enemy(testEnemyBox.Location.X*20, testEnemyBox.Location.Y, testEnemyBox, testEnemyBox.Width, testEnemyBox.Height, 600, 0, 25));
+            bullets = new List<Bullet> { };
+            bullets.Add(playerBullet);
             //FONT
             customFonts = new PrivateFontCollection();
             customFonts.AddFontFile("Resources\\ka1.ttf");
 
             ResizeThings();
 
-
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         { //test to see
-            if (e.KeyChar == ' ')
-            {
-                while (playerBullet.WallCheck())
-                {
-                    playerBullet.UpdatePos();
-                }
-            }
+            
         }
 
 
@@ -148,7 +144,22 @@ namespace final_project
             {
                 player.Left += playerSpeed;
             }
-            testEnemy.UpdatePos();
+            foreach(Bullet bullet in bullets)
+            { //updates all bullet positions
+                bullet.UpdatePos();
+                //bullet.WallCheck();
+            }
+            foreach (Enemy enemy in currentEnemies)
+            { //updates all enemy positions and then compares each enemy with all bullets
+                enemy.UpdatePos();
+                foreach(Bullet bullet in bullets)
+                {
+                    if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
+                    {
+                        enemy.Hit();
+                    }
+                }
+            }
         }
 
         private void Key_Down(object sender, KeyEventArgs e) // When Key is pressed
