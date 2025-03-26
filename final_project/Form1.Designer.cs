@@ -72,7 +72,7 @@
             backgroundPanel.Controls.Add(scorePanel);
             backgroundPanel.Controls.Add(playerBulletTest);
             backgroundPanel.Controls.Add(panel2);
-            backgroundPanel.Location = new Point(29, 0);
+            backgroundPanel.Location = new Point(0, 0);
             backgroundPanel.Name = "backgroundPanel";
             backgroundPanel.Size = new Size(600, 600);
             backgroundPanel.TabIndex = 1;
@@ -171,7 +171,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(658, 597);
+            ClientSize = new Size(600, 597);
             Controls.Add(player);
             Controls.Add(backgroundPanel);
             Margin = new Padding(2, 1, 2, 1);
