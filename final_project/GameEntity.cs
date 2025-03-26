@@ -7,7 +7,7 @@ using System.Security.Policy;
 public class GameEntity         // class for entities USE THIS FOR ENTITIES
 {
     static protected int entityListSize = 20; //default list size
-    public static GameEntity[] AllEntities { get; private set; } = new GameEntity[entityListSize];
+    public static GameEntity?[] AllEntities { get; private set; } = new GameEntity?[entityListSize];
 
     public PictureBox SpriteObject { get; set; }
 
@@ -120,7 +120,7 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
 
     private static void Expand() //doubles array size if full
     {
-        GameEntity[] newEntities = new GameEntity[entityListSize * 2];
+        GameEntity?[] newEntities = new GameEntity?[entityListSize * 2];
 
         for (int i = 0; i < entityListSize; i++)
         {

@@ -25,7 +25,7 @@ namespace final_project
 
         abstract public class DamagableEntity : GameEntity //inherited by generic enemy class, please have player class inherit this too
         {
-            public static DamagableEntity[] DamagableEntities { get; private set; } = new DamagableEntity[damagableListSize]; //this is the list of all damagable entities
+            public static DamagableEntity?[] DamagableEntities { get; private set; } = new DamagableEntity?[damagableListSize]; //this is the list of all damagable entities
            
             abstract public void Hit(); //call when you hit an entity
 
@@ -58,7 +58,7 @@ namespace final_project
             }
             private static void Expand() //doubles array size if full
             {
-                DamagableEntity[] newEntities = new DamagableEntity[damagableListSize * 2];
+                DamagableEntity?[] newEntities = new DamagableEntity?[damagableListSize * 2];
 
                 for (int i = 0; i < damagableListSize; i++)
                 {
@@ -67,7 +67,6 @@ namespace final_project
                 DamagableEntities = newEntities;
                 damagableListSize = damagableListSize * 2;
             }
-
         }
         public class EnemyEntity : DamagableEntity {
             private int scoreValue;
