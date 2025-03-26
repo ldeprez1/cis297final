@@ -7,7 +7,7 @@ using static final_project.Form1;
 
 namespace final_project
 {
-    public class Enemy : DamagableEntity
+    public class Enemy : GameEntity
     {
         public static int GlobalScore { get; set; } = 0;
         public static Label? ScoreLabel { get; set; }
@@ -16,9 +16,9 @@ namespace final_project
         int vX { get; set; } 
         int vY { get; set; }
 
-        bool dead = false; //please delete enemy objects when they are hit, but just in case
+        public bool dead { get; private set; } = false; //please delete enemy objects when they are hit, but just in case
 
-        public override void Hit() //call when you hit an enemy with a bullet
+        public void Hit() //call when you hit an enemy with a bullet
         {
             GlobalScore = GlobalScore + score;
             if(ScoreLabel != null)
@@ -26,7 +26,8 @@ namespace final_project
 
             //just in case it doesnt get deleted
             dead = true;
-            SpriteObject.Visible = false; 
+            SpriteObject.Visible = false;
+            AllEntities[ID] = null; // remove itself from the entities array
         }
 
         public Enemy(double x, double y, PictureBox sprite, double width, double height, int score, int vX, int vY) : base(x, y, sprite, width, height)

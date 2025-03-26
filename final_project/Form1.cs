@@ -23,54 +23,9 @@ namespace final_project
         //for custom fonts
         PrivateFontCollection customFonts;
 
-        abstract public class DamagableEntity : GameEntity //inherited by generic enemy class, please have player class inherit this too
-        {
-            public static DamagableEntity[] DamagableEntities { get; private set; } = new DamagableEntity[damagableListSize]; //this is the list of all damagable entities
-           
-            abstract public void Hit(); //call when you hit an entity
-
-            public DamagableEntity(double x, double y, PictureBox sprite, double width, double height) : base(x, y, sprite, width, height) { AddToList(); }
-
-            public DamagableEntity(PictureBox sprite, double width, double height) : base(sprite, width, height) { AddToList(); }
-
-
-            //internal use only
-            private static int damagableListSize = entityListSize;
-            private void AddToList() //adds new entity to list
-            {
-                for (int i = 0; i < damagableListSize; i++)
-                {
-                    if (DamagableEntities[i] == null)
-                    {
-                        DamagableEntities[i] = this;
-                        return; //return id of the element !
-                    }
-                }
-
-
-
-                //if list is full
-                int temp = damagableListSize; //keep track of prior size
-                Expand();
-                AllEntities[temp] = this; //put in first newly expanded slot
-                return;
-
-            }
-            private static void Expand() //doubles array size if full
-            {
-                DamagableEntity[] newEntities = new DamagableEntity[damagableListSize * 2];
-
-                for (int i = 0; i < damagableListSize; i++)
-                {
-                    newEntities[i] = DamagableEntities[i];
-                }
-                DamagableEntities = newEntities;
-                damagableListSize = damagableListSize * 2;
-            }
-
-        }
-
-        Enemy testEnemy;
+        //for enemy management
+        List<Enemy> currentEnemies;
+        
 
         internal class Bullet : GameEntity
         {
@@ -152,13 +107,13 @@ namespace final_project
             playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 0, -1, playerBulletTest, player ,true);
             testEnemy = new Enemy(testEnemyBox.Location.X, testEnemyBox.Location.Y, testEnemyBox, testEnemyBox.Width, testEnemyBox.Height, 500, 1, 0);
             Enemy.ScoreLabel = scoreLabel;
+            currentEnemies = new List<Enemy> { };
 
             //FONT
             customFonts = new PrivateFontCollection();
             customFonts.AddFontFile("Resources\\ka1.ttf");
 
             ResizeThings();
-
 
 
         }

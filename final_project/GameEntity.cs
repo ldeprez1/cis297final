@@ -7,7 +7,7 @@ using System.Security.Policy;
 public class GameEntity         // class for entities USE THIS FOR ENTITIES
 {
     static protected int entityListSize = 20; //default list size
-    public static GameEntity[] AllEntities { get; private set; } = new GameEntity[entityListSize];
+    public static GameEntity?[] AllEntities { get; private set; } = new GameEntity?[entityListSize];
 
     public PictureBox SpriteObject { get; set; }
 
@@ -24,6 +24,8 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
     public double yCoord { get; private set; } // 0 - 10000
     public double width { get; private set; } // 0 - 120
     public double height { get; private set; } // 0 - 100
+
+    protected int ID;
 
 
     public void UpdatePos(double x, double y) // CALL THIS FUNCTION FOR UPDATING POSITION
@@ -104,6 +106,7 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
             if (AllEntities[i] == null)
             {
                 AllEntities[i] = this;
+                this.ID = i;
                 return; //return id of the element !
             }
         }
@@ -114,13 +117,14 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
         int temp = entityListSize; //keep track of prior size
         Expand();
         AllEntities[temp] = this; //put in first newly expanded slot
+        this.ID = temp;
         return;
 
     }
 
     private static void Expand() //doubles array size if full
     {
-        GameEntity[] newEntities = new GameEntity[entityListSize * 2];
+        GameEntity?[] newEntities = new GameEntity?[entityListSize * 2];
 
         for (int i = 0; i < entityListSize; i++)
         {
