@@ -25,6 +25,8 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
     public double width { get; private set; } // 0 - 120
     public double height { get; private set; } // 0 - 100
 
+    protected int ID;
+
 
     public void UpdatePos(double x, double y) // CALL THIS FUNCTION FOR UPDATING POSITION
     {
@@ -104,6 +106,7 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
             if (AllEntities[i] == null)
             {
                 AllEntities[i] = this;
+                this.ID = i;
                 return; //return id of the element !
             }
         }
@@ -114,6 +117,7 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
         int temp = entityListSize; //keep track of prior size
         Expand();
         AllEntities[temp] = this; //put in first newly expanded slot
+        this.ID = temp;
         return;
 
     }
