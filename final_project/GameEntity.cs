@@ -7,7 +7,7 @@ using System.Security.Policy;
 public class GameEntity         // class for entities USE THIS FOR ENTITIES
 {
     static protected int entityListSize = 20; //default list size
-    public static GameEntity[] AllEntities { get; private set; } = new GameEntity[entityListSize];
+    public static GameEntity?[] AllEntities { get; private set; } = new GameEntity?[entityListSize];
 
     public PictureBox SpriteObject { get; set; }
 
@@ -16,14 +16,25 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
     public static double LeftCoord { get; set; } = 0;
     public static double RightCoord { get; set; } = 0;
 
+    public const int MAX_XCOORD = 12000;
+    public const int MAX_YCOORD = 10000;
+    public const int MAX_WIDTH = 120;
+    public const int MAX_HEIGHT = 100;
+    public double xCoord { get; private set; } // 0 - 12000
+    public double yCoord { get; private set; } // 0 - 10000
+    public double width { get; private set; } // 0 - 120
+    public double height { get; private set; } // 0 - 100
+
+    protected int ID;
+
 
     public void UpdatePos(double x, double y) // CALL THIS FUNCTION FOR UPDATING POSITION
     {
         xCoord = x;
         yCoord = y;
 
-        realX = ((RightCoord - LeftCoord)) * xCoord / 12000;
-        realY = ((BottomCoord - TopCoord)) * yCoord / 10000;
+        realX = ((RightCoord - LeftCoord)) * xCoord / MAX_XCOORD;
+        realY = ((BottomCoord - TopCoord)) * yCoord / MAX_YCOORD;
 
         SpriteObject.Location = new Point(((int)realX), ((int)realY));
     }
@@ -38,7 +49,7 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
 
         //size
 
-        SpriteObject.Size = new Size(((int)(((RightCoord - LeftCoord)) * width / 120)), ((int)(((BottomCoord - TopCoord)) * height / 100)));
+        SpriteObject.Size = new Size(((int)(((RightCoord - LeftCoord)) * width / MAX_WIDTH)), ((int)(((BottomCoord - TopCoord)) * height / MAX_HEIGHT)));
 
     }
 
@@ -83,14 +94,9 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
 
 
     //internal use only
-    double xCoord; // 0 - 12000
-    double yCoord; // 0 - 10000
+    
     double realX;
     double realY;
-
-
-    double width; // 0 - 120
-    double height; // 0 - 100
 
 
     private void AddToList() //adds new game entity to list
@@ -100,6 +106,7 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
             if (AllEntities[i] == null)
             {
                 AllEntities[i] = this;
+                this.ID = i;
                 return; //return id of the element !
             }
         }
@@ -110,13 +117,14 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
         int temp = entityListSize; //keep track of prior size
         Expand();
         AllEntities[temp] = this; //put in first newly expanded slot
+        this.ID = temp;
         return;
 
     }
 
     private static void Expand() //doubles array size if full
     {
-        GameEntity[] newEntities = new GameEntity[entityListSize * 2];
+        GameEntity?[] newEntities = new GameEntity?[entityListSize * 2];
 
         for (int i = 0; i < entityListSize; i++)
         {
