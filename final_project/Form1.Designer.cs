@@ -33,6 +33,7 @@
             fontDialog1 = new FontDialog();
             playerBulletTest = new PictureBox();
             backgroundPanel = new Panel();
+            testEnemyBox = new PictureBox();
             label1 = new Label();
             testBox1 = new PictureBox();
             scorePanel = new Panel();
@@ -43,6 +44,7 @@
             mainTimer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)playerBulletTest).BeginInit();
             backgroundPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)testEnemyBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)testBox1).BeginInit();
             scorePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)player).BeginInit();
@@ -64,6 +66,7 @@
             // 
             backgroundPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             backgroundPanel.BackColor = SystemColors.ActiveCaption;
+            backgroundPanel.Controls.Add(testEnemyBox);
             backgroundPanel.Controls.Add(label1);
             backgroundPanel.Controls.Add(testBox1);
             backgroundPanel.Controls.Add(scorePanel);
@@ -74,6 +77,16 @@
             backgroundPanel.Name = "backgroundPanel";
             backgroundPanel.Size = new Size(1114, 1280);
             backgroundPanel.TabIndex = 1;
+            // 
+            // testEnemyBox
+            // 
+            testEnemyBox.Image = (Image)resources.GetObject("testEnemyBox.Image");
+            testEnemyBox.InitialImage = (Image)resources.GetObject("testEnemyBox.InitialImage");
+            testEnemyBox.Location = new Point(39, 119);
+            testEnemyBox.Name = "testEnemyBox";
+            testEnemyBox.Size = new Size(62, 53);
+            testEnemyBox.TabIndex = 4;
+            testEnemyBox.TabStop = false;
             // 
             // label1
             // 
@@ -179,6 +192,7 @@
             ((System.ComponentModel.ISupportInitialize)playerBulletTest).EndInit();
             backgroundPanel.ResumeLayout(false);
             backgroundPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)testEnemyBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)testBox1).EndInit();
             scorePanel.ResumeLayout(false);
             scorePanel.PerformLayout();
@@ -198,5 +212,6 @@
         private PictureBox testBox1;
         private Label scoreLabel;
         private Label label1;
+        private PictureBox testEnemyBox;
     }
 }

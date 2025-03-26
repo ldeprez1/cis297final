@@ -13,6 +13,8 @@ namespace final_project
         public static Label? ScoreLabel { get; set; }
 
         int score;
+        int vX { get; set; } 
+        int vY { get; set; }
 
         bool dead = false; //please delete enemy objects when they are hit, but just in case
 
@@ -27,8 +29,10 @@ namespace final_project
             SpriteObject.Visible = false; 
         }
 
-        public Enemy(double x, double y, PictureBox sprite, double width, double height, int score) : base(x, y, sprite, width, height)
+        public Enemy(double x, double y, PictureBox sprite, double width, double height, int score, int vX, int vY) : base(x, y, sprite, width, height)
         {
+            this.vX = vX;
+            this.vY = vY;
             this.score = score;
         }
 
@@ -36,5 +40,10 @@ namespace final_project
         {
             this.score = score;
         }
+        public void UpdatePos()
+        {
+            base.UpdatePos(xCoord + vX, yCoord + vY); 
+        }
+        
     }
 }

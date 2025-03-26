@@ -69,8 +69,8 @@ namespace final_project
             }
 
         }
-       
 
+        Enemy testEnemy;
 
         internal class Bullet : GameEntity
         {
@@ -150,6 +150,7 @@ namespace final_project
             InitializeComponent();
             mainTimer.Start();
             playerBullet.SetAll(playerBulletTest.Location.X, playerBulletTest.Location.Y, 0, -1, playerBulletTest, player ,true);
+            testEnemy = new Enemy(testEnemyBox.Location.X, testEnemyBox.Location.Y, testEnemyBox, testEnemyBox.Width, testEnemyBox.Height, 500, 1, 0);
             Enemy.ScoreLabel = scoreLabel;
 
             //FONT
@@ -192,7 +193,7 @@ namespace final_project
             {
                 player.Left += playerSpeed;
             }
-
+            testEnemy.UpdatePos();
         }
 
         private void Key_Down(object sender, KeyEventArgs e) // When Key is pressed
