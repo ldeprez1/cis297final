@@ -175,17 +175,24 @@ namespace final_project
                 bullet.UpdatePos();
                 bullet.WallCheck();
             }
-            foreach (Enemy enemy in currentEnemies)
-            { //updates all enemy positions and then compares each enemy with all bullets
-                enemy.UpdatePos();
-                foreach(Bullet bullet in bullets)
-                {
-                    if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
+            try
+            {
+                foreach (Enemy enemy in currentEnemies)
+                { //updates all enemy positions and then compares each enemy with all bullets
+                    enemy.UpdatePos();
+                    foreach (Bullet bullet in bullets)
                     {
-                        enemy.Hit();
-                        //currentEnemies.Remove(enemy);
+                        if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
+                        {
+                            enemy.Hit();
+                            currentEnemies.Remove(enemy);
+                        }
                     }
                 }
+            }
+            catch(Exception)
+            {
+
             }
             label1.Text = $"Player bullet Pos: X:{playerBullet.xCoord} Y: {playerBullet.yCoord}";
         }
