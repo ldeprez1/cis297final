@@ -144,10 +144,10 @@ namespace final_project
             //FONT
             customFonts = new PrivateFontCollection();
             customFonts.AddFontFile("Resources\\ka1.ttf");
-            PictureBox playerSprite = new PictureBox(); // player sprite
+            //PictureBox playerSprite = new PictureBox(); // player sprite
             playerBox = new Player(5500, 8800, playerSprite); // player definition
             playerBullet.SetAll(playerBulletTest.Location.X * 20, playerBulletTest.Location.Y * 10, 0, -100, playerBulletTest, playerBox, true);
-            Controls.Add(playerSprite);
+            //Controls.Add(playerSprite); //no idea wtf this does but it broke something
             playerSprite.BringToFront();
             ResizeThings();
 
@@ -169,7 +169,6 @@ namespace final_project
 
         private void mainEventTimer(object sender, EventArgs e)
         {
-            playerBox.Refresh();
 
             foreach(Bullet bullet in bullets)
             { //updates all bullet positions
@@ -257,7 +256,7 @@ namespace final_project
                 }
             }
 
-            if (scorePanel.Height > 0)
+            if (scorePanel.Height > 0 && customFonts != null)
             {
                 livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.15)), livesLabel.Font.Style);
                 livesLabel.Padding = new Padding(((int)(scorePanel.Width * 0.2)), ((int)(scorePanel.Height * 0.1)), 0, 0);
