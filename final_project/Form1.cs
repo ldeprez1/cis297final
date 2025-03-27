@@ -1,4 +1,5 @@
 using System.Drawing.Text;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace final_project
@@ -14,10 +15,11 @@ namespace final_project
         //for player movement
         public bool moveLeft;
         public bool moveRight;
-        public int playerSpeed = 12;
+        //public int playerSpeed = 12;
+        private Player playerBox;
 
         //current score of the player
-       static  public int playerScore = 0;
+        static  public int playerScore = 0;
 
 
         //for custom fonts
@@ -28,7 +30,33 @@ namespace final_project
         //for bullet checking
         List<Bullet> bullets;
         
+        public class Player : GameEntity
+        {
+            public const double PlayerWidth = 10;  // Width of the player sprite
+            public const double PlayerHeight = 10; // Height of the player sprite
+            public const double playerSpeed = 60;
 
+            public Player(double x, double y, PictureBox sprite) : base(x, y, sprite, PlayerWidth, PlayerHeight) { }
+
+            public void Move(Keys direction)
+            {
+                switch (direction)
+                {
+                    case Keys.Left:
+                        UpdatePosRelative(-playerSpeed, 0);  // Move left
+                        break;
+                    case Keys.Right:
+                        UpdatePosRelative(playerSpeed, 0);   // Move right
+                        break;
+
+                }
+            }
+           public void Refresh()
+            {
+                RefreshPos();
+            }
+
+        }
         internal class Bullet : GameEntity
         {
             private int x, y, vX, vY; //x position, y position, velocity
@@ -115,7 +143,10 @@ namespace final_project
             //FONT
             customFonts = new PrivateFontCollection();
             customFonts.AddFontFile("Resources\\ka1.ttf");
-
+            PictureBox playerSprite = new PictureBox(); // player sprite
+            playerBox = new Player(5500, 8800, playerSprite); // player definition
+            Controls.Add(playerSprite);
+            playerSprite.BringToFront();
             ResizeThings();
 
         }
@@ -136,14 +167,8 @@ namespace final_project
 
         private void mainEventTimer(object sender, EventArgs e)
         {
-            if (moveLeft)
-            {
-                player.Left -= playerSpeed;
-            }
-            if (moveRight)
-            {
-                player.Left += playerSpeed;
-            }
+            playerBox.Refresh();
+
             foreach(Bullet bullet in bullets)
             { //updates all bullet positions
                 bullet.UpdatePos();
@@ -167,12 +192,14 @@ namespace final_project
         {
             if (e.KeyCode == Keys.Left)
             {
-                moveLeft = true;
+               // moveLeft = true;
+               playerBox.Move(Keys.Left);
                
             }
             if (e.KeyCode == Keys.Right)
             {
-                moveRight = true;
+                //moveRight = true;
+                playerBox.Move(Keys.Right);
             }
 
         }
