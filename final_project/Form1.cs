@@ -60,16 +60,17 @@ namespace final_project
         internal class Bullet : GameEntity
         {
             private int x, y, vX, vY; //x position, y position, velocity
-            private PictureBox icon, source; //visually represents the bullet
+            private PictureBox icon; 
+            GameEntity source; //visually represents the bullet
             private bool returnToSender;
             public Bullet() : base(0, 0, new PictureBox(), 10, 10)
             { // basic constructor
                 x = 0; y = 0; vX = 0; vY = 0;
                 icon = base.SpriteObject;
-                source = base.SpriteObject;
+                source = new GameEntity(0,0, SpriteObject, 10,10);
                 returnToSender = false;
             }
-            public Bullet(int x, int y, int vX, int vY, PictureBox icon, PictureBox source, bool r2s) : base(x, y, icon, 10, 10)
+            public Bullet(int x, int y, int vX, int vY, PictureBox icon, GameEntity source, bool r2s) : base(x, y, icon, 10, 10)
             { //specific constructor
                 this.x = x;
                 this.y = y;
@@ -80,7 +81,7 @@ namespace final_project
                 this.source = source;
                 returnToSender = r2s;
             }
-            public void SetAll(int x, int y, int vX, int vY, PictureBox icon, PictureBox source, bool r2s)
+            public void SetAll(int x, int y, int vX, int vY, PictureBox icon, GameEntity source, bool r2s)
             {
                 this.x = x;
                 this.y = y;
@@ -110,16 +111,16 @@ namespace final_project
                * false, or to (x = Middle of Source, y = Same as source). To make sure things look right visually, make sure that
                * all sources are layered above their respective bullets
                */
-                if ((base.xCoord + icon.Width < LeftCoord || base.yCoord + icon.Height < TopCoord) || (base.xCoord > RightCoord || base.yCoord > BottomCoord))
+                if ((base.xCoord + base.width < 0 || base.yCoord + base.height < 0) || (base.xCoord > 12000 || base.yCoord > 10000))
                 {
                     if (!returnToSender)
                     {
-                        x = 0 - icon.Width;
-                        y = 0 - icon.Height;
+                        x = 0 - (int)source.width;
+                        y = 0 - (int)source.height;
                     } else
                     {
-                        x = source.Location.X + source.Width / 2;
-                        y = source.Location.Y;
+                        x = (int)(source.xCoord + source.width / 2);
+                        y = (int)source.yCoord;
                     }
                     SetPos(x, y);
                     return false;
@@ -134,7 +135,7 @@ namespace final_project
         {
             InitializeComponent();
             mainTimer.Start();
-            playerBullet.SetAll(playerBulletTest.Location.X*20, playerBulletTest.Location.Y*10, 0, -50, playerBulletTest, player ,true);
+            
             Enemy.ScoreLabel = scoreLabel;
             currentEnemies = new List<Enemy> { };
             currentEnemies.Add(new Enemy(testEnemyBox.Location.X*20, testEnemyBox.Location.Y, testEnemyBox, 10, 10, 600, 0, 25));
@@ -145,6 +146,7 @@ namespace final_project
             customFonts.AddFontFile("Resources\\ka1.ttf");
             PictureBox playerSprite = new PictureBox(); // player sprite
             playerBox = new Player(5500, 8800, playerSprite); // player definition
+            playerBullet.SetAll(playerBulletTest.Location.X * 20, playerBulletTest.Location.Y * 10, 0, -100, playerBulletTest, playerBox, true);
             Controls.Add(playerSprite);
             playerSprite.BringToFront();
             ResizeThings();
@@ -172,7 +174,7 @@ namespace final_project
             foreach(Bullet bullet in bullets)
             { //updates all bullet positions
                 bullet.UpdatePos();
-                //bullet.WallCheck();
+                bullet.WallCheck();
             }
             foreach (Enemy enemy in currentEnemies)
             { //updates all enemy positions and then compares each enemy with all bullets
@@ -181,11 +183,12 @@ namespace final_project
                 {
                     if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
                     {
-                        //enemy.Hit();
+                        enemy.Hit();
                         
                     }
                 }
             }
+            label1.Text = $"Player bullet Pos: X:{playerBullet.xCoord} Y: {playerBullet.yCoord}";
         }
 
         private void Key_Down(object sender, KeyEventArgs e) // When Key is pressed
