@@ -175,6 +175,7 @@ namespace final_project
                 bullet.UpdatePos();
                 bullet.WallCheck();
             }
+            Bullet? killedEnemy = null;
             try
             {
                 foreach (Enemy enemy in currentEnemies)
@@ -185,14 +186,16 @@ namespace final_project
                         if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
                         {
                             enemy.Hit();
-                            currentEnemies.Remove(enemy);
+                            killedEnemy = bullet;
+                            currentEnemies.Remove(enemy);//will throw exception here
                         }
                     }
                 }
             }
-            catch(Exception)
+            catch(Exception) // delete the bullet that killed
             {
-
+                if(killedEnemy != null)
+                    bullets.Remove(killedEnemy);
             }
             label1.Text = $"Player bullet Pos: X:{playerBullet.xCoord} Y: {playerBullet.yCoord}";
         }
