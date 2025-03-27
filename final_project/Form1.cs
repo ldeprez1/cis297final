@@ -109,7 +109,7 @@ namespace final_project
             playerBullet.SetAll(playerBulletTest.Location.X*20, playerBulletTest.Location.Y*10, 0, -50, playerBulletTest, player ,true);
             Enemy.ScoreLabel = scoreLabel;
             currentEnemies = new List<Enemy> { };
-            currentEnemies.Add(new Enemy(testEnemyBox.Location.X*20, testEnemyBox.Location.Y, testEnemyBox, testEnemyBox.Width, testEnemyBox.Height, 600, 0, 25));
+            currentEnemies.Add(new Enemy(testEnemyBox.Location.X*20, testEnemyBox.Location.Y, testEnemyBox, 10, 10, 600, 0, 25));
             bullets = new List<Bullet> { };
             bullets.Add(playerBullet);
             //FONT
@@ -156,7 +156,8 @@ namespace final_project
                 {
                     if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
                     {
-                        enemy.Hit();
+                        //enemy.Hit();
+                        
                     }
                 }
             }
