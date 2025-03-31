@@ -48,7 +48,12 @@ namespace final_project
                     case Keys.Right:
                         UpdatePosRelative(playerSpeed, 0);   // Move right
                         break;
-
+                    case Keys.Up:
+                        UpdatePosRelative(0, -playerSpeed);
+                        break;
+                    case Keys.Down:
+                        UpdatePosRelative(0,playerSpeed);
+                        break;
                 }
             }
            public void Refresh()
@@ -212,6 +217,14 @@ namespace final_project
             {
                 //moveRight = true;
                 playerBox.Move(Keys.Right);
+            }
+            if (e.KeyCode == Keys.Up)
+            {
+                playerBox.Move(Keys.Up);
+            }
+            if (e.KeyCode == Keys.Down)
+            {
+                playerBox.Move(Keys.Down);
             }
 
         }
