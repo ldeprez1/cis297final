@@ -184,7 +184,7 @@ namespace final_project
                     if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
                     {
                         enemy.Hit();
-                        //currentEnemies.Remove(enemy);
+                        currentEnemies.Remove(enemy);
                     }
                 }
             }
