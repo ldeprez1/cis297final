@@ -6,7 +6,31 @@ namespace final_project
 {
     public partial class Form1 : Form
     {
-        
+
+        /*
+
+        powerup idea
+        random chance from killing enemy
+        higher score enemy = higher chance
+
+        */
+
+
+        /*
+          
+         move player up and down too?
+        bound player movement by the edges
+          
+         */
+
+
+        /*
+          
+         enemy movement controlled by waves/groups? 
+         to avoid collisions between multiple of same enemy type
+          
+         */
+
         //form size
         const int HEIGHT_OFFSET = 39;
         const int WIDTH_OFFSET = 16;
@@ -34,7 +58,7 @@ namespace final_project
         {
             public const double PlayerWidth = 10;  // Width of the player sprite
             public const double PlayerHeight = 10; // Height of the player sprite
-            public const double playerSpeed = 60;
+            public const double playerSpeed = 120;
 
             public Player(double x, double y, PictureBox sprite) : base(x, y, sprite, PlayerWidth, PlayerHeight) { }
 
@@ -48,7 +72,12 @@ namespace final_project
                     case Keys.Right:
                         UpdatePosRelative(playerSpeed, 0);   // Move right
                         break;
-
+                    case Keys.Up:
+                        UpdatePosRelative(0, -playerSpeed);
+                        break;
+                    case Keys.Down:
+                        UpdatePosRelative(0,playerSpeed);
+                        break;
                 }
             }
            public void Refresh()
@@ -144,10 +173,10 @@ namespace final_project
             //FONT
             customFonts = new PrivateFontCollection();
             customFonts.AddFontFile("Resources\\ka1.ttf");
-            PictureBox playerSprite = new PictureBox(); // player sprite
+            //PictureBox playerSprite = new PictureBox(); // player sprite
             playerBox = new Player(5500, 8800, playerSprite); // player definition
             playerBullet.SetAll(playerBulletTest.Location.X * 20, playerBulletTest.Location.Y * 10, 0, -100, playerBulletTest, playerBox, true);
-            Controls.Add(playerSprite);
+            //Controls.Add(playerSprite); //no idea wtf this does but it broke something
             playerSprite.BringToFront();
             ResizeThings();
 
@@ -169,24 +198,33 @@ namespace final_project
 
         private void mainEventTimer(object sender, EventArgs e)
         {
-            playerBox.Refresh();
 
             foreach(Bullet bullet in bullets)
             { //updates all bullet positions
                 bullet.UpdatePos();
                 bullet.WallCheck();
             }
-            foreach (Enemy enemy in currentEnemies)
-            { //updates all enemy positions and then compares each enemy with all bullets
-                enemy.UpdatePos();
-                foreach(Bullet bullet in bullets)
-                {
-                    if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
+            Bullet? killedEnemy = null;
+            try
+            {
+                foreach (Enemy enemy in currentEnemies)
+                { //updates all enemy positions and then compares each enemy with all bullets
+                    enemy.UpdatePos();
+                    foreach (Bullet bullet in bullets)
                     {
-                        enemy.Hit();
-                        currentEnemies.Remove(enemy);
+                        if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
+                        {
+                            enemy.Hit();
+                            killedEnemy = bullet;
+                            currentEnemies.Remove(enemy);//will throw exception here
+                        }
                     }
                 }
+            }
+            catch(Exception) // delete the bullet that killed
+            {
+                if(killedEnemy != null)
+                    bullets.Remove(killedEnemy);
             }
             label1.Text = $"Player bullet Pos: X:{playerBullet.xCoord} Y: {playerBullet.yCoord}";
         }
@@ -203,6 +241,14 @@ namespace final_project
             {
                 //moveRight = true;
                 playerBox.Move(Keys.Right);
+            }
+            if (e.KeyCode == Keys.Up)
+            {
+                playerBox.Move(Keys.Up);
+            }
+            if (e.KeyCode == Keys.Down)
+            {
+                playerBox.Move(Keys.Down);
             }
 
         }
@@ -257,7 +303,7 @@ namespace final_project
                 }
             }
 
-            if (scorePanel.Height > 0)
+            if (scorePanel.Height > 0 && customFonts != null)
             {
                 livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.15)), livesLabel.Font.Style);
                 livesLabel.Padding = new Padding(((int)(scorePanel.Width * 0.2)), ((int)(scorePanel.Height * 0.1)), 0, 0);
