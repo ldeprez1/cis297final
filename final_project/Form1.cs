@@ -6,7 +6,31 @@ namespace final_project
 {
     public partial class Form1 : Form
     {
-        
+
+        /*
+
+        powerup idea
+        random chance from killing enemy
+        higher score enemy = higher chance
+
+        */
+
+
+        /*
+          
+         move player up and down too?
+        bound player movement by the edges
+          
+         */
+
+
+        /*
+          
+         enemy movement controlled by waves/groups? 
+         to avoid collisions between multiple of same enemy type
+          
+         */
+
         //form size
         const int HEIGHT_OFFSET = 39;
         const int WIDTH_OFFSET = 16;
