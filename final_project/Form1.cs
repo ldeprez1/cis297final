@@ -34,7 +34,7 @@ namespace final_project
         {
             public const double PlayerWidth = 10;  // Width of the player sprite
             public const double PlayerHeight = 10; // Height of the player sprite
-            public const double playerSpeed = 60;
+            public const double playerSpeed = 120;
 
             public Player(double x, double y, PictureBox sprite) : base(x, y, sprite, PlayerWidth, PlayerHeight) { }
 
