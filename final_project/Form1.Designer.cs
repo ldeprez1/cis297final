@@ -57,10 +57,10 @@
             playerBulletTest.BackColor = SystemColors.ActiveCaption;
             playerBulletTest.Image = (Image)resources.GetObject("playerBulletTest.Image");
             playerBulletTest.InitialImage = (Image)resources.GetObject("playerBulletTest.InitialImage");
-            playerBulletTest.Location = new Point(235, 543);
+            playerBulletTest.Location = new Point(206, 407);
             playerBulletTest.Margin = new Padding(0);
             playerBulletTest.Name = "playerBulletTest";
-            playerBulletTest.Size = new Size(63, 67);
+            playerBulletTest.Size = new Size(55, 50);
             playerBulletTest.TabIndex = 0;
             playerBulletTest.TabStop = false;
             // 
@@ -76,18 +76,16 @@
             backgroundPanel.Controls.Add(playerBulletTest);
             backgroundPanel.Controls.Add(panel2);
             backgroundPanel.Location = new Point(0, 0);
-            backgroundPanel.Margin = new Padding(3, 4, 3, 4);
             backgroundPanel.Name = "backgroundPanel";
-            backgroundPanel.Size = new Size(686, 800);
+            backgroundPanel.Size = new Size(600, 600);
             backgroundPanel.TabIndex = 1;
             // 
             // playerSprite
             // 
             playerSprite.BackColor = SystemColors.Control;
-            playerSprite.Location = new Point(493, 480);
-            playerSprite.Margin = new Padding(3, 4, 3, 4);
+            playerSprite.Location = new Point(377, 373);
             playerSprite.Name = "playerSprite";
-            playerSprite.Size = new Size(114, 67);
+            playerSprite.Size = new Size(100, 50);
             playerSprite.TabIndex = 5;
             playerSprite.TabStop = false;
             // 
@@ -95,29 +93,27 @@
             // 
             testEnemyBox.Image = (Image)resources.GetObject("testEnemyBox.Image");
             testEnemyBox.InitialImage = (Image)resources.GetObject("testEnemyBox.InitialImage");
-            testEnemyBox.Location = new Point(98, 157);
-            testEnemyBox.Margin = new Padding(3, 4, 3, 4);
+            testEnemyBox.Location = new Point(86, 118);
             testEnemyBox.Name = "testEnemyBox";
-            testEnemyBox.Size = new Size(71, 71);
+            testEnemyBox.Size = new Size(62, 53);
             testEnemyBox.TabIndex = 4;
             testEnemyBox.TabStop = false;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(23, 12);
+            label1.Location = new Point(20, 9);
             label1.Name = "label1";
-            label1.Size = new Size(50, 20);
+            label1.Size = new Size(38, 15);
             label1.TabIndex = 3;
             label1.Text = "label1";
             // 
             // testBox1
             // 
             testBox1.BackColor = SystemColors.ActiveCaptionText;
-            testBox1.Location = new Point(255, 305);
-            testBox1.Margin = new Padding(3, 4, 3, 4);
+            testBox1.Location = new Point(223, 229);
             testBox1.Name = "testBox1";
-            testBox1.Size = new Size(65, 49);
+            testBox1.Size = new Size(57, 37);
             testBox1.TabIndex = 2;
             testBox1.TabStop = false;
             // 
@@ -128,10 +124,9 @@
             scorePanel.Controls.Add(livesLabel);
             scorePanel.Cursor = Cursors.SizeAll;
             scorePanel.Dock = DockStyle.Bottom;
-            scorePanel.Location = new Point(0, 667);
-            scorePanel.Margin = new Padding(3, 4, 3, 4);
+            scorePanel.Location = new Point(0, 500);
             scorePanel.Name = "scorePanel";
-            scorePanel.Size = new Size(686, 133);
+            scorePanel.Size = new Size(600, 100);
             scorePanel.TabIndex = 1;
             // 
             // scoreLabel
@@ -140,7 +135,7 @@
             scoreLabel.Dock = DockStyle.Right;
             scoreLabel.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             scoreLabel.ForeColor = SystemColors.ControlLight;
-            scoreLabel.Location = new Point(566, 0);
+            scoreLabel.Location = new Point(480, 0);
             scoreLabel.Name = "scoreLabel";
             scoreLabel.Size = new Size(120, 72);
             scoreLabel.TabIndex = 1;
@@ -164,18 +159,18 @@
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             panel2.BackColor = SystemColors.ButtonHighlight;
-            panel2.Location = new Point(23, 0);
-            panel2.Margin = new Padding(3, 4, 3, 4);
+            panel2.Location = new Point(20, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(0, 377);
+            panel2.Size = new Size(0, 283);
             panel2.TabIndex = 0;
             // 
             // player
             // 
             player.BackColor = SystemColors.ActiveCaptionText;
-            player.Location = new Point(770, 373);
+            player.Location = new Point(674, 280);
+            player.Margin = new Padding(3, 2, 3, 2);
             player.Name = "player";
-            player.Size = new Size(53, 49);
+            player.Size = new Size(46, 37);
             player.TabIndex = 2;
             player.TabStop = false;
             // 
@@ -186,9 +181,9 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(686, 796);
+            ClientSize = new Size(600, 597);
             Controls.Add(player);
             Controls.Add(backgroundPanel);
             Margin = new Padding(2, 1, 2, 1);
