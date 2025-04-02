@@ -15,7 +15,56 @@ namespace final_project
         higher score enemy = higher chance
 
         */
-
+        public class Powerup : GameEntity
+        {
+            private float v, xPos, yPos;
+            private PictureBox icon;
+            static Random rnd = new Random();
+            public bool active { get; set; }
+            public Powerup() : base(0,0,new PictureBox(), 0,0)
+            { //basic constructor
+                v = 0;xPos = 0; yPos = 0;
+                icon = base.SpriteObject;
+                active = false;
+            }
+            public Powerup(float v, float x, float y, PictureBox icon) : base(x,y,icon, 10,10)
+            { //more speccific constructor establishing 
+                this.v = v; xPos = x; yPos = y;
+                this.icon = icon;
+                active = false;
+            }
+            public Powerup(float v, float x, float y, PictureBox icon, float w, float h) : base(x, y, icon, w, h)
+            { //same constructor as before but with width and height for baseclass stuff
+                this.v = v; xPos = x; yPos = y;
+                this.icon = icon;
+            }
+            public void UpdatePos()
+            {
+                if (active)
+                {
+                    base.UpdatePos(0, yCoord + v);
+                }
+                OOB();
+            }
+            public void SetPos(float x, float y)
+            {
+                xPos = x;
+                yPos = y;
+                base.UpdatePos(xPos, yPos);
+            }
+            public void DoesSpawn(int hit, float x, float y)
+            {
+                if (rnd.Next(0, 1001) >= hit)
+                {
+                    SetPos(x, y);
+                    active = true;
+                }
+            }
+            private void OOB()
+            { //out of bounds check. handled by class so we dont need to.
+                if (yCoord > 12000) active = false;
+            }
+        }
 
         /*
           
@@ -106,6 +155,17 @@ namespace final_project
             }
             public Bullet(int x, int y, int vX, int vY, PictureBox icon, GameEntity source, bool r2s) : base(x, y, icon, 10, 10)
             { //specific constructor
+                this.x = x;
+                this.y = y;
+                this.vX = vX;
+                this.vY = vY;
+                this.icon = icon; base.SpriteObject = icon;
+                base.UpdatePos(x, y);
+                this.source = source;
+                returnToSender = r2s;
+            }
+            public Bullet(int x, int y, int vX, int vY, int w, int h, PictureBox icon, GameEntity source, bool r2s) : base(x,y,icon,w,h)
+            { //constructor with width and height
                 this.x = x;
                 this.y = y;
                 this.vX = vX;
