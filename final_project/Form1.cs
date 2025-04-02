@@ -121,15 +121,25 @@ namespace final_project
                 switch (direction)
                 {
                     case Keys.Left:
-                        UpdatePosRelative(-playerSpeed, 0);  // Move left
+                        if (xCoord > LeftCoord)
+                        {
+                            UpdatePosRelative(-playerSpeed, 0);  // Move left
+                        }
                         break;
                     case Keys.Right:
-                        UpdatePosRelative(playerSpeed, 0);   // Move right
+                        if (xCoord + width < 11000)
+                        {
+                            UpdatePosRelative(playerSpeed, 0);   // Move right
+                        }
                         break;
                     case Keys.Up:
-                        UpdatePosRelative(0, -playerSpeed);
+                        if (yCoord > TopCoord)
+                        {
+                            UpdatePosRelative(0, -playerSpeed);
+                        }
                         break;
                     case Keys.Down:
+                       if(yCoord + height < 9000)
                         UpdatePosRelative(0, playerSpeed);
                         break;
                 }
