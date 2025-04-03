@@ -84,8 +84,8 @@ namespace final_project
         //form size
 
 
-        const int HEIGHT_OFFSET = 39;
-        const int WIDTH_OFFSET = 16;
+        const int HEIGHT_OFFSET = 56;
+        const int WIDTH_OFFSET = 22;
         float scoreHeight;
         int iFrameCounter = 0;
         //for player movement

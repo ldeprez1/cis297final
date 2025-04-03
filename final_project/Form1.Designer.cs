@@ -210,13 +210,14 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(594, 583);
+            ClientSize = new Size(600, 600);
             Controls.Add(player);
             Controls.Add(backgroundPanel);
             Margin = new Padding(2, 1, 2, 1);
             Name = "Form1";
             StartPosition = FormStartPosition.Manual;
             Text = "Galiga";
+            WindowState = FormWindowState.Minimized;
             SizeChanged += Form1_SizeChanged;
             KeyDown += Key_Down;
             KeyPress += Form1_KeyPress;
