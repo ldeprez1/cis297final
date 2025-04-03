@@ -69,7 +69,6 @@
             // 
             // backgroundPanel
             // 
-            backgroundPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             backgroundPanel.BackColor = SystemColors.ActiveCaption;
             backgroundPanel.Controls.Add(enemyTestBullet);
             backgroundPanel.Controls.Add(playerSprite);
@@ -79,10 +78,11 @@
             backgroundPanel.Controls.Add(scorePanel);
             backgroundPanel.Controls.Add(playerBulletTest);
             backgroundPanel.Controls.Add(panel2);
+            backgroundPanel.Dock = DockStyle.Fill;
             backgroundPanel.Location = new Point(0, 0);
             backgroundPanel.Margin = new Padding(5);
             backgroundPanel.Name = "backgroundPanel";
-            backgroundPanel.Size = new Size(600, 600);
+            backgroundPanel.Size = new Size(626, 577);
             backgroundPanel.TabIndex = 1;
             // 
             // enemyTestBullet
@@ -143,10 +143,10 @@
             scorePanel.Controls.Add(livesLabel);
             scorePanel.Cursor = Cursors.SizeAll;
             scorePanel.Dock = DockStyle.Bottom;
-            scorePanel.Location = new Point(0, 500);
+            scorePanel.Location = new Point(0, 477);
             scorePanel.Margin = new Padding(5);
             scorePanel.Name = "scorePanel";
-            scorePanel.Size = new Size(600, 100);
+            scorePanel.Size = new Size(626, 100);
             scorePanel.TabIndex = 1;
             // 
             // scoreLabel
@@ -155,7 +155,7 @@
             scoreLabel.Dock = DockStyle.Right;
             scoreLabel.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             scoreLabel.ForeColor = SystemColors.ControlLight;
-            scoreLabel.Location = new Point(480, 0);
+            scoreLabel.Location = new Point(506, 0);
             scoreLabel.Margin = new Padding(5, 0, 5, 0);
             scoreLabel.Name = "scoreLabel";
             scoreLabel.Size = new Size(120, 72);
@@ -181,10 +181,10 @@
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             panel2.BackColor = SystemColors.ButtonHighlight;
-            panel2.Location = new Point(-100, 0);
+            panel2.Location = new Point(-87, 0);
             panel2.Margin = new Padding(5);
             panel2.Name = "panel2";
-            panel2.Size = new Size(0, 72);
+            panel2.Size = new Size(0, 490);
             panel2.TabIndex = 0;
             // 
             // player
@@ -210,7 +210,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(600, 600);
+            ClientSize = new Size(626, 577);
             Controls.Add(player);
             Controls.Add(backgroundPanel);
             Margin = new Padding(2, 1, 2, 1);
