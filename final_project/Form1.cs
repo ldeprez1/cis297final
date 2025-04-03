@@ -1,25 +1,102 @@
 using System.Drawing.Text;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using static final_project.Form1;
 
 namespace final_project
 {
     public partial class Form1 : Form
     {
-        
+
+        /*
+
+        powerup idea
+        random chance from killing enemy
+        higher score enemy = higher chance
+
+        */
+        public class Powerup : GameEntity
+        {
+            private float v, xPos, yPos;
+            private PictureBox icon;
+            static Random rnd = new Random();
+            public bool active { get; set; }
+            public Powerup() : base(0,0,new PictureBox(), 0,0)
+            { //basic constructor
+                v = 0;xPos = 0; yPos = 0;
+                icon = base.SpriteObject;
+                active = false;
+            }
+            public Powerup(float v, float x, float y, PictureBox icon) : base(x,y,icon, 10,10)
+            { //more speccific constructor establishing 
+                this.v = v; xPos = x; yPos = y;
+                this.icon = icon;
+                active = false;
+            }
+            public Powerup(float v, float x, float y, PictureBox icon, float w, float h) : base(x, y, icon, w, h)
+            { //same constructor as before but with width and height for baseclass stuff
+                this.v = v; xPos = x; yPos = y;
+                this.icon = icon;
+            }
+            public void UpdatePos()
+            {
+                if (active)
+                {
+                    base.UpdatePos(0, yCoord + v);
+                }
+                OOB();
+            }
+            public void SetPos(float x, float y)
+            {
+                xPos = x;
+                yPos = y;
+                base.UpdatePos(xPos, yPos);
+            }
+            public void DoesSpawn(int hit, float x, float y)
+            {
+                if (rnd.Next(0, 1001) >= hit)
+                {
+                    SetPos(x, y);
+                    active = true;
+                }
+            }
+            private void OOB()
+            { //out of bounds check. handled by class so we dont need to.
+                if (yCoord > 12000) active = false;
+            }
+        }
+
+        /*
+          
+         move player up and down too?
+        bound player movement by the edges
+          
+         */
+
+
+        /*
+          
+         enemy movement controlled by waves/groups? 
+         to avoid collisions between multiple of same enemy type
+          
+         */
+
         //form size
+
+
         const int HEIGHT_OFFSET = 39;
         const int WIDTH_OFFSET = 16;
         float scoreHeight;
-
+        int iFrameCounter = 0;
         //for player movement
         public bool moveLeft;
         public bool moveRight;
+        public bool iFrame = false;
         //public int playerSpeed = 12;
         private Player playerBox;
 
         //current score of the player
-        static  public int playerScore = 0;
+        static public int playerScore = 0;
 
 
         //for custom fonts
@@ -29,12 +106,13 @@ namespace final_project
         List<Enemy> currentEnemies;
         //for bullet checking
         List<Bullet> bullets;
-        
+        List<Bullet> enemyBullets;
+
         public class Player : GameEntity
         {
             public const double PlayerWidth = 10;  // Width of the player sprite
             public const double PlayerHeight = 10; // Height of the player sprite
-            public const double playerSpeed = 60;
+            public const double playerSpeed = 120;
 
             public Player(double x, double y, PictureBox sprite) : base(x, y, sprite, PlayerWidth, PlayerHeight) { }
 
@@ -43,15 +121,30 @@ namespace final_project
                 switch (direction)
                 {
                     case Keys.Left:
-                        UpdatePosRelative(-playerSpeed, 0);  // Move left
+                        if (xCoord > LeftCoord)
+                        {
+                            UpdatePosRelative(-playerSpeed, 0);  // Move left
+                        }
                         break;
                     case Keys.Right:
-                        UpdatePosRelative(playerSpeed, 0);   // Move right
+                        if (xCoord + width < 11000)
+                        {
+                            UpdatePosRelative(playerSpeed, 0);   // Move right
+                        }
                         break;
-
+                    case Keys.Up:
+                        if (yCoord > TopCoord)
+                        {
+                            UpdatePosRelative(0, -playerSpeed);
+                        }
+                        break;
+                    case Keys.Down:
+                       if(yCoord + height < 9000)
+                        UpdatePosRelative(0, playerSpeed);
+                        break;
                 }
             }
-           public void Refresh()
+            public void Refresh()
             {
                 RefreshPos();
             }
@@ -60,18 +153,29 @@ namespace final_project
         internal class Bullet : GameEntity
         {
             private int x, y, vX, vY; //x position, y position, velocity
-            private PictureBox icon; 
+            private PictureBox icon;
             GameEntity source; //visually represents the bullet
             private bool returnToSender;
             public Bullet() : base(0, 0, new PictureBox(), 10, 10)
             { // basic constructor
                 x = 0; y = 0; vX = 0; vY = 0;
                 icon = base.SpriteObject;
-                source = new GameEntity(0,0, SpriteObject, 10,10);
+                source = new GameEntity(0, 0, SpriteObject, 10, 10);
                 returnToSender = false;
             }
             public Bullet(int x, int y, int vX, int vY, PictureBox icon, GameEntity source, bool r2s) : base(x, y, icon, 10, 10)
             { //specific constructor
+                this.x = x;
+                this.y = y;
+                this.vX = vX;
+                this.vY = vY;
+                this.icon = icon; base.SpriteObject = icon;
+                base.UpdatePos(x, y);
+                this.source = source;
+                returnToSender = r2s;
+            }
+            public Bullet(int x, int y, int vX, int vY, int w, int h, PictureBox icon, GameEntity source, bool r2s) : base(x,y,icon,w,h)
+            { //constructor with width and height
                 this.x = x;
                 this.y = y;
                 this.vX = vX;
@@ -117,7 +221,8 @@ namespace final_project
                     {
                         x = 0 - (int)source.width;
                         y = 0 - (int)source.height;
-                    } else
+                    }
+                    else
                     {
                         x = (int)(source.xCoord + source.width / 2);
                         y = (int)source.yCoord;
@@ -129,18 +234,22 @@ namespace final_project
             }
         }
         Bullet playerBullet = new Bullet();
-        
+        Bullet testBullet;
+
 
         public Form1()
         {
             InitializeComponent();
             mainTimer.Start();
-            
+
             Enemy.ScoreLabel = scoreLabel;
             currentEnemies = new List<Enemy> { };
-            currentEnemies.Add(new Enemy(testEnemyBox.Location.X*20, testEnemyBox.Location.Y, testEnemyBox, 10, 10, 600, 0, 25));
+            currentEnemies.Add(new Enemy(testEnemyBox.Location.X * 20, testEnemyBox.Location.Y, testEnemyBox, 10, 10, 600, 0, 25));
+            testBullet = new Bullet((int)currentEnemies.ElementAt<Enemy>(0).xCoord, (int)currentEnemies.ElementAt<Enemy>(0).yCoord, 0, 100, enemyTestBullet, currentEnemies.ElementAt<Enemy>(0), true); //creates a test bullet with source of enemy 1
             bullets = new List<Bullet> { };
-            bullets.Add(playerBullet);
+            enemyBullets = new List<Bullet>();
+            enemyBullets.Add(testBullet);
+            //bullets.Add(playerBullet);
             //FONT
             customFonts = new PrivateFontCollection();
             customFonts.AddFontFile("Resources\\ka1.ttf");
@@ -155,7 +264,7 @@ namespace final_project
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         { //test to see
-            
+
         }
 
 
@@ -170,7 +279,7 @@ namespace final_project
         private void mainEventTimer(object sender, EventArgs e)
         {
 
-            foreach(Bullet bullet in bullets)
+            foreach (Bullet bullet in bullets)
             { //updates all bullet positions
                 bullet.UpdatePos();
                 bullet.WallCheck();
@@ -181,8 +290,15 @@ namespace final_project
                 foreach (Enemy enemy in currentEnemies)
                 { //updates all enemy positions and then compares each enemy with all bullets
                     enemy.UpdatePos();
+                    if (enemy.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame) //check for collisions between player and enemies
+                    {
+                        iframetimer.Start();
+                        iFrame = true;
+                    }
                     foreach (Bullet bullet in bullets)
                     {
+                        enemy.Hit();
+                        currentEnemies.Remove(enemy);
                         if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
                         {
                             enemy.Hit();
@@ -192,26 +308,43 @@ namespace final_project
                     }
                 }
             }
-            catch(Exception) // delete the bullet that killed
+            catch (Exception) // delete the bullet that killed
             {
-                if(killedEnemy != null)
+                if (killedEnemy != null)
                     bullets.Remove(killedEnemy);
             }
-            label1.Text = $"Player bullet Pos: X:{playerBullet.xCoord} Y: {playerBullet.yCoord}";
+            //label1.Text = $"Player bullet Pos: X:{playerBullet.xCoord} Y: {playerBullet.yCoord}";
+            //bullets if for PlayerBullets. enemy bullets is for enemy bullets
+            foreach (Bullet bullet in enemyBullets)
+            {
+                bullet.UpdatePos();
+                if (bullet.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame)
+                {
+                    iframetimer.Start();
+                    iFrame = true;
+                }
+            }
         }
-
         private void Key_Down(object sender, KeyEventArgs e) // When Key is pressed
         {
             if (e.KeyCode == Keys.Left)
             {
-               // moveLeft = true;
-               playerBox.Move(Keys.Left);
-               
+                // moveLeft = true;
+                playerBox.Move(Keys.Left);
+
             }
             if (e.KeyCode == Keys.Right)
             {
                 //moveRight = true;
                 playerBox.Move(Keys.Right);
+            }
+            if (e.KeyCode == Keys.Up)
+            {
+                playerBox.Move(Keys.Up);
+            }
+            if (e.KeyCode == Keys.Down)
+            {
+                playerBox.Move(Keys.Down);
             }
 
         }
@@ -276,6 +409,26 @@ namespace final_project
             }
         }
 
-
+        private void iframetimer_Tick(object sender, EventArgs e)
+        {
+            if (iFrameCounter % 2 == 0)
+            { //if the iframe counter is odd, transparency is set to half
+                playerBox.SpriteObject.BackColor = Color.FromArgb(127, 255, 255, 255);
+            } else
+            { //otherwise full
+                playerBox.SpriteObject.BackColor = Color.FromArgb(255, 255, 255, 255);
+            }
+            iFrameCounter++;
+            if(iFrameCounter <10){ //less than 1 second, player is moved to the original spawn, and invisible
+                playerBox.SpriteObject.BackColor = Color.FromArgb(0, 255, 255, 255);
+                playerBox.UpdatePos(5500, 8800);
+            } //remaining 2 sec of iframes do nothing special
+            if (iFrameCounter == 30)
+            { //after 3 seconds, iframes turn off and the counter resets
+                iframetimer.Stop();
+                iFrame = false;
+                iFrameCounter = 0;
+            }
+        }
     }
 }
