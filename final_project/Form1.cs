@@ -84,8 +84,8 @@ namespace final_project
         //form size
 
 
-        const int HEIGHT_OFFSET = 39;
-        const int WIDTH_OFFSET = 16;
+        int HEIGHT_OFFSET = 56;
+        int WIDTH_OFFSET = 22;
         float scoreHeight;
         int iFrameCounter = 0;
         //for player movement
@@ -241,6 +241,17 @@ namespace final_project
         {
             InitializeComponent();
             mainTimer.Start();
+
+            //might help fix any offsets
+            HEIGHT_OFFSET = this.Height - this.backgroundPanel.Height;
+            WIDTH_OFFSET = this.Width - this.backgroundPanel.Width;
+
+            this.backgroundPanel.Dock = DockStyle.None;
+            this.backgroundPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            this.backgroundPanel.Height = this.Height - HEIGHT_OFFSET;
+            this.backgroundPanel.Width = this.backgroundPanel.Height;
+            this.backgroundPanel.Location = new Point((this.Width - this.backgroundPanel.Width - HEIGHT_OFFSET) / 2, 0);
+            this.scorePanel.Height = this.backgroundPanel.Height / 6;
 
             Enemy.ScoreLabel = scoreLabel;
             currentEnemies = new List<Enemy> { };
