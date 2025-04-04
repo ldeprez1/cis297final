@@ -100,6 +100,7 @@ namespace final_project
         public bool moveRight;
         public bool iFrame = false;
         public bool piercingPower = false;
+        public bool firing = true;
         //public int playerSpeed = 12;
         private Player playerBox;
 
@@ -131,7 +132,7 @@ namespace final_project
                 switch (direction)
                 {
                     case Keys.Left:
-                        if (xCoord > LeftCoord)
+                        if (xCoord > 0)
                         {
                             UpdatePosRelative(-playerSpeed, 0);  // Move left
                         }
@@ -149,7 +150,7 @@ namespace final_project
                         }
                         break;
                     case Keys.Down:
-                        if (yCoord + height < 9000)
+                        if (yCoord + height < 8940)
                             UpdatePosRelative(0, playerSpeed);
                         break;
                 }
@@ -243,7 +244,7 @@ namespace final_project
                 return true;
             }
         }
-        Bullet playerBullet = new Bullet();
+        //Bullet playerBullet = new Bullet();
         Bullet testBullet;
 
 
@@ -271,7 +272,7 @@ namespace final_project
             powerups = new List<Powerup>();
             enemyBullets = new List<Bullet>();
             enemyBullets.Add(testBullet);
-            bullets.Add(playerBullet);
+            //bullets.Add(playerBullet);
             powerups.Add(new Powerup(4, 5500, 100, 0, powerUpBoxTest, 10, 10));
             powerups.ElementAt<Powerup>(0).active = true;
             //FONT
@@ -279,7 +280,7 @@ namespace final_project
             customFonts.AddFontFile("Resources\\ka1.ttf");
             //PictureBox playerSprite = new PictureBox(); // player sprite
             playerBox = new Player(5500, 8800, playerSprite); // player definition
-            playerBullet.SetAll(playerBulletTest.Location.X * 20, playerBulletTest.Location.Y * 10, 0, -100, playerBulletTest, playerBox, true);
+            //playerBullet.SetAll(playerBulletTest.Location.X * 20, playerBulletTest.Location.Y * 10, 0, -100, playerBulletTest, playerBox, true);
             //Controls.Add(playerSprite); //no idea wtf this does but it broke something
             playerSprite.BringToFront();
             ResizeThings();
@@ -366,6 +367,20 @@ namespace final_project
                 }
             }
         }
+        private void FireBullet()
+        {
+            double playerX = playerBox.xCoord + playerBox.width / 2;
+            double playerY = playerBox.yCoord;
+
+            //PictureBox bulletSprite = new PictureBox();
+            
+
+
+            Bullet playerBullet = new Bullet();
+            playerBullet.SetAll((int)playerX, (int)playerY, 0, -100, playerBulletTest, playerBox, true);
+            bullets.Add(playerBullet);
+
+        }
         private void Key_Down(object sender, KeyEventArgs e) // When Key is pressed
         {
             if (e.KeyCode == Keys.Left)
@@ -387,7 +402,11 @@ namespace final_project
             {
                 playerBox.Move(Keys.Down);
             }
-
+            if (e.KeyCode == Keys.Space && firing)
+            {
+                FireBullet();
+               
+            }
         }
 
         private void Key_Up(object sender, KeyEventArgs e) // When Key is let go
@@ -401,7 +420,10 @@ namespace final_project
             {
                 moveRight = false;
             }
-
+            if(e.KeyCode == Keys.Space)
+            {
+                
+            }
         }
 
         private void ResizeThings()
