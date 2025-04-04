@@ -18,25 +18,32 @@ namespace final_project
         public class Powerup : GameEntity
         {
             private float v, xPos, yPos;
+            public int type { get; set; }
             private PictureBox icon;
             static Random rnd = new Random();
             public bool active { get; set; }
-            public Powerup() : base(0,0,new PictureBox(), 0,0)
+            public Powerup() : base(0, 0, new PictureBox(), 0, 0)
             { //basic constructor
-                v = 0;xPos = 0; yPos = 0;
+                v = 0; xPos = 0; yPos = 0;
+                type = 0;
                 icon = base.SpriteObject;
                 active = false;
             }
-            public Powerup(float v, float x, float y, PictureBox icon) : base(x,y,icon, 10,10)
+            public Powerup(float v, float x, float y, int type, PictureBox icon) : base(x, y, icon, 10, 10)
             { //more speccific constructor establishing 
+                this.type = type;
                 this.v = v; xPos = x; yPos = y;
                 this.icon = icon;
+                SetPos(x, y);
                 active = false;
             }
-            public Powerup(float v, float x, float y, PictureBox icon, float w, float h) : base(x, y, icon, w, h)
+            public Powerup(float v, float x, float y, int type, PictureBox icon, float w, float h) : base(x, y, icon, w, h)
             { //same constructor as before but with width and height for baseclass stuff
                 this.v = v; xPos = x; yPos = y;
                 this.icon = icon;
+                active = false;
+                SetPos(x, y);
+                this.type = type;
             }
             public void UpdatePos()
             {
@@ -92,6 +99,7 @@ namespace final_project
         public bool moveLeft;
         public bool moveRight;
         public bool iFrame = false;
+        public bool piercingPower = false;
         //public int playerSpeed = 12;
         private Player playerBox;
 
@@ -107,6 +115,8 @@ namespace final_project
         //for bullet checking
         List<Bullet> bullets;
         List<Bullet> enemyBullets;
+        //for powerup movements
+        List<Powerup> powerups;
 
         public class Player : GameEntity
         {
@@ -139,8 +149,8 @@ namespace final_project
                         }
                         break;
                     case Keys.Down:
-                       if(yCoord + height < 9000)
-                        UpdatePosRelative(0, playerSpeed);
+                        if (yCoord + height < 9000)
+                            UpdatePosRelative(0, playerSpeed);
                         break;
                 }
             }
@@ -174,7 +184,7 @@ namespace final_project
                 this.source = source;
                 returnToSender = r2s;
             }
-            public Bullet(int x, int y, int vX, int vY, int w, int h, PictureBox icon, GameEntity source, bool r2s) : base(x,y,icon,w,h)
+            public Bullet(int x, int y, int vX, int vY, int w, int h, PictureBox icon, GameEntity source, bool r2s) : base(x, y, icon, w, h)
             { //constructor with width and height
                 this.x = x;
                 this.y = y;
@@ -258,9 +268,12 @@ namespace final_project
             currentEnemies.Add(new Enemy(testEnemyBox.Location.X * 20, testEnemyBox.Location.Y, testEnemyBox, 10, 10, 600, 0, 25));
             testBullet = new Bullet((int)currentEnemies.ElementAt<Enemy>(0).xCoord, (int)currentEnemies.ElementAt<Enemy>(0).yCoord, 0, 100, enemyTestBullet, currentEnemies.ElementAt<Enemy>(0), true); //creates a test bullet with source of enemy 1
             bullets = new List<Bullet> { };
+            powerups = new List<Powerup>();
             enemyBullets = new List<Bullet>();
             enemyBullets.Add(testBullet);
-            //bullets.Add(playerBullet);
+            bullets.Add(playerBullet);
+            powerups.Add(new Powerup(4, 5500, 100, 0, powerUpBoxTest, 10, 10));
+            powerups.ElementAt<Powerup>(0).active = true;
             //FONT
             customFonts = new PrivateFontCollection();
             customFonts.AddFontFile("Resources\\ka1.ttf");
@@ -289,9 +302,26 @@ namespace final_project
 
         private void mainEventTimer(object sender, EventArgs e)
         {
-
+            foreach (Powerup powerup in powerups)
+            { //update position of any active powerups. Active status is false by default, can be manually set. check for Active is in the class itself :>
+                powerup.UpdatePos();
+                if (powerup.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds))
+                { 
+                    powerup.SetPos(-9000, -9000);
+                    powerup.active = false;
+                    switch (powerup.type)
+                    {
+                        default:
+                            //case 0 and default case, piercing
+                            piercingPower = true;
+                            piercingTimer.Enabled = true;
+                            playerBox.SpriteObject.BackColor = Color.FromArgb(255, 10, 0, 156);
+                            break;
+                    }
+                }
+            }
             foreach (Bullet bullet in bullets)
-            { //updates all bullet positions
+            { //updates all player bullet positions
                 bullet.UpdatePos();
                 bullet.WallCheck();
             }
@@ -299,7 +329,7 @@ namespace final_project
             try
             {
                 foreach (Enemy enemy in currentEnemies)
-                { //updates all enemy positions and then compares each enemy with all bullets
+                { //updates all enemy positions and then compares each enemy with player bullets
                     enemy.UpdatePos();
                     if (enemy.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame) //check for collisions between player and enemies
                     {
@@ -321,13 +351,13 @@ namespace final_project
             }
             catch (Exception) // delete the bullet that killed
             {
-                if (killedEnemy != null)
+                if (killedEnemy != null && !piercingPower) //but only when the piercing powerup is not enabled :>
                     bullets.Remove(killedEnemy);
             }
             //label1.Text = $"Player bullet Pos: X:{playerBullet.xCoord} Y: {playerBullet.yCoord}";
             //bullets if for PlayerBullets. enemy bullets is for enemy bullets
             foreach (Bullet bullet in enemyBullets)
-            {
+            { //updates enemy bullets and then checks for collisions
                 bullet.UpdatePos();
                 if (bullet.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame)
                 {
@@ -425,12 +455,14 @@ namespace final_project
             if (iFrameCounter % 2 == 0)
             { //if the iframe counter is odd, transparency is set to half
                 playerBox.SpriteObject.BackColor = Color.FromArgb(127, 255, 255, 255);
-            } else
+            }
+            else
             { //otherwise full
                 playerBox.SpriteObject.BackColor = Color.FromArgb(255, 255, 255, 255);
             }
             iFrameCounter++;
-            if(iFrameCounter <10){ //less than 1 second, player is moved to the original spawn, and invisible
+            if (iFrameCounter < 10)
+            { //less than 1 second, player is moved to the original spawn, and invisible
                 playerBox.SpriteObject.BackColor = Color.FromArgb(0, 255, 255, 255);
                 playerBox.UpdatePos(5500, 8800);
             } //remaining 2 sec of iframes do nothing special
@@ -440,6 +472,15 @@ namespace final_project
                 iFrame = false;
                 iFrameCounter = 0;
             }
+        }
+
+        private void piercingTimer_Tick(object sender, EventArgs e)
+        { //timer for piercing power up. BUT if we want we can repurpose it to be a generalized powerup timer. last 5 seconds, then disables itself
+            //and returns character to base color.
+
+            piercingPower = false;
+            playerBox.SpriteObject.BackColor = Color.FromArgb(255, 255, 255, 255);
+            piercingTimer.Enabled = false;
         }
     }
 }

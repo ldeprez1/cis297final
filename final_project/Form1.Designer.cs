@@ -33,6 +33,7 @@
             fontDialog1 = new FontDialog();
             playerBulletTest = new PictureBox();
             backgroundPanel = new Panel();
+            powerUpBoxTest = new PictureBox();
             enemyTestBullet = new PictureBox();
             playerSprite = new PictureBox();
             testEnemyBox = new PictureBox();
@@ -45,8 +46,10 @@
             player = new PictureBox();
             mainTimer = new System.Windows.Forms.Timer(components);
             iframetimer = new System.Windows.Forms.Timer(components);
+            piercingTimer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)playerBulletTest).BeginInit();
             backgroundPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)powerUpBoxTest).BeginInit();
             ((System.ComponentModel.ISupportInitialize)enemyTestBullet).BeginInit();
             ((System.ComponentModel.ISupportInitialize)playerSprite).BeginInit();
             ((System.ComponentModel.ISupportInitialize)testEnemyBox).BeginInit();
@@ -60,16 +63,17 @@
             playerBulletTest.BackColor = SystemColors.ActiveCaption;
             playerBulletTest.Image = (Image)resources.GetObject("playerBulletTest.Image");
             playerBulletTest.InitialImage = (Image)resources.GetObject("playerBulletTest.InitialImage");
-            playerBulletTest.Location = new Point(295, 678);
+            playerBulletTest.Location = new Point(384, 868);
             playerBulletTest.Margin = new Padding(0);
             playerBulletTest.Name = "playerBulletTest";
-            playerBulletTest.Size = new Size(79, 84);
+            playerBulletTest.Size = new Size(103, 108);
             playerBulletTest.TabIndex = 0;
             playerBulletTest.TabStop = false;
             // 
             // backgroundPanel
             // 
             backgroundPanel.BackColor = SystemColors.ActiveCaption;
+            backgroundPanel.Controls.Add(powerUpBoxTest);
             backgroundPanel.Controls.Add(enemyTestBullet);
             backgroundPanel.Controls.Add(playerSprite);
             backgroundPanel.Controls.Add(testEnemyBox);
@@ -80,28 +84,36 @@
             backgroundPanel.Controls.Add(panel2);
             backgroundPanel.Dock = DockStyle.Fill;
             backgroundPanel.Location = new Point(0, 0);
-            backgroundPanel.Margin = new Padding(5);
+            backgroundPanel.Margin = new Padding(6);
             backgroundPanel.Name = "backgroundPanel";
-            backgroundPanel.Size = new Size(626, 577);
+            backgroundPanel.Size = new Size(814, 739);
             backgroundPanel.TabIndex = 1;
+            // 
+            // powerUpBoxTest
+            // 
+            powerUpBoxTest.BackColor = Color.LawnGreen;
+            powerUpBoxTest.Location = new Point(420, 73);
+            powerUpBoxTest.Name = "powerUpBoxTest";
+            powerUpBoxTest.Size = new Size(52, 50);
+            powerUpBoxTest.TabIndex = 7;
+            powerUpBoxTest.TabStop = false;
             // 
             // enemyTestBullet
             // 
             enemyTestBullet.BackColor = Color.Yellow;
-            enemyTestBullet.Location = new Point(539, 182);
-            enemyTestBullet.Margin = new Padding(2);
+            enemyTestBullet.Location = new Point(701, 233);
             enemyTestBullet.Name = "enemyTestBullet";
-            enemyTestBullet.Size = new Size(58, 59);
+            enemyTestBullet.Size = new Size(75, 76);
             enemyTestBullet.TabIndex = 6;
             enemyTestBullet.TabStop = false;
             // 
             // playerSprite
             // 
             playerSprite.BackColor = SystemColors.Control;
-            playerSprite.Location = new Point(539, 622);
-            playerSprite.Margin = new Padding(5);
+            playerSprite.Location = new Point(701, 796);
+            playerSprite.Margin = new Padding(6);
             playerSprite.Name = "playerSprite";
-            playerSprite.Size = new Size(142, 84);
+            playerSprite.Size = new Size(185, 108);
             playerSprite.TabIndex = 5;
             playerSprite.TabStop = false;
             // 
@@ -109,30 +121,30 @@
             // 
             testEnemyBox.Image = (Image)resources.GetObject("testEnemyBox.Image");
             testEnemyBox.InitialImage = (Image)resources.GetObject("testEnemyBox.InitialImage");
-            testEnemyBox.Location = new Point(122, 198);
-            testEnemyBox.Margin = new Padding(5);
+            testEnemyBox.Location = new Point(159, 253);
+            testEnemyBox.Margin = new Padding(6);
             testEnemyBox.Name = "testEnemyBox";
-            testEnemyBox.Size = new Size(89, 89);
+            testEnemyBox.Size = new Size(116, 114);
             testEnemyBox.TabIndex = 4;
             testEnemyBox.TabStop = false;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(29, 15);
-            label1.Margin = new Padding(5, 0, 5, 0);
+            label1.Location = new Point(38, 19);
+            label1.Margin = new Padding(6, 0, 6, 0);
             label1.Name = "label1";
-            label1.Size = new Size(59, 25);
+            label1.Size = new Size(78, 32);
             label1.TabIndex = 3;
             label1.Text = "label1";
             // 
             // testBox1
             // 
             testBox1.BackColor = SystemColors.ActiveCaptionText;
-            testBox1.Location = new Point(319, 382);
-            testBox1.Margin = new Padding(5);
+            testBox1.Location = new Point(415, 489);
+            testBox1.Margin = new Padding(6);
             testBox1.Name = "testBox1";
-            testBox1.Size = new Size(81, 61);
+            testBox1.Size = new Size(105, 78);
             testBox1.TabIndex = 2;
             testBox1.TabStop = false;
             // 
@@ -143,10 +155,10 @@
             scorePanel.Controls.Add(livesLabel);
             scorePanel.Cursor = Cursors.SizeAll;
             scorePanel.Dock = DockStyle.Bottom;
-            scorePanel.Location = new Point(0, 477);
-            scorePanel.Margin = new Padding(5);
+            scorePanel.Location = new Point(0, 611);
+            scorePanel.Margin = new Padding(6);
             scorePanel.Name = "scorePanel";
-            scorePanel.Size = new Size(626, 100);
+            scorePanel.Size = new Size(814, 128);
             scorePanel.TabIndex = 1;
             // 
             // scoreLabel
@@ -155,8 +167,8 @@
             scoreLabel.Dock = DockStyle.Right;
             scoreLabel.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             scoreLabel.ForeColor = SystemColors.ControlLight;
-            scoreLabel.Location = new Point(506, 0);
-            scoreLabel.Margin = new Padding(5, 0, 5, 0);
+            scoreLabel.Location = new Point(694, 0);
+            scoreLabel.Margin = new Padding(6, 0, 6, 0);
             scoreLabel.Name = "scoreLabel";
             scoreLabel.Size = new Size(120, 72);
             scoreLabel.TabIndex = 1;
@@ -170,7 +182,7 @@
             livesLabel.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             livesLabel.ForeColor = SystemColors.ControlLight;
             livesLabel.Location = new Point(0, 0);
-            livesLabel.Margin = new Padding(5, 0, 5, 0);
+            livesLabel.Margin = new Padding(6, 0, 6, 0);
             livesLabel.Name = "livesLabel";
             livesLabel.Size = new Size(101, 72);
             livesLabel.TabIndex = 0;
@@ -181,19 +193,19 @@
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             panel2.BackColor = SystemColors.ButtonHighlight;
-            panel2.Location = new Point(-87, 0);
-            panel2.Margin = new Padding(5);
+            panel2.Location = new Point(-113, 0);
+            panel2.Margin = new Padding(6);
             panel2.Name = "panel2";
-            panel2.Size = new Size(0, 490);
+            panel2.Size = new Size(0, 627);
             panel2.TabIndex = 0;
             // 
             // player
             // 
             player.BackColor = SystemColors.ActiveCaptionText;
-            player.Location = new Point(962, 466);
-            player.Margin = new Padding(5, 2, 5, 2);
+            player.Location = new Point(1251, 596);
+            player.Margin = new Padding(6, 3, 6, 3);
             player.Name = "player";
-            player.Size = new Size(65, 61);
+            player.Size = new Size(84, 78);
             player.TabIndex = 2;
             player.TabStop = false;
             // 
@@ -206,14 +218,19 @@
             // 
             iframetimer.Tick += iframetimer_Tick;
             // 
+            // piercingTimer
+            // 
+            piercingTimer.Interval = 5000;
+            piercingTimer.Tick += piercingTimer_Tick;
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(626, 577);
+            ClientSize = new Size(814, 739);
             Controls.Add(player);
             Controls.Add(backgroundPanel);
-            Margin = new Padding(2, 1, 2, 1);
+            Margin = new Padding(3, 1, 3, 1);
             Name = "Form1";
             StartPosition = FormStartPosition.Manual;
             Text = "Galiga";
@@ -225,6 +242,7 @@
             ((System.ComponentModel.ISupportInitialize)playerBulletTest).EndInit();
             backgroundPanel.ResumeLayout(false);
             backgroundPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)powerUpBoxTest).EndInit();
             ((System.ComponentModel.ISupportInitialize)enemyTestBullet).EndInit();
             ((System.ComponentModel.ISupportInitialize)playerSprite).EndInit();
             ((System.ComponentModel.ISupportInitialize)testEnemyBox).EndInit();
@@ -251,5 +269,7 @@
         private PictureBox playerSprite;
         private PictureBox enemyTestBullet;
         private System.Windows.Forms.Timer iframetimer;
+        private PictureBox powerUpBoxTest;
+        private System.Windows.Forms.Timer piercingTimer;
     }
 }
