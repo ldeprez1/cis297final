@@ -63,13 +63,17 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
         this.width = width;
         this.height = height;
 
-        realX = ((RightCoord - LeftCoord)) * xCoord / 12000;
-        realY = ((BottomCoord - TopCoord)) * yCoord / 10000;
 
-        SpriteObject.Location = new Point(((int)realX), ((int)realY));
-        SpriteObject.Size = new Size(((int)(((RightCoord - LeftCoord)) * width / 120)), ((int)(((BottomCoord - TopCoord)) * height / 100)));
+        //realX = ((RightCoord - LeftCoord)) * xCoord / MAX_XCOORD;
+        //realY = ((BottomCoord - TopCoord)) * yCoord / MAX_YCOORD;
+
+        //SpriteObject.Location = new Point(((int)realX), ((int)realY));
+        //SpriteObject.Size = new Size(((int)(((RightCoord - LeftCoord)) * width / MAX_WIDTH)), ((int)(((BottomCoord - TopCoord)) * height / MAX_HEIGHT)));
+
 
         AddToList();
+
+        RefreshPos();
     }
 
     public GameEntity(PictureBox sprite, double width, double height) // create offscreen
@@ -80,13 +84,17 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
         this.width = width;
         this.height = height;
 
-        realX = ((RightCoord - LeftCoord)) * xCoord / 12000;
-        realY = ((BottomCoord - TopCoord)) * yCoord / 10000;
 
-        SpriteObject.Location = new Point(((int)realX), ((int)realY));
-        SpriteObject.Size = new Size(((int)(((RightCoord - LeftCoord)) * width / 120)), ((int)(((BottomCoord - TopCoord)) * height / 100)));
+        //realX = ((RightCoord - LeftCoord)) * xCoord / MAX_XCOORD;
+        //realY = ((BottomCoord - TopCoord)) * yCoord / MAX_YCOORD;
+
+        //SpriteObject.Location = new Point(((int)realX), ((int)realY));
+        //SpriteObject.Size = new Size(((int)(((RightCoord - LeftCoord)) * width / MAX_WIDTH)), ((int)(((BottomCoord - TopCoord)) * height / MAX_HEIGHT)));
+
 
         AddToList();
+
+        RefreshPos();
     }
 
 

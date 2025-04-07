@@ -196,18 +196,18 @@ namespace final_project
                 this.source = source;
                 returnToSender = r2s;
             }
-            public void SetAll(int x, int y, int vX, int vY, PictureBox icon, GameEntity source, bool r2s)
-            {
-                this.x = x;
-                this.y = y;
-                this.vX = vX;
-                this.vY = vY;
-                this.icon = icon;
-                base.SpriteObject = icon;
-                base.UpdatePos(x, y);
-                this.source = source;
-                returnToSender = r2s;
-            }
+            //public void SetAll(int x, int y, int vX, int vY, PictureBox icon, GameEntity source, bool r2s)
+            //{
+            //    this.x = x;
+            //    this.y = y;
+            //    this.vX = vX;
+            //    this.vY = vY;
+            //    this.icon = icon;
+            //    base.SpriteObject = icon;
+            //    base.UpdatePos(x, y);
+            //    this.source = source;
+            //    returnToSender = r2s;
+            //}
             public void SetPos(int x, int y)
             { //manually set position
                 this.x = x;
@@ -261,8 +261,8 @@ namespace final_project
             this.backgroundPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             this.backgroundPanel.Height = this.Height - HEIGHT_OFFSET;
             this.backgroundPanel.Width = this.backgroundPanel.Height;
-            this.backgroundPanel.Location = new Point((this.Width - this.backgroundPanel.Width - HEIGHT_OFFSET) / 2, 0);
             this.scorePanel.Height = this.backgroundPanel.Height / 6;
+            this.backgroundPanel.Location = new Point((this.Width - this.backgroundPanel.Height - HEIGHT_OFFSET) / 2, 0);
 
             Enemy.ScoreLabel = scoreLabel;
             currentEnemies = new List<Enemy> { };
@@ -339,8 +339,6 @@ namespace final_project
                     }
                     foreach (Bullet bullet in bullets)
                     {
-                        enemy.Hit();
-                        currentEnemies.Remove(enemy);
                         if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
                         {
                             enemy.Hit();
@@ -376,8 +374,7 @@ namespace final_project
             
 
 
-            Bullet playerBullet = new Bullet();
-            playerBullet.SetAll((int)playerX, (int)playerY, 0, -100, playerBulletTest, playerBox, true);
+            Bullet playerBullet = new Bullet((int)playerX, (int)playerY, 0, -100, playerBulletTest, playerBox, true);
             bullets.Add(playerBullet);
 
         }
