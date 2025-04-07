@@ -282,12 +282,12 @@ namespace final_project
 
             Enemy.ScoreLabel = scoreLabel;
             currentEnemies = new List<Enemy> { };
-            currentEnemies.Add(new Enemy(testEnemyBox.Location.X * 20, testEnemyBox.Location.Y, testEnemyBox, 10, 10, 600, 0, 25));
-            testBullet = new Bullet((int)currentEnemies.ElementAt<Enemy>(0).xCoord, (int)currentEnemies.ElementAt<Enemy>(0).yCoord, 0, 100, backgroundPanel, currentEnemies.ElementAt<Enemy>(0), true); //creates a test bullet with source of enemy 1
+            //currentEnemies.Add(new Enemy(testEnemyBox.Location.X * 20, testEnemyBox.Location.Y, testEnemyBox, 10, 10, 600, 0, 25));
+            //testBullet = new Bullet((int)currentEnemies.ElementAt<Enemy>(0).xCoord, (int)currentEnemies.ElementAt<Enemy>(0).yCoord, 0, 100, backgroundPanel, currentEnemies.ElementAt<Enemy>(0), true); //creates a test bullet with source of enemy 1
             bullets = new List<Bullet> { };
             powerups = new List<Powerup>();
             enemyBullets = new List<Bullet>();
-            enemyBullets.Add(testBullet);
+            //enemyBullets.Add(testBullet);
             //bullets.Add(playerBullet);
             powerups.Add(new Powerup(4, 5500, 100, 0, powerUpBoxTest, 10, 10));
             powerups.ElementAt<Powerup>(0).active = true;
@@ -302,8 +302,7 @@ namespace final_project
             ResizeThings();
 
 
-            Enemy enemy1 = new GroupEnemy(100, 100, backgroundPanel);
-            currentEnemies.Add(enemy1);
+            currentEnemies.Add(new GroupEnemy(100, GameEntity.MAX_XCOORD, 100, 50, backgroundPanel));
 
         }
 
@@ -350,45 +349,47 @@ namespace final_project
                     remove.Add(bullet);
                 }
             }
-            foreach(Bullet bullet in remove)
+
+
+            List<Enemy> killed = new List<Enemy>();
+            
+            
+            foreach (Enemy enemy in currentEnemies)
+            { //updates all enemy positions and then compares each enemy with player bullets
+                enemy.move();
+                if (enemy.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame) //check for collisions between player and enemies
+                {
+                    iframetimer.Start();
+                    iFrame = true;
+                }
+                foreach (Bullet bullet in bullets)
+                {
+                    if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
+                    {
+                        killed.Add(enemy);
+                        remove.Add(bullet);
+                    }
+                }
+            }
+           
+
+            if(!piercingPower)
+            {
+                foreach (Enemy enemy in killed)
+                {
+                    enemy.Hit();
+                    backgroundPanel.Controls.Remove(enemy.SpriteObject);
+                    currentEnemies.Remove(enemy);
+                }
+            }
+            killed.Clear();
+
+            foreach (Bullet bullet in remove)
             {
                 backgroundPanel.Controls.Remove(bullet.SpriteObject);
                 bullets.Remove(bullet);
             }
             remove.Clear();
-
-
-            Bullet? killedEnemy = null;
-            try
-            {
-                foreach (Enemy enemy in currentEnemies)
-                { //updates all enemy positions and then compares each enemy with player bullets
-                    enemy.UpdatePos();
-                    if (enemy.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame) //check for collisions between player and enemies
-                    {
-                        iframetimer.Start();
-                        iFrame = true;
-                    }
-                    foreach (Bullet bullet in bullets)
-                    {
-                        if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
-                        {
-                            enemy.Hit();
-                            backgroundPanel.Controls.Remove(enemy.SpriteObject);
-                            killedEnemy = bullet;
-                            currentEnemies.Remove(enemy);//will throw exception here
-                        }
-                    }
-                }
-            }
-            catch (Exception) // delete the bullet that killed
-            {
-                if (killedEnemy != null && !piercingPower) //but only when the piercing powerup is not enabled :>
-                {
-                    backgroundPanel.Controls.Remove(killedEnemy.SpriteObject);
-                    bullets.Remove(killedEnemy);
-                }
-            }
             //label1.Text = $"Player bullet Pos: X:{playerBullet.xCoord} Y: {playerBullet.yCoord}";
             //bullets if for PlayerBullets. enemy bullets is for enemy bullets
 

@@ -7,7 +7,7 @@ using static final_project.Form1;
 
 namespace final_project
 {
-    public class Enemy : GameEntity
+    abstract public class Enemy : GameEntity
     {
         public static int GlobalScore { get; set; } = 0;
         public static Label? ScoreLabel { get; set; }
@@ -49,25 +49,70 @@ namespace final_project
             base.UpdatePos(xCoord + vX, yCoord + vY);
         }
 
+        abstract public void move();
+
     }
 
     //basic enemy type
     public class GroupEnemy : Enemy
     {
+        int startX;
+        int endX;
+        bool moveRight = true;
+        int moveDown;
+        int speed;
 
-
-        public GroupEnemy(int x, int y, Control p) : base(x, y, new PictureBox(), 10, 10, 100, 0, 0)
+        public GroupEnemy(int startx, int endx, int y, int speed, Control p) : base(startx, y, new PictureBox(), 10, 10, 100, 0, 0)
         {
             SpriteObject.Parent = p;
             RefreshPos();
             SpriteObject.BackColor = Color.MediumPurple;
+            this.speed = speed;
+            startX = startx;
+            endX = endx - 10*100; //subtract size times 100
         }
 
-        public GroupEnemy(Control p) : base(new PictureBox(), 10, 10, 100)
+        override public void move()
         {
-            SpriteObject.Parent = p;
-            RefreshPos();
-            SpriteObject.BackColor = Color.MediumPurple;
+            if(moveRight)
+            {
+                if(moveDown > 0)
+                {
+                    moveDown--;
+                    UpdatePosRelative(0, speed);
+                }
+                else if (xCoord < endX)
+                {
+                    UpdatePosRelative(speed, 0);
+                }
+                else
+                {
+                    moveRight = false;
+                    moveDown = 5;
+                    speed += 5;
+                }
+            }
+            else if(moveDown > 0)
+            {
+                moveDown--;
+                UpdatePosRelative(0, speed);
+            }
+            else
+            {
+                if (xCoord > startX)
+                {
+                    UpdatePosRelative(speed * -1, 0);
+                }
+                else
+                {
+                    moveRight = true;
+                    moveDown = 5;
+                    speed += 5;
+                }
+            }
         }
+
+
+
     }
 }
