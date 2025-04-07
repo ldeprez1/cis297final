@@ -157,7 +157,7 @@
             // 
             // scorePanel
             // 
-            scorePanel.BackColor = SystemColors.ActiveCaptionText;
+            scorePanel.BackColor = SystemColors.ControlDark;
             scorePanel.Controls.Add(scoreLabel);
             scorePanel.Controls.Add(livesLabel);
             scorePanel.Cursor = Cursors.SizeAll;

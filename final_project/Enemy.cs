@@ -20,14 +20,17 @@ namespace final_project
 
         public void Hit() //call when you hit an enemy with a bullet
         {
-            GlobalScore = GlobalScore + score;
-            if(ScoreLabel != null)
-                ScoreLabel.Text = "SCORE\r\n" + GlobalScore;
+            if (!dead)
+            {
+                GlobalScore = GlobalScore + score;
+                if (ScoreLabel != null)
+                    ScoreLabel.Text = "SCORE\r\n" + GlobalScore;
 
-            //just in case it doesnt get deleted
-            dead = true;
-            SpriteObject.Visible = false;
-            AllEntities[ID] = null; // remove itself from the entities array
+                //just in case it doesnt get deleted
+                dead = true;
+               // SpriteObject.Visible = false;
+                AllEntities[ID] = null; // remove itself from the entities array
+            }
         }
 
         public Enemy(double x, double y, PictureBox sprite, double width, double height, int score, int vX, int vY) : base(x, y, sprite, width, height)
