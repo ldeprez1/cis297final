@@ -285,6 +285,10 @@ namespace final_project
             playerSprite.BringToFront();
             ResizeThings();
 
+
+            Enemy enemy1 = new GroupEnemy(100, 100, backgroundPanel);
+            currentEnemies.Add(enemy1);
+
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
@@ -502,4 +506,16 @@ namespace final_project
             piercingTimer.Enabled = false;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }

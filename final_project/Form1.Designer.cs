@@ -179,7 +179,7 @@
             scoreLabel.Name = "scoreLabel";
             scoreLabel.Size = new Size(120, 72);
             scoreLabel.TabIndex = 1;
-            scoreLabel.Text = "SCORE\r\n67986\r\n";
+            scoreLabel.Text = "SCORE\r\n0";
             scoreLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // livesLabel

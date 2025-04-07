@@ -43,8 +43,28 @@ namespace final_project
         }
         public void UpdatePos()
         { //velocity change
-            base.UpdatePos(xCoord + vX, yCoord + vY); 
+            base.UpdatePos(xCoord + vX, yCoord + vY);
         }
-        
+
+    }
+
+    //basic enemy type
+    public class GroupEnemy : Enemy
+    {
+
+
+        public GroupEnemy(int x, int y, Control p) : base(x, y, new PictureBox(), 10, 10, 100, 0, 0)
+        {
+            SpriteObject.Parent = p;
+            RefreshPos();
+            SpriteObject.BackColor = Color.MediumPurple;
+        }
+
+        public GroupEnemy(Control p) : base(new PictureBox(), 10, 10, 100)
+        {
+            SpriteObject.Parent = p;
+            RefreshPos();
+            SpriteObject.BackColor = Color.MediumPurple;
+        }
     }
 }
