@@ -196,7 +196,7 @@ namespace final_project
                 this.source = source;
                 returnToSender = r2s;
             }
-            public void SetAll(int x, int y, int vX, int vY, PictureBox icon, GameEntity source, bool r2s)
+            /*public void SetAll(int x, int y, int vX, int vY, PictureBox icon, GameEntity source, bool r2s)
             {
                 this.x = x;
                 this.y = y;
@@ -207,7 +207,7 @@ namespace final_project
                 base.UpdatePos(x, y);
                 this.source = source;
                 returnToSender = r2s;
-            }
+            }*/
             public void SetPos(int x, int y)
             { //manually set position
                 this.x = x;
@@ -376,8 +376,7 @@ namespace final_project
             
 
 
-            Bullet playerBullet = new Bullet();
-            playerBullet.SetAll((int)playerX, (int)playerY, 0, -100, playerBulletTest, playerBox, true);
+            Bullet playerBullet = new Bullet((int)playerX, (int)playerY, 0, -100, playerBulletTest, playerBox, true);
             bullets.Add(playerBullet);
 
         }

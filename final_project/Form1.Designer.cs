@@ -63,10 +63,10 @@
             playerBulletTest.BackColor = SystemColors.ActiveCaption;
             playerBulletTest.Image = (Image)resources.GetObject("playerBulletTest.Image");
             playerBulletTest.InitialImage = (Image)resources.GetObject("playerBulletTest.InitialImage");
-            playerBulletTest.Location = new Point(236, 542);
+            playerBulletTest.Location = new Point(384, 867);
             playerBulletTest.Margin = new Padding(0);
             playerBulletTest.Name = "playerBulletTest";
-            playerBulletTest.Size = new Size(63, 68);
+            playerBulletTest.Size = new Size(102, 109);
             playerBulletTest.TabIndex = 0;
             playerBulletTest.TabStop = false;
             // 
@@ -84,38 +84,36 @@
             backgroundPanel.Controls.Add(panel2);
             backgroundPanel.Dock = DockStyle.Fill;
             backgroundPanel.Location = new Point(0, 0);
-            backgroundPanel.Margin = new Padding(4);
+            backgroundPanel.Margin = new Padding(6);
             backgroundPanel.Name = "backgroundPanel";
-            backgroundPanel.Size = new Size(501, 462);
+            backgroundPanel.Size = new Size(814, 739);
             backgroundPanel.TabIndex = 1;
             // 
             // powerUpBoxTest
             // 
             powerUpBoxTest.BackColor = Color.LawnGreen;
-            powerUpBoxTest.Location = new Point(258, 46);
-            powerUpBoxTest.Margin = new Padding(2);
+            powerUpBoxTest.Location = new Point(419, 74);
             powerUpBoxTest.Name = "powerUpBoxTest";
-            powerUpBoxTest.Size = new Size(32, 31);
+            powerUpBoxTest.Size = new Size(52, 50);
             powerUpBoxTest.TabIndex = 7;
             powerUpBoxTest.TabStop = false;
             // 
             // enemyTestBullet
             // 
             enemyTestBullet.BackColor = Color.Yellow;
-            enemyTestBullet.Location = new Point(431, 146);
-            enemyTestBullet.Margin = new Padding(2);
+            enemyTestBullet.Location = new Point(700, 234);
             enemyTestBullet.Name = "enemyTestBullet";
-            enemyTestBullet.Size = new Size(46, 48);
+            enemyTestBullet.Size = new Size(75, 77);
             enemyTestBullet.TabIndex = 6;
             enemyTestBullet.TabStop = false;
             // 
             // playerSprite
             // 
             playerSprite.BackColor = SystemColors.Control;
-            playerSprite.Location = new Point(431, 498);
-            playerSprite.Margin = new Padding(4);
+            playerSprite.Location = new Point(700, 797);
+            playerSprite.Margin = new Padding(6);
             playerSprite.Name = "playerSprite";
-            playerSprite.Size = new Size(114, 68);
+            playerSprite.Size = new Size(185, 109);
             playerSprite.TabIndex = 5;
             playerSprite.TabStop = false;
             // 
@@ -123,30 +121,30 @@
             // 
             testEnemyBox.Image = (Image)resources.GetObject("testEnemyBox.Image");
             testEnemyBox.InitialImage = (Image)resources.GetObject("testEnemyBox.InitialImage");
-            testEnemyBox.Location = new Point(98, 158);
-            testEnemyBox.Margin = new Padding(4);
+            testEnemyBox.Location = new Point(159, 253);
+            testEnemyBox.Margin = new Padding(6);
             testEnemyBox.Name = "testEnemyBox";
-            testEnemyBox.Size = new Size(71, 71);
+            testEnemyBox.Size = new Size(115, 114);
             testEnemyBox.TabIndex = 4;
             testEnemyBox.TabStop = false;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(23, 12);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(37, 19);
+            label1.Margin = new Padding(6, 0, 6, 0);
             label1.Name = "label1";
-            label1.Size = new Size(50, 20);
+            label1.Size = new Size(78, 32);
             label1.TabIndex = 3;
             label1.Text = "label1";
             // 
             // testBox1
             // 
             testBox1.BackColor = SystemColors.ActiveCaptionText;
-            testBox1.Location = new Point(255, 306);
-            testBox1.Margin = new Padding(4);
+            testBox1.Location = new Point(414, 490);
+            testBox1.Margin = new Padding(6);
             testBox1.Name = "testBox1";
-            testBox1.Size = new Size(65, 49);
+            testBox1.Size = new Size(106, 78);
             testBox1.TabIndex = 2;
             testBox1.TabStop = false;
             // 
@@ -157,10 +155,10 @@
             scorePanel.Controls.Add(livesLabel);
             scorePanel.Cursor = Cursors.SizeAll;
             scorePanel.Dock = DockStyle.Bottom;
-            scorePanel.Location = new Point(0, 382);
-            scorePanel.Margin = new Padding(4);
+            scorePanel.Location = new Point(0, 611);
+            scorePanel.Margin = new Padding(6);
             scorePanel.Name = "scorePanel";
-            scorePanel.Size = new Size(501, 80);
+            scorePanel.Size = new Size(814, 128);
             scorePanel.TabIndex = 1;
             // 
             // scoreLabel
@@ -169,8 +167,8 @@
             scoreLabel.Dock = DockStyle.Right;
             scoreLabel.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             scoreLabel.ForeColor = SystemColors.ControlLight;
-            scoreLabel.Location = new Point(381, 0);
-            scoreLabel.Margin = new Padding(4, 0, 4, 0);
+            scoreLabel.Location = new Point(694, 0);
+            scoreLabel.Margin = new Padding(6, 0, 6, 0);
             scoreLabel.Name = "scoreLabel";
             scoreLabel.Size = new Size(120, 72);
             scoreLabel.TabIndex = 1;
@@ -184,7 +182,7 @@
             livesLabel.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             livesLabel.ForeColor = SystemColors.ControlLight;
             livesLabel.Location = new Point(0, 0);
-            livesLabel.Margin = new Padding(4, 0, 4, 0);
+            livesLabel.Margin = new Padding(6, 0, 6, 0);
             livesLabel.Name = "livesLabel";
             livesLabel.Size = new Size(101, 72);
             livesLabel.TabIndex = 0;
@@ -195,19 +193,19 @@
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             panel2.BackColor = SystemColors.ButtonHighlight;
-            panel2.Location = new Point(-70, 0);
-            panel2.Margin = new Padding(4);
+            panel2.Location = new Point(-114, 0);
+            panel2.Margin = new Padding(6);
             panel2.Name = "panel2";
-            panel2.Size = new Size(0, 392);
+            panel2.Size = new Size(0, 627);
             panel2.TabIndex = 0;
             // 
             // player
             // 
             player.BackColor = SystemColors.ActiveCaptionText;
-            player.Location = new Point(770, 372);
-            player.Margin = new Padding(4, 2, 4, 2);
+            player.Location = new Point(1251, 595);
+            player.Margin = new Padding(6, 3, 6, 3);
             player.Name = "player";
-            player.Size = new Size(52, 49);
+            player.Size = new Size(84, 78);
             player.TabIndex = 2;
             player.TabStop = false;
             // 
@@ -227,12 +225,12 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(501, 462);
+            ClientSize = new Size(814, 739);
             Controls.Add(player);
             Controls.Add(backgroundPanel);
-            Margin = new Padding(2, 1, 2, 1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             StartPosition = FormStartPosition.Manual;
             Text = "Galiga";
