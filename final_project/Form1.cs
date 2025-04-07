@@ -15,6 +15,11 @@ namespace final_project
         higher score enemy = higher chance
 
         */
+
+
+        bool playerCanShoot = true;
+
+
         public class Powerup : GameEntity
         {
             private float v, xPos, yPos;
@@ -170,7 +175,7 @@ namespace final_project
             public Bullet(Control parent, GameEntity source) : base(0, 0, new PictureBox(), 10, 10)
             { // basic constructor
                 x = 0; y = 0; vX = 0; vY = 0;
-               //icon = base.SpriteObject;
+                //icon = base.SpriteObject;
                 this.source = source;
                 SpriteObject.Parent = parent;
                 SpriteObject.BackColor = Color.Black;
@@ -261,7 +266,7 @@ namespace final_project
             }
         }
         //Bullet playerBullet = new Bullet();
-        Bullet testBullet;
+        //Bullet testBullet;
 
 
         public Form1()
@@ -326,7 +331,7 @@ namespace final_project
             { //update position of any active powerups. Active status is false by default, can be manually set. check for Active is in the class itself :>
                 powerup.UpdatePos();
                 if (powerup.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds))
-                { 
+                {
                     powerup.SetPos(-9000, -9000);
                     powerup.active = false;
                     switch (powerup.type)
@@ -344,7 +349,7 @@ namespace final_project
             foreach (Bullet bullet in bullets)
             { //updates all player bullet positions
                 bullet.UpdatePos();
-                if(!(bullet.WallCheck()))
+                if (!(bullet.WallCheck()))
                 {
                     remove.Add(bullet);
                 }
@@ -352,8 +357,8 @@ namespace final_project
 
 
             List<Enemy> killed = new List<Enemy>();
-            
-            
+
+
             foreach (Enemy enemy in currentEnemies)
             { //updates all enemy positions and then compares each enemy with player bullets
                 enemy.move();
@@ -371,9 +376,9 @@ namespace final_project
                     }
                 }
             }
-           
 
-            if(!piercingPower)
+
+            if (!piercingPower)
             {
                 foreach (Enemy enemy in killed)
                 {
@@ -409,7 +414,7 @@ namespace final_project
                     remove.Add(bullet);
                 }
             }
-            if(Hit != null)
+            if (Hit != null)
             {
                 backgroundPanel.Controls.Remove(Hit.SpriteObject);
                 enemyBullets.Remove(Hit);
@@ -429,12 +434,14 @@ namespace final_project
             double playerY = playerBox.yCoord;
 
             //PictureBox bulletSprite = new PictureBox();
-            
 
-
-            Bullet playerBullet = new Bullet((int)playerX, (int)playerY, 0, -100, backgroundPanel, playerBox, true);
-            bullets.Add(playerBullet);
-
+            if (playerCanShoot && bullets.Count < 3)
+            {
+                Bullet playerBullet = new Bullet((int)playerX, (int)playerY, 0, -100, backgroundPanel, playerBox, true);
+                bullets.Add(playerBullet);
+                playerCanShoot = false;
+                playerShoot.Start();
+            }
         }
         private void Key_Down(object sender, KeyEventArgs e) // When Key is pressed
         {
@@ -460,7 +467,7 @@ namespace final_project
             if (e.KeyCode == Keys.Space && firing)
             {
                 FireBullet();
-               
+
             }
         }
 
@@ -475,9 +482,9 @@ namespace final_project
             {
                 moveRight = false;
             }
-            if(e.KeyCode == Keys.Space)
+            if (e.KeyCode == Keys.Space)
             {
-                
+
             }
         }
 
@@ -558,6 +565,12 @@ namespace final_project
             piercingPower = false;
             playerBox.SpriteObject.BackColor = Color.FromArgb(255, 255, 255, 255);
             piercingTimer.Enabled = false;
+        }
+
+        private void playerShoot_Tick(object sender, EventArgs e)
+        {
+            playerCanShoot = true;
+            playerShoot.Stop();
         }
     }
 

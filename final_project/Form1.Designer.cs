@@ -47,6 +47,7 @@
             mainTimer = new System.Windows.Forms.Timer(components);
             iframetimer = new System.Windows.Forms.Timer(components);
             piercingTimer = new System.Windows.Forms.Timer(components);
+            playerShoot = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)playerBulletTest).BeginInit();
             backgroundPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)powerUpBoxTest).BeginInit();
@@ -230,6 +231,11 @@
             piercingTimer.Interval = 5000;
             piercingTimer.Tick += piercingTimer_Tick;
             // 
+            // playerShoot
+            // 
+            playerShoot.Interval = 300;
+            playerShoot.Tick += playerShoot_Tick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -278,5 +284,6 @@
         private System.Windows.Forms.Timer iframetimer;
         private PictureBox powerUpBoxTest;
         private System.Windows.Forms.Timer piercingTimer;
+        private System.Windows.Forms.Timer playerShoot;
     }
 }
