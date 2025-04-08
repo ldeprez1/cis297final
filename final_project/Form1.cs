@@ -94,7 +94,8 @@ namespace final_project
          */
 
         //form size
-
+        int gameState = 0;
+        int lives = 9;
 
         int HEIGHT_OFFSET = 56;
         int WIDTH_OFFSET = 22;
@@ -327,6 +328,36 @@ namespace final_project
 
         private void mainEventTimer(object sender, EventArgs e)
         {
+            CheckGameState();
+        }
+        private void CheckGameState()
+        { //checks GameState. Default, Zero, is to START THE GAME. One Calls to update all sprite locations and run collision calculations. 2 is GAME OVER
+            switch (gameState)
+            {
+                case 1:
+                    labelGameStart.Visible = false; startGameButton.Visible = false; startGameButton.Enabled = false;
+                    backgroundPanel.SendToBack();
+                    RunGameLogic();
+                    break;
+                case 2:
+                    backgroundPanel.BringToFront();
+                    labelGameStart.BringToFront(); startGameButton.BringToFront(); labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
+                    labelGameStart.Text = "GAME OVER! Try Again?";
+                    break;
+                default:
+                    backgroundPanel.BringToFront();
+                    labelGameStart.BringToFront(); startGameButton.BringToFront(); labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
+                    labelGameStart.Text = "Welcome to Galaga-Like!";
+                    break;
+            }
+        }
+        private void RunGameLogic()
+        {
+            if (lives == 0)
+            { //immediately stops this entire thing if lives becomes 0
+                gameState = 2;
+                return;
+            }
             foreach (Powerup powerup in powerups)
             { //update position of any active powerups. Active status is false by default, can be manually set. check for Active is in the class itself :>
                 powerup.UpdatePos();
@@ -364,6 +395,8 @@ namespace final_project
                 enemy.move();
                 if (enemy.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame) //check for collisions between player and enemies
                 {
+                    lives--;
+                    livesLabel.Text = $"Lives: {Environment.NewLine} {lives}";
                     iframetimer.Start();
                     iFrame = true;
                 }
@@ -405,6 +438,8 @@ namespace final_project
                 bullet.UpdatePos();
                 if (bullet.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame)
                 {
+                    lives--;
+                    livesLabel.Text = $"Lives: {Environment.NewLine} {lives}";
                     iframetimer.Start();
                     iFrame = true;
                     Hit = bullet;
@@ -571,6 +606,42 @@ namespace final_project
         {
             playerCanShoot = true;
             playerShoot.Stop();
+        }
+
+        private void startGameButton_Click(object sender, EventArgs e)
+        { //reset ANY AND ALL VARIABLES, other than gamestate, which it sets to 1
+            gameState = 1;
+            lives = 9;
+            livesLabel.Text = $"Lives: {Environment.NewLine} {lives}";
+            playerScore = 0;
+            List<Bullet> allBullets = new List<Bullet>();
+            foreach (Bullet b in bullets) //removing bullets on screen
+            {
+                allBullets.Add(b);
+            }
+            foreach (Bullet b in allBullets)
+            {
+                backgroundPanel.Controls.Remove(b.SpriteObject);
+                bullets.Remove(b);
+            }
+            allBullets.Clear();
+            foreach (Bullet b in enemyBullets)
+            {
+                allBullets.Add(b);
+            }
+            foreach (Bullet b in allBullets)
+            {
+                backgroundPanel.Controls.Remove(b.SpriteObject);
+                backgroundPanel.Controls.Remove(b.SpriteObject);
+
+            }
+            allBullets.Clear();
+            playerBox.UpdatePos(5500, 8800);
+            iFrame = false;
+            piercingPower = false;
+            playerCanShoot = true;
+            firing = true;
+
         }
     }
 

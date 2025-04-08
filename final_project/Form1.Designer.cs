@@ -31,10 +31,11 @@
             components = new System.ComponentModel.Container();
             fontDialog1 = new FontDialog();
             backgroundPanel = new Panel();
+            startGameButton = new Button();
             powerUpBoxTest = new PictureBox();
             enemyTestBullet = new PictureBox();
             playerSprite = new PictureBox();
-            label1 = new Label();
+            labelGameStart = new Label();
             scorePanel = new Panel();
             scoreLabel = new Label();
             livesLabel = new Label();
@@ -53,10 +54,11 @@
             // backgroundPanel
             // 
             backgroundPanel.BackColor = SystemColors.ActiveCaption;
+            backgroundPanel.Controls.Add(startGameButton);
             backgroundPanel.Controls.Add(powerUpBoxTest);
             backgroundPanel.Controls.Add(enemyTestBullet);
             backgroundPanel.Controls.Add(playerSprite);
-            backgroundPanel.Controls.Add(label1);
+            backgroundPanel.Controls.Add(labelGameStart);
             backgroundPanel.Controls.Add(scorePanel);
             backgroundPanel.Controls.Add(panel2);
             backgroundPanel.Dock = DockStyle.Fill;
@@ -65,6 +67,16 @@
             backgroundPanel.Name = "backgroundPanel";
             backgroundPanel.Size = new Size(814, 739);
             backgroundPanel.TabIndex = 1;
+            // 
+            // startGameButton
+            // 
+            startGameButton.Location = new Point(312, 315);
+            startGameButton.Name = "startGameButton";
+            startGameButton.Size = new Size(150, 46);
+            startGameButton.TabIndex = 8;
+            startGameButton.Text = "Start!";
+            startGameButton.UseVisualStyleBackColor = true;
+            startGameButton.Click += startGameButton_Click;
             // 
             // powerUpBoxTest
             // 
@@ -98,19 +110,19 @@
             playerSprite.TabIndex = 5;
             playerSprite.TabStop = false;
             // 
-            // label1
+            // labelGameStart
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(37, 19);
-            label1.Margin = new Padding(7, 0, 7, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(78, 32);
-            label1.TabIndex = 3;
-            label1.Text = "label1";
+            labelGameStart.AutoSize = true;
+            labelGameStart.Location = new Point(347, 280);
+            labelGameStart.Margin = new Padding(7, 0, 7, 0);
+            labelGameStart.Name = "labelGameStart";
+            labelGameStart.Size = new Size(78, 32);
+            labelGameStart.TabIndex = 3;
+            labelGameStart.Text = "label1";
             // 
             // scorePanel
             // 
-            scorePanel.BackColor = SystemColors.ControlDark;
+            scorePanel.BackColor = SystemColors.ActiveCaptionText;
             scorePanel.Controls.Add(scoreLabel);
             scorePanel.Controls.Add(livesLabel);
             scorePanel.Cursor = Cursors.SizeAll;
@@ -211,12 +223,13 @@
         private System.Windows.Forms.Timer mainTimer;
         private Label livesLabel;
         private Label scoreLabel;
-        private Label label1;
+        private Label labelGameStart;
         private PictureBox playerSprite;
         private PictureBox enemyTestBullet;
         private System.Windows.Forms.Timer iframetimer;
         private PictureBox powerUpBoxTest;
         private System.Windows.Forms.Timer piercingTimer;
         private System.Windows.Forms.Timer playerShoot;
+        private Button startGameButton;
     }
 }
