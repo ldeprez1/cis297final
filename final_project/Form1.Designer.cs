@@ -47,6 +47,7 @@
             mainTimer = new System.Windows.Forms.Timer(components);
             iframetimer = new System.Windows.Forms.Timer(components);
             piercingTimer = new System.Windows.Forms.Timer(components);
+            playerShoot = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)playerBulletTest).BeginInit();
             backgroundPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)powerUpBoxTest).BeginInit();
@@ -157,7 +158,7 @@
             // 
             // scorePanel
             // 
-            scorePanel.BackColor = SystemColors.ActiveCaptionText;
+            scorePanel.BackColor = SystemColors.ControlDark;
             scorePanel.Controls.Add(scoreLabel);
             scorePanel.Controls.Add(livesLabel);
             scorePanel.Cursor = Cursors.SizeAll;
@@ -179,7 +180,7 @@
             scoreLabel.Name = "scoreLabel";
             scoreLabel.Size = new Size(120, 72);
             scoreLabel.TabIndex = 1;
-            scoreLabel.Text = "SCORE\r\n67986\r\n";
+            scoreLabel.Text = "SCORE\r\n0";
             scoreLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // livesLabel
@@ -230,6 +231,11 @@
             piercingTimer.Interval = 5000;
             piercingTimer.Tick += piercingTimer_Tick;
             // 
+            // playerShoot
+            // 
+            playerShoot.Interval = 300;
+            playerShoot.Tick += playerShoot_Tick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
@@ -278,5 +284,6 @@
         private System.Windows.Forms.Timer iframetimer;
         private PictureBox powerUpBoxTest;
         private System.Windows.Forms.Timer piercingTimer;
+        private System.Windows.Forms.Timer playerShoot;
     }
 }

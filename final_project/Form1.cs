@@ -15,6 +15,11 @@ namespace final_project
         higher score enemy = higher chance
 
         */
+
+
+        bool playerCanShoot = true;
+
+
         public class Powerup : GameEntity
         {
             private float v, xPos, yPos;
@@ -164,34 +169,50 @@ namespace final_project
         internal class Bullet : GameEntity
         {
             private int x, y, vX, vY; //x position, y position, velocity
-            private PictureBox icon;
+            //private PictureBox icon;
             GameEntity source; //visually represents the bullet
             private bool returnToSender;
-            public Bullet() : base(0, 0, new PictureBox(), 10, 10)
+            public Bullet(Control parent, GameEntity source) : base(0, 0, new PictureBox(), 10, 10)
             { // basic constructor
                 x = 0; y = 0; vX = 0; vY = 0;
-                icon = base.SpriteObject;
-                source = new GameEntity(0, 0, SpriteObject, 10, 10);
+                //icon = base.SpriteObject;
+                this.source = source;
+                SpriteObject.Parent = parent;
+                SpriteObject.BackColor = Color.Black;
+                RefreshPos();
+
+
                 returnToSender = false;
             }
-            public Bullet(int x, int y, int vX, int vY, PictureBox icon, GameEntity source, bool r2s) : base(x, y, icon, 10, 10)
+            public Bullet(int x, int y, int vX, int vY, Control parent, GameEntity source, bool r2s) : base(x, y, new PictureBox(), 10, 10)
             { //specific constructor
                 this.x = x;
                 this.y = y;
                 this.vX = vX;
                 this.vY = vY;
-                this.icon = icon; base.SpriteObject = icon;
+                // this.icon = icon; base.SpriteObject = icon;
+
+
+                SpriteObject.Parent = parent;
+                SpriteObject.BackColor = Color.Black;
+                RefreshPos();
+
                 base.UpdatePos(x, y);
                 this.source = source;
                 returnToSender = r2s;
             }
-            public Bullet(int x, int y, int vX, int vY, int w, int h, PictureBox icon, GameEntity source, bool r2s) : base(x, y, icon, w, h)
+            public Bullet(int x, int y, int vX, int vY, int w, int h, Control parent, GameEntity source, bool r2s) : base(x, y, new PictureBox(), w, h)
             { //constructor with width and height
                 this.x = x;
                 this.y = y;
                 this.vX = vX;
                 this.vY = vY;
-                this.icon = icon; base.SpriteObject = icon;
+                // this.icon = icon; base.SpriteObject = icon;
+
+                SpriteObject.Parent = parent;
+                SpriteObject.BackColor = Color.Black;
+                RefreshPos();
+
                 base.UpdatePos(x, y);
                 this.source = source;
                 returnToSender = r2s;
@@ -226,7 +247,7 @@ namespace final_project
                * false, or to (x = Middle of Source, y = Same as source). To make sure things look right visually, make sure that
                * all sources are layered above their respective bullets
                */
-                if ((base.xCoord + base.width < 0 || base.yCoord + base.height < 0) || (base.xCoord > 12000 || base.yCoord > 10000))
+                if ((base.xCoord + base.width < 0 || base.yCoord + base.height < 0) || (base.xCoord > GameEntity.MAX_XCOORD || base.yCoord > GameEntity.MAX_YCOORD))
                 {
                     if (!returnToSender)
                     {
@@ -245,7 +266,7 @@ namespace final_project
             }
         }
         //Bullet playerBullet = new Bullet();
-        Bullet testBullet;
+        //Bullet testBullet;
 
 
         public Form1()
@@ -266,12 +287,12 @@ namespace final_project
 
             Enemy.ScoreLabel = scoreLabel;
             currentEnemies = new List<Enemy> { };
-            currentEnemies.Add(new Enemy(testEnemyBox.Location.X * 20, testEnemyBox.Location.Y, testEnemyBox, 10, 10, 600, 0, 25));
-            testBullet = new Bullet((int)currentEnemies.ElementAt<Enemy>(0).xCoord, (int)currentEnemies.ElementAt<Enemy>(0).yCoord, 0, 100, enemyTestBullet, currentEnemies.ElementAt<Enemy>(0), true); //creates a test bullet with source of enemy 1
+            //currentEnemies.Add(new Enemy(testEnemyBox.Location.X * 20, testEnemyBox.Location.Y, testEnemyBox, 10, 10, 600, 0, 25));
+            //testBullet = new Bullet((int)currentEnemies.ElementAt<Enemy>(0).xCoord, (int)currentEnemies.ElementAt<Enemy>(0).yCoord, 0, 100, backgroundPanel, currentEnemies.ElementAt<Enemy>(0), true); //creates a test bullet with source of enemy 1
             bullets = new List<Bullet> { };
             powerups = new List<Powerup>();
             enemyBullets = new List<Bullet>();
-            enemyBullets.Add(testBullet);
+            //enemyBullets.Add(testBullet);
             //bullets.Add(playerBullet);
             powerups.Add(new Powerup(4, 5500, 100, 0, powerUpBoxTest, 10, 10));
             powerups.ElementAt<Powerup>(0).active = true;
@@ -284,6 +305,9 @@ namespace final_project
             //Controls.Add(playerSprite); //no idea wtf this does but it broke something
             playerSprite.BringToFront();
             ResizeThings();
+
+
+            currentEnemies.Add(new GroupEnemy(100, GameEntity.MAX_XCOORD, 100, 50, backgroundPanel));
 
         }
 
@@ -307,7 +331,7 @@ namespace final_project
             { //update position of any active powerups. Active status is false by default, can be manually set. check for Active is in the class itself :>
                 powerup.UpdatePos();
                 if (powerup.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds))
-                { 
+                {
                     powerup.SetPos(-9000, -9000);
                     powerup.active = false;
                     switch (powerup.type)
@@ -321,40 +345,61 @@ namespace final_project
                     }
                 }
             }
+            List<Bullet> remove = new List<Bullet>();
             foreach (Bullet bullet in bullets)
             { //updates all player bullet positions
                 bullet.UpdatePos();
-                bullet.WallCheck();
+                if (!(bullet.WallCheck()))
+                {
+                    remove.Add(bullet);
+                }
             }
-            Bullet? killedEnemy = null;
-            try
-            {
-                foreach (Enemy enemy in currentEnemies)
-                { //updates all enemy positions and then compares each enemy with player bullets
-                    enemy.UpdatePos();
-                    if (enemy.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame) //check for collisions between player and enemies
+
+
+            List<Enemy> killed = new List<Enemy>();
+
+
+            foreach (Enemy enemy in currentEnemies)
+            { //updates all enemy positions and then compares each enemy with player bullets
+                enemy.move();
+                if (enemy.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame) //check for collisions between player and enemies
+                {
+                    iframetimer.Start();
+                    iFrame = true;
+                }
+                foreach (Bullet bullet in bullets)
+                {
+                    if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
                     {
-                        iframetimer.Start();
-                        iFrame = true;
-                    }
-                    foreach (Bullet bullet in bullets)
-                    {
-                        if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
-                        {
-                            enemy.Hit();
-                            killedEnemy = bullet;
-                            currentEnemies.Remove(enemy);//will throw exception here
-                        }
+                        killed.Add(enemy);
+                        remove.Add(bullet);
                     }
                 }
             }
-            catch (Exception) // delete the bullet that killed
+
+
+            if (!piercingPower)
             {
-                if (killedEnemy != null && !piercingPower) //but only when the piercing powerup is not enabled :>
-                    bullets.Remove(killedEnemy);
+                foreach (Enemy enemy in killed)
+                {
+                    enemy.Hit();
+                    backgroundPanel.Controls.Remove(enemy.SpriteObject);
+                    currentEnemies.Remove(enemy);
+                }
             }
+            killed.Clear();
+
+            foreach (Bullet bullet in remove)
+            {
+                backgroundPanel.Controls.Remove(bullet.SpriteObject);
+                bullets.Remove(bullet);
+            }
+            remove.Clear();
             //label1.Text = $"Player bullet Pos: X:{playerBullet.xCoord} Y: {playerBullet.yCoord}";
             //bullets if for PlayerBullets. enemy bullets is for enemy bullets
+
+
+            Bullet? Hit = null;
             foreach (Bullet bullet in enemyBullets)
             { //updates enemy bullets and then checks for collisions
                 bullet.UpdatePos();
@@ -362,8 +407,26 @@ namespace final_project
                 {
                     iframetimer.Start();
                     iFrame = true;
+                    Hit = bullet;
+                }
+                if (!(bullet.WallCheck()))
+                {
+                    remove.Add(bullet);
                 }
             }
+            if (Hit != null)
+            {
+                backgroundPanel.Controls.Remove(Hit.SpriteObject);
+                enemyBullets.Remove(Hit);
+            }
+            foreach (Bullet bullet in remove)
+            {
+                backgroundPanel.Controls.Remove(bullet.SpriteObject);
+                enemyBullets.Remove(bullet);
+            }
+            remove.Clear();
+
+
         }
         private void FireBullet()
         {
@@ -371,12 +434,14 @@ namespace final_project
             double playerY = playerBox.yCoord;
 
             //PictureBox bulletSprite = new PictureBox();
-            
 
-
-            Bullet playerBullet = new Bullet((int)playerX, (int)playerY, 0, -100, playerBulletTest, playerBox, true);
-            bullets.Add(playerBullet);
-
+            if (playerCanShoot && bullets.Count < 3)
+            {
+                Bullet playerBullet = new Bullet((int)playerX, (int)playerY, 0, -100, backgroundPanel, playerBox, true);
+                bullets.Add(playerBullet);
+                playerCanShoot = false;
+                playerShoot.Start();
+            }
         }
         private void Key_Down(object sender, KeyEventArgs e) // When Key is pressed
         {
@@ -402,7 +467,7 @@ namespace final_project
             if (e.KeyCode == Keys.Space && firing)
             {
                 FireBullet();
-               
+
             }
         }
 
@@ -417,9 +482,9 @@ namespace final_project
             {
                 moveRight = false;
             }
-            if(e.KeyCode == Keys.Space)
+            if (e.KeyCode == Keys.Space)
             {
-                
+
             }
         }
 
@@ -501,5 +566,23 @@ namespace final_project
             playerBox.SpriteObject.BackColor = Color.FromArgb(255, 255, 255, 255);
             piercingTimer.Enabled = false;
         }
+
+        private void playerShoot_Tick(object sender, EventArgs e)
+        {
+            playerCanShoot = true;
+            playerShoot.Stop();
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }
