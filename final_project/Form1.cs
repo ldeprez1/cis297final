@@ -109,6 +109,7 @@ namespace final_project
         public bool iFrame = false;
         public bool piercingPower = false;
         public bool firing = true;
+        
         //public int playerSpeed = 12;
         private Player playerBox;
 
@@ -133,7 +134,10 @@ namespace final_project
             public const double PlayerHeight = 10; // Height of the player sprite
             public const double playerSpeed = 120;
 
-            public Player(double x, double y, PictureBox sprite) : base(x, y, sprite, PlayerWidth, PlayerHeight) { }
+            public Player(double x, double y, PictureBox sprite) : base(x, y, sprite, PlayerWidth, PlayerHeight) {
+                SpriteObject.Image = Image.FromFile("Resources\\ship_sprite.png");
+                SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
 
             public void Move(Keys direction)
             {
@@ -207,7 +211,7 @@ namespace final_project
 
                 returnToSender = false;
             }
-            public Bullet(int x, int y, int vX, int vY, Control parent, GameEntity source, bool r2s) : base(x, y, new PictureBox(), 10, 10)
+            public Bullet(int x, int y, int vX, int vY, Control parent, GameEntity source, bool r2s) : base(x, y, new PictureBox(), 5,5)
             { //specific constructor
                 this.x = x;
                 this.y = y;
@@ -323,9 +327,10 @@ namespace final_project
             customFonts = new PrivateFontCollection();
             customFonts.AddFontFile("Resources\\ka1.ttf");
             //PictureBox playerSprite = new PictureBox(); // player sprite
+            
             playerBox = new Player(5500, 8800, playerSprite); // player definition
-            //playerBullet.SetAll(playerBulletTest.Location.X * 20, playerBulletTest.Location.Y * 10, 0, -100, playerBulletTest, playerBox, true);
-            //Controls.Add(playerSprite); //no idea wtf this does but it broke something
+            
+
             playerSprite.BringToFront();
             ResizeThings();
 
@@ -682,16 +687,5 @@ namespace final_project
 
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }
