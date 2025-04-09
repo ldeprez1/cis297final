@@ -33,7 +33,6 @@
             backgroundPanel = new Panel();
             startGameButton = new Button();
             powerUpBoxTest = new PictureBox();
-            enemyTestBullet = new PictureBox();
             playerSprite = new PictureBox();
             labelGameStart = new Label();
             scorePanel = new Panel();
@@ -45,7 +44,6 @@
             piercingTimer = new System.Windows.Forms.Timer(components);
             backgroundPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)powerUpBoxTest).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)enemyTestBullet).BeginInit();
             ((System.ComponentModel.ISupportInitialize)playerSprite).BeginInit();
             scorePanel.SuspendLayout();
             SuspendLayout();
@@ -55,7 +53,6 @@
             backgroundPanel.BackColor = SystemColors.ActiveCaptionText;
             backgroundPanel.Controls.Add(startGameButton);
             backgroundPanel.Controls.Add(powerUpBoxTest);
-            backgroundPanel.Controls.Add(enemyTestBullet);
             backgroundPanel.Controls.Add(playerSprite);
             backgroundPanel.Controls.Add(labelGameStart);
             backgroundPanel.Controls.Add(scorePanel);
@@ -88,17 +85,6 @@
             powerUpBoxTest.SizeMode = PictureBoxSizeMode.StretchImage;
             powerUpBoxTest.TabIndex = 7;
             powerUpBoxTest.TabStop = false;
-            // 
-            // enemyTestBullet
-            // 
-            enemyTestBullet.BackColor = Color.Yellow;
-            enemyTestBullet.Location = new Point(377, 110);
-            enemyTestBullet.Margin = new Padding(2);
-            enemyTestBullet.Name = "enemyTestBullet";
-            enemyTestBullet.Size = new Size(40, 36);
-            enemyTestBullet.SizeMode = PictureBoxSizeMode.StretchImage;
-            enemyTestBullet.TabIndex = 6;
-            enemyTestBullet.TabStop = false;
             // 
             // playerSprite
             // 
@@ -204,7 +190,6 @@
             backgroundPanel.ResumeLayout(false);
             backgroundPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)powerUpBoxTest).EndInit();
-            ((System.ComponentModel.ISupportInitialize)enemyTestBullet).EndInit();
             ((System.ComponentModel.ISupportInitialize)playerSprite).EndInit();
             scorePanel.ResumeLayout(false);
             scorePanel.PerformLayout();
@@ -221,7 +206,6 @@
         private Label scoreLabel;
         private Label labelGameStart;
         private PictureBox playerSprite;
-        private PictureBox enemyTestBullet;
         private System.Windows.Forms.Timer iframetimer;
         private PictureBox powerUpBoxTest;
         private System.Windows.Forms.Timer piercingTimer;
