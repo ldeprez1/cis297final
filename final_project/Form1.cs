@@ -104,6 +104,8 @@ namespace final_project
         //for player movement
         public bool moveLeft;
         public bool moveRight;
+        public bool moveUp;
+        public bool moveDown;
         public bool iFrame = false;
         public bool piercingPower = false;
         public bool firing = true;
@@ -135,29 +137,49 @@ namespace final_project
 
             public void Move(Keys direction)
             {
+                double dX = 0; //diagonal x
+                double dY = 0; //diagonal y
+
+                if (direction == Keys.Left)
+                {
+                    dX = -playerSpeed;
+                }
+                if (direction == Keys.Right)
+                {
+                    dX = playerSpeed;
+                }
+                if (direction == Keys.Up)
+                {
+                    dY = -playerSpeed;
+                }
+                if (direction == Keys.Down)
+                {
+                    dY = playerSpeed;
+                }
+
                 switch (direction)
                 {
                     case Keys.Left:
                         if (xCoord > 0)
                         {
-                            UpdatePosRelative(-playerSpeed, 0);  // Move left
+                            UpdatePosRelative(dX, 0);  // Move left
                         }
                         break;
                     case Keys.Right:
                         if (xCoord + width < 11000)
                         {
-                            UpdatePosRelative(playerSpeed, 0);   // Move right
+                            UpdatePosRelative(dX, 0);   // Move right
                         }
                         break;
                     case Keys.Up:
                         if (yCoord > TopCoord)
                         {
-                            UpdatePosRelative(0, -playerSpeed);
+                            UpdatePosRelative(0, dY);
                         }
                         break;
                     case Keys.Down:
                         if (yCoord + height < 8940)
-                            UpdatePosRelative(0, playerSpeed);
+                            UpdatePosRelative(0, dY);
                         break;
                 }
             }
@@ -482,28 +504,35 @@ namespace final_project
         {
             if (e.KeyCode == Keys.Left)
             {
-                // moveLeft = true;
+                moveLeft = true;
                 playerBox.Move(Keys.Left);
 
             }
             if (e.KeyCode == Keys.Right)
             {
-                //moveRight = true;
+                moveRight = true;
                 playerBox.Move(Keys.Right);
             }
             if (e.KeyCode == Keys.Up)
             {
+                moveUp = true;
                 playerBox.Move(Keys.Up);
             }
             if (e.KeyCode == Keys.Down)
-            {
+            {   
+                moveDown = true;
                 playerBox.Move(Keys.Down);
             }
-            if (e.KeyCode == Keys.Space && firing)
+            if (e.KeyCode == Keys.Space)
             {
                 FireBullet();
 
             }
+            if (moveLeft) playerBox.Move(Keys.Left);
+            if (moveRight) playerBox.Move(Keys.Right);
+            if (moveUp) playerBox.Move(Keys.Up);
+            if (moveDown) playerBox.Move(Keys.Down);
+
         }
 
         private void Key_Up(object sender, KeyEventArgs e) // When Key is let go
@@ -517,10 +546,19 @@ namespace final_project
             {
                 moveRight = false;
             }
-            if (e.KeyCode == Keys.Space)
+            if (e.KeyCode == Keys.Up)
             {
-
+                moveUp = false;
             }
+            if (e.KeyCode == Keys.Down)
+            {
+                moveDown = false;
+            }
+          
+            if (moveLeft) playerBox.Move(Keys.Left);
+            if (moveRight) playerBox.Move(Keys.Right);
+            if (moveUp) playerBox.Move(Keys.Up);
+            if (moveDown) playerBox.Move(Keys.Down);
         }
 
         private void ResizeThings()
