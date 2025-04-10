@@ -375,11 +375,11 @@ namespace final_project
 
             if (scorePanel.Height > 0 && customFonts != null)
             {
-                livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.2)), livesLabel.Font.Style);
-                livesLabel.Padding = new Padding(((int)(scorePanel.Width * 0.2)), ((int)(scorePanel.Height * 0.1)), 0, 0);
+                livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.17)), livesLabel.Font.Style);
+                livesLabel.Padding = new Padding(((int)(scorePanel.Width * 0.17)), ((int)(scorePanel.Height * 0.1)), 0, 0);
 
-                scoreLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.2)), scoreLabel.Font.Style);
-                scoreLabel.Padding = new Padding(0, ((int)(scorePanel.Height * 0.1)), ((int)(scorePanel.Width * 0.2)), 0);
+                scoreLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.17)), scoreLabel.Font.Style);
+                scoreLabel.Padding = new Padding(0, ((int)(scorePanel.Height * 0.1)), ((int)(scorePanel.Width * 0.17)), 0);
             }
             scorePanel.Padding = new Padding((int)(Math.Max((scorePanel.Height * 0.05), 1)));
         }

@@ -93,3 +93,5 @@ C:\Users\armon\Source\Repos\cis297final\final_project\bin\Debug\net8.0-windows\R
 C:\Users\chees\Source\Repos\cis297final\final_project\bin\Debug\net8.0-windows\Resources\ka1.ttf
 D:\Lyla\School\CIS 297\final project\final_project\bin\Debug\net8.0-windows\Resources\ship_sprite.png
 D:\Lyla\School\CIS 297\final project\final_project\bin\Debug\net8.0-windows\Resources\ship_sprite_powerup.png
+C:\Users\chees\Source\Repos\cis297final\final_project\bin\Debug\net8.0-windows\Resources\ship_sprite.png
+C:\Users\chees\Source\Repos\cis297final\final_project\bin\Debug\net8.0-windows\Resources\ship_sprite_powerup.png

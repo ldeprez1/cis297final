@@ -62,17 +62,16 @@
             backgroundPanel.Controls.Add(panel2);
             backgroundPanel.Dock = DockStyle.Fill;
             backgroundPanel.Location = new Point(0, 0);
-            backgroundPanel.Margin = new Padding(4, 3, 4, 3);
+            backgroundPanel.Margin = new Padding(6, 5, 6, 5);
             backgroundPanel.Name = "backgroundPanel";
-            backgroundPanel.Size = new Size(438, 346);
+            backgroundPanel.Size = new Size(626, 577);
             backgroundPanel.TabIndex = 1;
             // 
             // startGameButton
             // 
-            startGameButton.Location = new Point(168, 148);
-            startGameButton.Margin = new Padding(2);
+            startGameButton.Location = new Point(240, 247);
             startGameButton.Name = "startGameButton";
-            startGameButton.Size = new Size(80, 22);
+            startGameButton.Size = new Size(114, 37);
             startGameButton.TabIndex = 8;
             startGameButton.Text = "Start!";
             startGameButton.UseVisualStyleBackColor = true;
@@ -81,10 +80,9 @@
             // powerUpBoxTest
             // 
             powerUpBoxTest.BackColor = Color.LawnGreen;
-            powerUpBoxTest.Location = new Point(226, 34);
-            powerUpBoxTest.Margin = new Padding(2);
+            powerUpBoxTest.Location = new Point(323, 57);
             powerUpBoxTest.Name = "powerUpBoxTest";
-            powerUpBoxTest.Size = new Size(28, 23);
+            powerUpBoxTest.Size = new Size(40, 38);
             powerUpBoxTest.SizeMode = PictureBoxSizeMode.StretchImage;
             powerUpBoxTest.TabIndex = 7;
             powerUpBoxTest.TabStop = false;
@@ -92,10 +90,10 @@
             // playerSprite
             // 
             playerSprite.BackColor = Color.Transparent;
-            playerSprite.Location = new Point(187, 203);
-            playerSprite.Margin = new Padding(4, 3, 4, 3);
+            playerSprite.Location = new Point(267, 338);
+            playerSprite.Margin = new Padding(6, 5, 6, 5);
             playerSprite.Name = "playerSprite";
-            playerSprite.Size = new Size(100, 51);
+            playerSprite.Size = new Size(143, 85);
             playerSprite.SizeMode = PictureBoxSizeMode.StretchImage;
             playerSprite.TabIndex = 5;
             playerSprite.TabStop = false;
@@ -103,10 +101,10 @@
             // labelGameStart
             // 
             labelGameStart.AutoSize = true;
-            labelGameStart.Location = new Point(187, 131);
-            labelGameStart.Margin = new Padding(4, 0, 4, 0);
+            labelGameStart.Location = new Point(267, 218);
+            labelGameStart.Margin = new Padding(6, 0, 6, 0);
             labelGameStart.Name = "labelGameStart";
-            labelGameStart.Size = new Size(38, 15);
+            labelGameStart.Size = new Size(59, 25);
             labelGameStart.TabIndex = 3;
             labelGameStart.Text = "label1";
             // 
@@ -117,11 +115,11 @@
             scorePanel.Cursor = Cursors.SizeAll;
             scorePanel.Dock = DockStyle.Bottom;
             scorePanel.ForeColor = SystemColors.Control;
-            scorePanel.Location = new Point(0, 286);
-            scorePanel.Margin = new Padding(4, 3, 4, 3);
+            scorePanel.Location = new Point(0, 477);
+            scorePanel.Margin = new Padding(6, 5, 6, 5);
             scorePanel.Name = "scorePanel";
-            scorePanel.Padding = new Padding(1);
-            scorePanel.Size = new Size(438, 60);
+            scorePanel.Padding = new Padding(1, 2, 1, 2);
+            scorePanel.Size = new Size(626, 100);
             scorePanel.TabIndex = 1;
             // 
             // panel1
@@ -130,9 +128,10 @@
             panel1.Controls.Add(scoreLabel);
             panel1.Controls.Add(livesLabel);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(1, 1);
+            panel1.Location = new Point(1, 2);
+            panel1.Margin = new Padding(4, 5, 4, 5);
             panel1.Name = "panel1";
-            panel1.Size = new Size(436, 58);
+            panel1.Size = new Size(624, 96);
             panel1.TabIndex = 0;
             // 
             // scoreLabel
@@ -141,8 +140,8 @@
             scoreLabel.Dock = DockStyle.Right;
             scoreLabel.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             scoreLabel.ForeColor = SystemColors.ControlLight;
-            scoreLabel.Location = new Point(316, 0);
-            scoreLabel.Margin = new Padding(4, 0, 4, 0);
+            scoreLabel.Location = new Point(504, 0);
+            scoreLabel.Margin = new Padding(6, 0, 6, 0);
             scoreLabel.Name = "scoreLabel";
             scoreLabel.Size = new Size(120, 72);
             scoreLabel.TabIndex = 1;
@@ -156,7 +155,7 @@
             livesLabel.Font = new Font("Microsoft Sans Serif", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             livesLabel.ForeColor = SystemColors.ControlLight;
             livesLabel.Location = new Point(0, 0);
-            livesLabel.Margin = new Padding(4, 0, 4, 0);
+            livesLabel.Margin = new Padding(6, 0, 6, 0);
             livesLabel.Name = "livesLabel";
             livesLabel.Size = new Size(101, 72);
             livesLabel.TabIndex = 0;
@@ -167,10 +166,10 @@
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             panel2.BackColor = SystemColors.ButtonHighlight;
-            panel2.Location = new Point(-60, 0);
-            panel2.Margin = new Padding(4, 3, 4, 3);
+            panel2.Location = new Point(-86, 0);
+            panel2.Margin = new Padding(6, 5, 6, 5);
             panel2.Name = "panel2";
-            panel2.Size = new Size(0, 294);
+            panel2.Size = new Size(0, 490);
             panel2.TabIndex = 0;
             // 
             // mainTimer
@@ -189,13 +188,13 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
-            ClientSize = new Size(438, 346);
+            ClientSize = new Size(626, 577);
             Controls.Add(backgroundPanel);
-            Margin = new Padding(2, 1, 2, 1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             StartPosition = FormStartPosition.Manual;
             Text = "Galiga";
