@@ -11,6 +11,9 @@ public class Bullet : GameEntity
                               //private PictureBox icon;
     GameEntity source; //visually represents the bullet
     private bool returnToSender;
+
+    public const  int bulletSizeX = 2;
+    public const int bulletSizeY = 5;
     public Bullet(Control parent, GameEntity source) : base(0, 0, new PictureBox(), 10, 10)
     { // basic constructor
         x = 0; y = 0; vX = 0; vY = 0;
@@ -22,8 +25,9 @@ public class Bullet : GameEntity
 
 
         returnToSender = false;
+
     }
-    public Bullet(int x, int y, int vX, int vY, Control parent, GameEntity source, bool r2s) : base(x, y, new PictureBox(), 5, 5)
+    public Bullet(int x, int y, int vX, int vY, Control parent, GameEntity source, bool r2s) : base(x, y, new PictureBox(), bulletSizeX, bulletSizeY)
     { //specific constructor
         this.x = x;
         this.y = y;

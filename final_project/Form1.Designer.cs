@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             fontDialog1 = new FontDialog();
             backgroundPanel = new Panel();
             startGameButton = new Button();
@@ -36,6 +37,7 @@
             playerSprite = new PictureBox();
             labelGameStart = new Label();
             scorePanel = new Panel();
+            panel1 = new Panel();
             scoreLabel = new Label();
             livesLabel = new Label();
             panel2 = new Panel();
@@ -46,6 +48,7 @@
             ((System.ComponentModel.ISupportInitialize)powerUpBoxTest).BeginInit();
             ((System.ComponentModel.ISupportInitialize)playerSprite).BeginInit();
             scorePanel.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // backgroundPanel
@@ -109,17 +112,28 @@
             // 
             // scorePanel
             // 
-            scorePanel.BackColor = Color.Black;
-            scorePanel.BorderStyle = BorderStyle.FixedSingle;
-            scorePanel.Controls.Add(scoreLabel);
-            scorePanel.Controls.Add(livesLabel);
+            scorePanel.BackColor = Color.White;
+            scorePanel.Controls.Add(panel1);
             scorePanel.Cursor = Cursors.SizeAll;
             scorePanel.Dock = DockStyle.Bottom;
+            scorePanel.ForeColor = SystemColors.Control;
             scorePanel.Location = new Point(0, 286);
             scorePanel.Margin = new Padding(4, 3, 4, 3);
             scorePanel.Name = "scorePanel";
+            scorePanel.Padding = new Padding(1);
             scorePanel.Size = new Size(438, 60);
             scorePanel.TabIndex = 1;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Black;
+            panel1.Controls.Add(scoreLabel);
+            panel1.Controls.Add(livesLabel);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(1, 1);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(436, 58);
+            panel1.TabIndex = 0;
             // 
             // scoreLabel
             // 
@@ -177,6 +191,8 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ActiveCaptionText;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(438, 346);
             Controls.Add(backgroundPanel);
             Margin = new Padding(2, 1, 2, 1);
@@ -184,7 +200,8 @@
             StartPosition = FormStartPosition.Manual;
             Text = "Galiga";
             WindowState = FormWindowState.Minimized;
-            SizeChanged += Form1_SizeChanged;
+            ResizeEnd += Form1_SizeChanged;
+            SizeChanged += ResizeHelp;
             KeyDown += Key_Down;
             KeyUp += Key_Up;
             backgroundPanel.ResumeLayout(false);
@@ -192,7 +209,8 @@
             ((System.ComponentModel.ISupportInitialize)powerUpBoxTest).EndInit();
             ((System.ComponentModel.ISupportInitialize)playerSprite).EndInit();
             scorePanel.ResumeLayout(false);
-            scorePanel.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -210,5 +228,6 @@
         private PictureBox powerUpBoxTest;
         private System.Windows.Forms.Timer piercingTimer;
         private Button startGameButton;
+        private Panel panel1;
     }
 }

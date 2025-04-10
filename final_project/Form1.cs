@@ -1,3 +1,4 @@
+using final_project.Properties;
 using System.Drawing.Text;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -29,6 +30,7 @@ namespace final_project
         public bool iFrame = false;
 
         //for resizing
+        bool fullscreen = false;
         int HEIGHT_OFFSET = 56;
         int WIDTH_OFFSET = 22;
 
@@ -101,7 +103,7 @@ namespace final_project
             playerBox = new Player(5500, 8800, playerSprite);
             players = new List<Player>();
             players.Add(playerBox);
-            playerSprite.BringToFront();
+            //playerSprite.BringToFront();
 
             ResizeThings();
 
@@ -172,7 +174,7 @@ namespace final_project
                             //case 0 and default case, piercing
                             piercingPower = true;
                             piercingTimer.Enabled = true;
-                            playerBox.SpriteObject.BackColor = Color.FromArgb(255, 10, 0, 156);
+                            playerBox.SpriteObject.Image = Image.FromFile("Resources\\ship_sprite_powerup.png");
                             break;
                     }
                 }
@@ -321,11 +323,24 @@ namespace final_project
             if (moveDown) playerBox.Move(Keys.Down);
         }
 
+
+        private void ResizeHelp(object sender, EventArgs e)
+        {
+            if ((this.WindowState == FormWindowState.Maximized) != fullscreen)
+            {
+                ResizeThings();
+                fullscreen = !fullscreen;
+            }
+        }
+
+
+
         private void ResizeThings()
         {
-            this.MinimumSize = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, 0);
-
             backgroundPanel.Width = backgroundPanel.Height;
+
+            if (backgroundPanel.Width > this.Width - WIDTH_OFFSET)
+                this.Size = new Size(backgroundPanel.Width + WIDTH_OFFSET, this.Height);
 
             GameEntity.LeftCoord = ((this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
             //leftCoord = (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2; 
@@ -340,6 +355,7 @@ namespace final_project
             //backgroundPanel.Location = new Point(leftCoord, topCoord);
             scorePanel.Height = ((int)(backgroundPanel.Height - GameEntity.BottomCoord));
             //scorePanel.Height = backgroundPanel.Height - bottomCoord;
+
 
 
             if (this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
@@ -359,12 +375,13 @@ namespace final_project
 
             if (scorePanel.Height > 0 && customFonts != null)
             {
-                livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.15)), livesLabel.Font.Style);
+                livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.2)), livesLabel.Font.Style);
                 livesLabel.Padding = new Padding(((int)(scorePanel.Width * 0.2)), ((int)(scorePanel.Height * 0.1)), 0, 0);
 
-                scoreLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.15)), scoreLabel.Font.Style);
+                scoreLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.2)), scoreLabel.Font.Style);
                 scoreLabel.Padding = new Padding(0, ((int)(scorePanel.Height * 0.1)), ((int)(scorePanel.Width * 0.2)), 0);
             }
+            scorePanel.Padding = new Padding((int)(Math.Max((scorePanel.Height * 0.05), 1)));
         }
 
         private void iframetimer_Tick(object sender, EventArgs e)
@@ -396,7 +413,7 @@ namespace final_project
             //and returns character to base color.
 
             piercingPower = false;
-            playerBox.SpriteObject.BackColor = Color.FromArgb(255, 255, 255, 255);
+            playerBox.SpriteObject.Image = Image.FromFile("Resources\\ship_sprite.png");
             piercingTimer.Enabled = false;
         }
 
