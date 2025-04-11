@@ -4,36 +4,53 @@ using System;
 using System.Drawing;
 using System.Security.Policy;
 using static final_project.Form1;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 public class Powerup : GameEntity
 {
-    private float v, xPos, yPos;
+    private double v, xPos, yPos;
     public int type { get; set; }
-    private PictureBox icon;
     static Random rnd = new Random();
+    GameEntity source;
     public bool active { get; set; }
-    public Powerup() : base(0, 0, new PictureBox(), 0, 0)
+    public Powerup(GameEntity source, Control parent) : base(0, 0, new PictureBox(), 0, 0)
     { //basic constructor
         v = 0; xPos = 0; yPos = 0;
         type = 0;
-        icon = base.SpriteObject;
         active = false;
+        this.source = source;
+        SpriteObject.Parent = parent;
+        SpriteObject.BackColor = Color.FromArgb(255, 0, 184, 37);
     }
-    public Powerup(float v, float x, float y, int type, PictureBox icon) : base(x, y, icon, 10, 10)
+    public Powerup(double v, double x, double y, int type, GameEntity source, Control parent) : base(x, y, new PictureBox(), 10, 10)
     { //more speccific constructor establishing 
         this.type = type;
         this.v = v; xPos = x; yPos = y;
-        this.icon = icon;
         SetPos(x, y);
         active = false;
+        switch (type)
+        { //assign different colors to different powerups
+            default:
+                SpriteObject.BackColor = Color.FromArgb(255, 0, 184, 37);
+                break;
+        }
+        this.source = source;
+        SpriteObject.Parent = parent;
     }
-    public Powerup(float v, float x, float y, int type, PictureBox icon, float w, float h) : base(x, y, icon, w, h)
+    public Powerup(double v, double x, double y, int type, GameEntity source, Control parent, float w, float h) : base(x, y, new PictureBox(), w, h)
     { //same constructor as before but with width and height for baseclass stuff
         this.v = v; xPos = x; yPos = y;
-        this.icon = icon;
         active = false;
         SetPos(x, y);
         this.type = type;
+        switch (type)
+        { //assign different colors to different powerups
+            default:
+                SpriteObject.BackColor = Color.FromArgb(255, 0, 184, 37);
+                break;
+        }
+        this.source = source;
+        SpriteObject.Parent = parent;
     }
     public void UpdatePos()
     {
@@ -43,19 +60,19 @@ public class Powerup : GameEntity
         }
         OOB();
     }
-    public void SetPos(float x, float y)
+    public void SetPos(double x, double y)
     {
         xPos = x;
         yPos = y;
         base.UpdatePos(xPos, yPos);
     }
-    public void DoesSpawn(int hit, float x, float y)
+    static public bool DoesSpawn(int hit)
     {
         if (rnd.Next(0, 1001) >= hit)
         {
-            SetPos(x, y);
-            active = true;
+            return (true);
         }
+        return (false);
     }
     private void OOB()
     { //out of bounds check. handled by class so we dont need to.

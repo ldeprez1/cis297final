@@ -88,8 +88,6 @@ namespace final_project
 
             //powerup setup
             powerups = new List<Powerup>();
-            powerups.Add(new Powerup(4, 5500, 100, 0, powerUpBoxTest, 10, 10));
-            powerups.ElementAt<Powerup>(0).active = true;
 
             //FONT setup
             customFonts = new PrivateFontCollection();
@@ -159,13 +157,13 @@ namespace final_project
                 gameState = 2;
                 return;
             }
+            List<Powerup> toRemove = new List<Powerup>();
             foreach (Powerup powerup in powerups)
             { //update position of any active powerups. Active status is false by default, can be manually set. check for Active is in the class itself :>
                 powerup.UpdatePos();
                 if (powerup.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds))
                 {
-                    powerup.SetPos(-9000, -9000);
-                    powerup.active = false;
+                    toRemove.Add(powerup);
                     switch (powerup.type)
                     {
                         default:
@@ -177,6 +175,7 @@ namespace final_project
                     }
                 }
             }
+            toRemove.Clear();
             List<Bullet> remove = new List<Bullet>();
             foreach (Bullet bullet in bullets)
             { //updates all player bullet positions
@@ -208,6 +207,13 @@ namespace final_project
                     {
                         killed.Add(enemy);
                         remove.Add(bullet);
+                        if (Powerup.DoesSpawn(0))
+                        {
+                            Powerup p = new Powerup(enemy.xCoord, enemy.yCoord, 5, 0, enemy, enemy.SpriteObject.Parent);
+                            p.SetPos(enemy.xCoord, enemy.yCoord);
+                            p.active = true;
+                            powerups.Add(p);
+                        }
                     }
                 }
             }

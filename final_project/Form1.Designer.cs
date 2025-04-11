@@ -33,7 +33,6 @@
             fontDialog1 = new FontDialog();
             backgroundPanel = new Panel();
             startGameButton = new Button();
-            powerUpBoxTest = new PictureBox();
             playerSprite = new PictureBox();
             labelGameStart = new Label();
             scorePanel = new Panel();
@@ -45,7 +44,6 @@
             iframetimer = new System.Windows.Forms.Timer(components);
             piercingTimer = new System.Windows.Forms.Timer(components);
             backgroundPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)powerUpBoxTest).BeginInit();
             ((System.ComponentModel.ISupportInitialize)playerSprite).BeginInit();
             scorePanel.SuspendLayout();
             panel1.SuspendLayout();
@@ -55,7 +53,6 @@
             // 
             backgroundPanel.BackColor = SystemColors.ActiveCaptionText;
             backgroundPanel.Controls.Add(startGameButton);
-            backgroundPanel.Controls.Add(powerUpBoxTest);
             backgroundPanel.Controls.Add(playerSprite);
             backgroundPanel.Controls.Add(labelGameStart);
             backgroundPanel.Controls.Add(scorePanel);
@@ -76,16 +73,6 @@
             startGameButton.Text = "Start!";
             startGameButton.UseVisualStyleBackColor = true;
             startGameButton.Click += startGameButton_Click;
-            // 
-            // powerUpBoxTest
-            // 
-            powerUpBoxTest.BackColor = Color.LawnGreen;
-            powerUpBoxTest.Location = new Point(419, 74);
-            powerUpBoxTest.Name = "powerUpBoxTest";
-            powerUpBoxTest.Size = new Size(52, 48);
-            powerUpBoxTest.SizeMode = PictureBoxSizeMode.StretchImage;
-            powerUpBoxTest.TabIndex = 7;
-            powerUpBoxTest.TabStop = false;
             // 
             // playerSprite
             // 
@@ -205,7 +192,6 @@
             KeyUp += Key_Up;
             backgroundPanel.ResumeLayout(false);
             backgroundPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)powerUpBoxTest).EndInit();
             ((System.ComponentModel.ISupportInitialize)playerSprite).EndInit();
             scorePanel.ResumeLayout(false);
             panel1.ResumeLayout(false);
@@ -224,7 +210,6 @@
         private Label labelGameStart;
         private PictureBox playerSprite;
         private System.Windows.Forms.Timer iframetimer;
-        private PictureBox powerUpBoxTest;
         private System.Windows.Forms.Timer piercingTimer;
         private Button startGameButton;
         private Panel panel1;
