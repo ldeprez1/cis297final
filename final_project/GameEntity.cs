@@ -49,8 +49,7 @@ public class GameEntity         // class for entities USE THIS FOR ENTITIES
 
         //size
 
-        SpriteObject.Size = new Size(((int)(((RightCoord - LeftCoord)) * width / MAX_WIDTH)), ((int)(((BottomCoord - TopCoord)) * height / MAX_HEIGHT)));
-
+        SpriteObject.Size = new Size(Math.Max(((int)(((RightCoord - LeftCoord)) * width / MAX_WIDTH)), 1), Math.Max(((int)(((BottomCoord - TopCoord)) * height / MAX_HEIGHT)), 1));
     }
 
 

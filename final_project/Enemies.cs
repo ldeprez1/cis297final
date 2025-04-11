@@ -9,6 +9,13 @@ namespace final_project
 {
     abstract public class Enemy : GameEntity
     {
+        private static Random rnd = new Random();
+
+        private const int randStart = 0;
+        private const int randEnd = 25;
+
+        private static int bulletTimer = rnd.Next(0, randEnd);
+        public static List<Bullet> enemyBullets { get; } = new List<Bullet>();
         public static int GlobalScore { get; set; } = 0;
         public static Label? ScoreLabel { get; set; }
 
@@ -18,6 +25,17 @@ namespace final_project
 
         public bool dead { get; private set; } = false; //please delete enemy objects when they are hit, but just in case
 
+        public void Shoot()
+        {
+            if (bulletTimer < 1)
+            {
+                Bullet enemyBullet = new Bullet((int)(xCoord + (width * 50 - Bullet.bulletSizeX * 50)), (int)(yCoord + (height * 100)), 0, 150, SpriteObject.Parent, this, true);
+                enemyBullets.Add(enemyBullet);
+                bulletTimer = rnd.Next(randStart * Waves.currentEnemies.Count, randEnd * Waves.currentEnemies.Count);
+                return;
+            }
+            bulletTimer -= 1;
+        }
         public void Hit() //call when you hit an enemy with a bullet
         {
             if (!dead)
@@ -62,11 +80,14 @@ namespace final_project
         int moveDown;
         int speed;
 
-        public GroupEnemy(int startx, int endx, int y, int speed, Control p) : base(startx, y, new PictureBox(), 10, 10, 100, 0, 0)
+        public GroupEnemy(int spawnx, int startx, int endx, int y, int speed, Control p, bool moveRight) : base(spawnx, y, new PictureBox(), 8, 8, 100, 0, 0)
         {
+            this.moveRight = moveRight;
             SpriteObject.Parent = p;
             RefreshPos();
-            SpriteObject.BackColor = Color.MediumPurple;
+            //SpriteObject.BackColor = Color.MediumPurple;
+            SpriteObject.Image = Image.FromFile("Resources\\enemyTest.png");
+            SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
             this.speed = speed;
             startX = startx;
             endX = endx - 10*100; //subtract size times 100
@@ -74,6 +95,7 @@ namespace final_project
 
         override public void move()
         {
+            
             if(moveRight)
             {
                 if(moveDown > 0)
@@ -88,8 +110,7 @@ namespace final_project
                 else
                 {
                     moveRight = false;
-                    moveDown = 5;
-                    speed += 5;
+                    moveDown = (12 * 100) / speed;
                 }
             }
             else if(moveDown > 0)
@@ -106,8 +127,7 @@ namespace final_project
                 else
                 {
                     moveRight = true;
-                    moveDown = 5;
-                    speed += 5;
+                    moveDown = (12 * 100) / speed;
                 }
             }
         }

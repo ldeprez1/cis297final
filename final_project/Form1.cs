@@ -1,3 +1,4 @@
+using final_project.Properties;
 using System.Drawing.Text;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -29,6 +30,7 @@ namespace final_project
         public bool iFrame = false;
 
         //for resizing
+        bool fullscreen = false;
         int HEIGHT_OFFSET = 56;
         int WIDTH_OFFSET = 22;
 
@@ -50,12 +52,8 @@ namespace final_project
         //for custom fonts
         PrivateFontCollection customFonts;
 
-        //for enemy management
-        List<Enemy> currentEnemies;
-
         //for bullet checking
         List<Bullet> bullets;
-        List<Bullet> enemyBullets;
 
         //for powerup movements
         List<Powerup> powerups;
@@ -70,6 +68,8 @@ namespace final_project
             InitializeComponent();
             mainTimer.Start();
 
+            Waves.parent = this.backgroundPanel; //set parent for wave functions
+
             //fix offsets
             HEIGHT_OFFSET = this.Height - this.backgroundPanel.Height;
             WIDTH_OFFSET = this.Width - this.backgroundPanel.Width;
@@ -82,11 +82,9 @@ namespace final_project
 
             //Enemy class setup
             Enemy.ScoreLabel = scoreLabel;
-            currentEnemies = new List<Enemy> { };
 
             //bullet setup
             bullets = new List<Bullet> { };
-            enemyBullets = new List<Bullet>();
 
             //powerup setup
             powerups = new List<Powerup>();
@@ -101,7 +99,7 @@ namespace final_project
             playerBox = new Player(5500, 8800, playerSprite);
             players = new List<Player>();
             players.Add(playerBox);
-            playerSprite.BringToFront();
+            //playerSprite.BringToFront();
 
             ResizeThings();
 
@@ -109,7 +107,6 @@ namespace final_project
 
 
             //test code
-            currentEnemies.Add(new GroupEnemy(100, GameEntity.MAX_XCOORD, 100, 50, backgroundPanel));
 
         }
 
@@ -129,6 +126,9 @@ namespace final_project
             if (moveRight) playerBox.Move(Keys.Right);
             if (moveUp) playerBox.Move(Keys.Up);
             if (moveDown) playerBox.Move(Keys.Down);
+
+            if (Waves.currentEnemies.Count == 0)
+                Waves.nextWave();
         }
 
         private void CheckGameState()
@@ -172,7 +172,7 @@ namespace final_project
                             //case 0 and default case, piercing
                             piercingPower = true;
                             piercingTimer.Enabled = true;
-                            playerBox.SpriteObject.BackColor = Color.FromArgb(255, 10, 0, 156);
+                            playerBox.SpriteObject.Image = Image.FromFile("Resources\\ship_sprite_powerup.png");
                             break;
                     }
                 }
@@ -191,9 +191,10 @@ namespace final_project
             List<Enemy> killed = new List<Enemy>();
 
 
-            foreach (Enemy enemy in currentEnemies)
+            foreach (Enemy enemy in Waves.currentEnemies)
             { //updates all enemy positions and then compares each enemy with player bullets
                 enemy.move();
+                enemy.Shoot();
                 if (enemy.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame) //check for collisions between player and enemies
                 {
                     lives--;
@@ -218,7 +219,7 @@ namespace final_project
                 {
                     enemy.Hit();
                     backgroundPanel.Controls.Remove(enemy.SpriteObject);
-                    currentEnemies.Remove(enemy);
+                    Waves.currentEnemies.Remove(enemy);
                 }
             }
             killed.Clear();
@@ -234,7 +235,7 @@ namespace final_project
 
 
             Bullet? Hit = null;
-            foreach (Bullet bullet in enemyBullets)
+            foreach (Bullet bullet in Enemy.enemyBullets)
             { //updates enemy bullets and then checks for collisions
                 bullet.UpdatePos();
                 if (bullet.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame)
@@ -253,12 +254,12 @@ namespace final_project
             if (Hit != null)
             {
                 backgroundPanel.Controls.Remove(Hit.SpriteObject);
-                enemyBullets.Remove(Hit);
+                Enemy.enemyBullets.Remove(Hit);
             }
             foreach (Bullet bullet in remove)
             {
                 backgroundPanel.Controls.Remove(bullet.SpriteObject);
-                enemyBullets.Remove(bullet);
+                Enemy.enemyBullets.Remove(bullet);
             }
             remove.Clear();
 
@@ -321,11 +322,24 @@ namespace final_project
             if (moveDown) playerBox.Move(Keys.Down);
         }
 
+
+        private void ResizeHelp(object sender, EventArgs e)
+        {
+            if ((this.WindowState == FormWindowState.Maximized) != fullscreen)
+            {
+                ResizeThings();
+                fullscreen = !fullscreen;
+            }
+        }
+
+
+
         private void ResizeThings()
         {
-            this.MinimumSize = new Size(this.Height - HEIGHT_OFFSET + WIDTH_OFFSET, 0);
-
             backgroundPanel.Width = backgroundPanel.Height;
+
+            if (backgroundPanel.Width > this.Width - WIDTH_OFFSET)
+                this.Size = new Size(backgroundPanel.Width + WIDTH_OFFSET, this.Height);
 
             GameEntity.LeftCoord = ((this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2);
             //leftCoord = (this.Width - backgroundPanel.Width - WIDTH_OFFSET) / 2; 
@@ -340,6 +354,7 @@ namespace final_project
             //backgroundPanel.Location = new Point(leftCoord, topCoord);
             scorePanel.Height = ((int)(backgroundPanel.Height - GameEntity.BottomCoord));
             //scorePanel.Height = backgroundPanel.Height - bottomCoord;
+
 
 
             if (this.Width - WIDTH_OFFSET < this.Height - HEIGHT_OFFSET)
@@ -359,28 +374,29 @@ namespace final_project
 
             if (scorePanel.Height > 0 && customFonts != null)
             {
-                livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.15)), livesLabel.Font.Style);
-                livesLabel.Padding = new Padding(((int)(scorePanel.Width * 0.2)), ((int)(scorePanel.Height * 0.1)), 0, 0);
+                livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.17)), livesLabel.Font.Style);
+                livesLabel.Padding = new Padding(((int)(scorePanel.Width * 0.17)), ((int)(scorePanel.Height * 0.1)), 0, 0);
 
-                scoreLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.15)), scoreLabel.Font.Style);
-                scoreLabel.Padding = new Padding(0, ((int)(scorePanel.Height * 0.1)), ((int)(scorePanel.Width * 0.2)), 0);
+                scoreLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.17)), scoreLabel.Font.Style);
+                scoreLabel.Padding = new Padding(0, ((int)(scorePanel.Height * 0.1)), ((int)(scorePanel.Width * 0.17)), 0);
             }
+            scorePanel.Padding = new Padding((int)(Math.Max((scorePanel.Height * 0.05), 1)));
         }
 
         private void iframetimer_Tick(object sender, EventArgs e)
         {
             if (iFrameCounter % 2 == 0)
             { //if the iframe counter is odd, transparency is set to half
-                playerBox.SpriteObject.BackColor = Color.FromArgb(127, 255, 255, 255);
+                playerBox.SpriteObject.Visible = false;
             }
             else
             { //otherwise full
-                playerBox.SpriteObject.BackColor = Color.FromArgb(255, 255, 255, 255);
+                playerBox.SpriteObject.Visible= true;
             }
             iFrameCounter++;
             if (iFrameCounter < 10)
             { //less than 1 second, player is moved to the original spawn, and invisible
-                playerBox.SpriteObject.BackColor = Color.FromArgb(0, 255, 255, 255);
+                playerBox.SpriteObject.Visible = false;
                 playerBox.UpdatePos(5500, 8800);
             } //remaining 2 sec of iframes do nothing special
             if (iFrameCounter == 30)
@@ -396,7 +412,7 @@ namespace final_project
             //and returns character to base color.
 
             piercingPower = false;
-            playerBox.SpriteObject.BackColor = Color.FromArgb(255, 255, 255, 255);
+            playerBox.SpriteObject.Image = Image.FromFile("Resources\\ship_sprite.png");
             piercingTimer.Enabled = false;
         }
 
@@ -419,7 +435,7 @@ namespace final_project
                 bullets.Remove(b);
             }
             allBullets.Clear();
-            foreach (Bullet b in enemyBullets)
+            foreach (Bullet b in Enemy.enemyBullets)
             {
                 allBullets.Add(b);
             }
