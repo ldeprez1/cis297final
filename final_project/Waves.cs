@@ -28,6 +28,12 @@ namespace final_project
                 case < 1: { waveNum = 0;  return; }
                 case 1: { wave1(); return; }
                 case 2: { wave2(); return; }
+
+                case int n when (n % 50 == 0): // if we want boss waves?
+                    return;
+
+                default: // to be changed
+                    { wave2(); return; }
             }
 
             //code goes here
