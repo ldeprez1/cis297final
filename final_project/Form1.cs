@@ -1,5 +1,6 @@
 using final_project.Properties;
 using System.Drawing.Text;
+using System.Media;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using static final_project.Form1;
@@ -40,7 +41,7 @@ namespace final_project
         public bool moveUp;
         public bool moveDown;
 
-
+        SoundPlayer gunshot = new SoundPlayer("Resources\\gunshot.wav");
 
         public bool firing = true;              //what is this used for? is it redundant?
 
@@ -297,9 +298,13 @@ namespace final_project
             }
             if (e.KeyCode == Keys.Space)
             {
+                e.SuppressKeyPress = true;
                 playerBox.FireBullet(bullets);
+                gunshot.Play();
+                
             }
 
+            
         }
 
         private void Key_Up(object sender, KeyEventArgs e) // When Key is let go
