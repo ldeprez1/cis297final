@@ -1,4 +1,6 @@
-﻿using System;
+﻿using final_project.Properties;
+using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -140,5 +142,26 @@ namespace final_project
 
 
 
+    }
+    public class ChaserEnemy : Enemy
+    {
+        int speed;
+        public ChaserEnemy(int spawnY, int speed, Control p, bool mL): base ((mL? 0: 12000), spawnY, new PictureBox(), 8, 8, 350, speed, 0)
+        { //mL, aka moving left, determines if starting on the left or right side of the screen. no reason to set manually :)
+            SpriteObject.Parent = p;
+            RefreshPos();
+            this.speed = speed;
+            SpriteObject.Image = Image.FromFile("Resources\\thatAsshole.png");
+            SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
+
+        }
+        public override void move()
+        {
+            UpdatePos(xCoord + speed, 0);
+            if ((xCoord + SpriteObject.Width < 0 ) || (xCoord > MAX_XCOORD) )
+            { //switch speed if it goes offscreen
+                speed *= -1;
+            }
+        }
     }
 }

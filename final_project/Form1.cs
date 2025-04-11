@@ -99,7 +99,8 @@ namespace final_project
             players = new List<Player>();
             players.Add(playerBox);
             //playerSprite.BringToFront();
-
+            Waves.currentEnemies.Add(new ChaserEnemy(100, 200, Waves.parent, true));
+            Waves.currentEnemies.Add(new ChaserEnemy(15000, 200, Waves.parent, false));
             ResizeThings();
 
 
