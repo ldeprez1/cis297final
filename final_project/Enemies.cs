@@ -13,7 +13,7 @@ namespace final_project
     {
         private static Random rnd = new Random();
 
-        protected int shootChance; // 0 - 100
+        protected int shootChance = 100; // 0 - 100
 
 
         private const int randStart = 0;
@@ -64,13 +64,11 @@ namespace final_project
             this.vX = vX;
             this.vY = vY;
             this.score = score;
-            shootChance = 100;
         }
 
         public Enemy(PictureBox sprite, double width, double height, int score) : base(sprite, width, height)
         {
             this.score = score;
-            shootChance = 100;
         }
         public void UpdatePos()
         { //velocity change
