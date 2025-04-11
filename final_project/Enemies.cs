@@ -13,6 +13,9 @@ namespace final_project
     {
         private static Random rnd = new Random();
 
+        protected int shootChance; // 0 - 100
+
+
         private const int randStart = 0;
         private const int randEnd = 25;
 
@@ -31,8 +34,11 @@ namespace final_project
         {
             if (bulletTimer < 1)
             {
-                Bullet enemyBullet = new Bullet((int)(xCoord + (width * 50 - Bullet.bulletSizeX * 50)), (int)(yCoord + (height * 100)), 0, 150, SpriteObject.Parent, this, true);
-                enemyBullets.Add(enemyBullet);
+                if(rnd.Next(0, 100) < shootChance)
+                {
+                    Bullet enemyBullet = new Bullet((int)(xCoord + (width * 50 - Bullet.bulletSizeX * 50)), (int)(yCoord + (height * 100)), 0, 150, SpriteObject.Parent, this, true);
+                    enemyBullets.Add(enemyBullet);
+                }
                 bulletTimer = rnd.Next(randStart * Waves.currentEnemies.Count, randEnd * Waves.currentEnemies.Count);
                 return;
             }
@@ -58,11 +64,13 @@ namespace final_project
             this.vX = vX;
             this.vY = vY;
             this.score = score;
+            shootChance = 100;
         }
 
         public Enemy(PictureBox sprite, double width, double height, int score) : base(sprite, width, height)
         {
             this.score = score;
+            shootChance = 100;
         }
         public void UpdatePos()
         { //velocity change
@@ -146,19 +154,19 @@ namespace final_project
     public class ChaserEnemy : Enemy
     {
         int speed;
-        public ChaserEnemy(int spawnY, int speed, Control p, bool mL): base ((mL? 0: 12000), spawnY, new PictureBox(), 8, 8, 350, speed, 0)
+        public ChaserEnemy(int spawnY, int speed, Control p, bool mL): base ((mL? -800: 12000), spawnY, new PictureBox(), 8, 8, 350, speed, 0)
         { //mL, aka moving left, determines if starting on the left or right side of the screen. no reason to set manually :)
             SpriteObject.Parent = p;
             RefreshPos();
             this.speed = speed;
             SpriteObject.Image = Image.FromFile("Resources\\thatAsshole.png");
             SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
-
+            shootChance = 0;
         }
         public override void move()
         {
             UpdatePos(xCoord + speed, 0);
-            if ((xCoord + SpriteObject.Width < 0 ) || (xCoord > MAX_XCOORD) )
+            if ((xCoord + width * 100 < 0 ) || (xCoord > MAX_XCOORD) )
             { //switch speed if it goes offscreen
                 speed *= -1;
             }
