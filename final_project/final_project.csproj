@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Resources\enemyTest.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\ka1.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
