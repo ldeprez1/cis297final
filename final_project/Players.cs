@@ -2,6 +2,7 @@
 
 using System;
 using System.Drawing;
+using System.Media;
 using System.Security.Policy;
 using static final_project.Form1;
 
@@ -13,6 +14,8 @@ public class Player : GameEntity
     public const double playerSpeed = 80;
     bool playerCanShoot = true;
     System.Windows.Forms.Timer playerShoot = new System.Windows.Forms.Timer();
+    static SoundPlayer gunshot = new SoundPlayer("Resources\\gunshot.wav");
+
 
     public Player(double x, double y, PictureBox sprite) : base(x, y, sprite, PlayerWidth, PlayerHeight)
     {
@@ -92,6 +95,7 @@ public class Player : GameEntity
         {
             Bullet playerBullet = new Bullet((int)(playerX + (width * 50 - Bullet.bulletSizeX * 50)), (int)playerY - (Bullet.bulletSizeY * 100), 0, -150, SpriteObject.Parent, this, true);
             bullets.Add(playerBullet);
+            gunshot.Play();
             playerCanShoot = false;
             playerShoot.Start();
         }

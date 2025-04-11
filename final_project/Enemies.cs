@@ -100,8 +100,11 @@ namespace final_project
             {
                 if(moveDown > 0)
                 {
-                    moveDown--;
                     UpdatePosRelative(0, speed);
+                    if (yCoord < MAX_YCOORD - 1500 && yCoord > 0)
+                        moveDown--;
+                    if (yCoord > MAX_YCOORD)
+                        UpdatePos(xCoord, -800);
                 }
                 else if (xCoord < endX)
                 {
@@ -115,8 +118,11 @@ namespace final_project
             }
             else if(moveDown > 0)
             {
-                moveDown--;
+                if(yCoord < MAX_YCOORD - 1500 && yCoord > 0)
+                    moveDown--;
                 UpdatePosRelative(0, speed);
+                if (yCoord > MAX_YCOORD)
+                    UpdatePos(xCoord, -800);
             }
             else
             {
