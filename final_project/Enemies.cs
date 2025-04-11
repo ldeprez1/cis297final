@@ -85,7 +85,9 @@ namespace final_project
             this.moveRight = moveRight;
             SpriteObject.Parent = p;
             RefreshPos();
-            SpriteObject.BackColor = Color.MediumPurple;
+            //SpriteObject.BackColor = Color.MediumPurple;
+            SpriteObject.Image = Image.FromFile("Resources\\enemyTest.png");
+            SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
             this.speed = speed;
             startX = startx;
             endX = endx - 10*100; //subtract size times 100
