@@ -52,12 +52,8 @@ namespace final_project
         //for custom fonts
         PrivateFontCollection customFonts;
 
-        //for enemy management
-        List<Enemy> currentEnemies;
-
         //for bullet checking
         List<Bullet> bullets;
-        List<Bullet> enemyBullets;
 
         //for powerup movements
         List<Powerup> powerups;
@@ -72,6 +68,8 @@ namespace final_project
             InitializeComponent();
             mainTimer.Start();
 
+            Waves.parent = this.backgroundPanel; //set parent for wave functions
+
             //fix offsets
             HEIGHT_OFFSET = this.Height - this.backgroundPanel.Height;
             WIDTH_OFFSET = this.Width - this.backgroundPanel.Width;
@@ -84,11 +82,9 @@ namespace final_project
 
             //Enemy class setup
             Enemy.ScoreLabel = scoreLabel;
-            currentEnemies = new List<Enemy> { };
 
             //bullet setup
             bullets = new List<Bullet> { };
-            enemyBullets = new List<Bullet>();
 
             //powerup setup
             powerups = new List<Powerup>();
@@ -111,7 +107,6 @@ namespace final_project
 
 
             //test code
-            currentEnemies.Add(new GroupEnemy(100, GameEntity.MAX_XCOORD, 100, 50, backgroundPanel));
 
         }
 
@@ -131,6 +126,9 @@ namespace final_project
             if (moveRight) playerBox.Move(Keys.Right);
             if (moveUp) playerBox.Move(Keys.Up);
             if (moveDown) playerBox.Move(Keys.Down);
+
+            if (Waves.currentEnemies.Count == 0)
+                Waves.nextWave();
         }
 
         private void CheckGameState()
@@ -193,9 +191,10 @@ namespace final_project
             List<Enemy> killed = new List<Enemy>();
 
 
-            foreach (Enemy enemy in currentEnemies)
+            foreach (Enemy enemy in Waves.currentEnemies)
             { //updates all enemy positions and then compares each enemy with player bullets
                 enemy.move();
+                enemy.Shoot();
                 if (enemy.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame) //check for collisions between player and enemies
                 {
                     lives--;
@@ -220,7 +219,7 @@ namespace final_project
                 {
                     enemy.Hit();
                     backgroundPanel.Controls.Remove(enemy.SpriteObject);
-                    currentEnemies.Remove(enemy);
+                    Waves.currentEnemies.Remove(enemy);
                 }
             }
             killed.Clear();
@@ -236,7 +235,7 @@ namespace final_project
 
 
             Bullet? Hit = null;
-            foreach (Bullet bullet in enemyBullets)
+            foreach (Bullet bullet in Enemy.enemyBullets)
             { //updates enemy bullets and then checks for collisions
                 bullet.UpdatePos();
                 if (bullet.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame)
@@ -255,12 +254,12 @@ namespace final_project
             if (Hit != null)
             {
                 backgroundPanel.Controls.Remove(Hit.SpriteObject);
-                enemyBullets.Remove(Hit);
+                Enemy.enemyBullets.Remove(Hit);
             }
             foreach (Bullet bullet in remove)
             {
                 backgroundPanel.Controls.Remove(bullet.SpriteObject);
-                enemyBullets.Remove(bullet);
+                Enemy.enemyBullets.Remove(bullet);
             }
             remove.Clear();
 
@@ -388,16 +387,16 @@ namespace final_project
         {
             if (iFrameCounter % 2 == 0)
             { //if the iframe counter is odd, transparency is set to half
-                playerBox.SpriteObject.BackColor = Color.FromArgb(127, 255, 255, 255);
+                playerBox.SpriteObject.Visible = false;
             }
             else
             { //otherwise full
-                playerBox.SpriteObject.BackColor = Color.FromArgb(255, 255, 255, 255);
+                playerBox.SpriteObject.Visible= true;
             }
             iFrameCounter++;
             if (iFrameCounter < 10)
             { //less than 1 second, player is moved to the original spawn, and invisible
-                playerBox.SpriteObject.BackColor = Color.FromArgb(0, 255, 255, 255);
+                playerBox.SpriteObject.Visible = false;
                 playerBox.UpdatePos(5500, 8800);
             } //remaining 2 sec of iframes do nothing special
             if (iFrameCounter == 30)
@@ -436,7 +435,7 @@ namespace final_project
                 bullets.Remove(b);
             }
             allBullets.Clear();
-            foreach (Bullet b in enemyBullets)
+            foreach (Bullet b in Enemy.enemyBullets)
             {
                 allBullets.Add(b);
             }
