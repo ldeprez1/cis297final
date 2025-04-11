@@ -28,6 +28,7 @@ namespace final_project
         //for when player is hit
         int lives = 9;
         int iFrameCounter = 0;
+        public bool dead = false;
         public bool iFrame = false;
 
         //for resizing
@@ -41,7 +42,6 @@ namespace final_project
         public bool moveUp;
         public bool moveDown;
 
-        SoundPlayer gunshot = new SoundPlayer("Resources\\gunshot.wav");
 
         public bool firing = true;              //what is this used for? is it redundant?
 
@@ -199,8 +199,10 @@ namespace final_project
                 {
                     lives--;
                     livesLabel.Text = $"Lives: {Environment.NewLine} {lives}";
+                    playerBox.SpriteObject.Visible = false;
                     iframetimer.Start();
                     iFrame = true;
+                    dead = true;
                 }
                 foreach (Bullet bullet in bullets)
                 {
@@ -250,6 +252,8 @@ namespace final_project
                     lives--;
                     livesLabel.Text = $"Lives: {Environment.NewLine} {lives}";
                     iframetimer.Start();
+                    playerBox.SpriteObject.Visible = false;
+                    dead = true;
                     iFrame = true;
                     Hit = bullet;
                 }
@@ -299,8 +303,10 @@ namespace final_project
             if (e.KeyCode == Keys.Space)
             {
                 e.SuppressKeyPress = true;
-                playerBox.FireBullet(bullets);
-                gunshot.Play();
+                if (!dead)
+                {
+                    playerBox.FireBullet(bullets);
+                }
                 
             }
 
@@ -396,25 +402,34 @@ namespace final_project
 
         private void iframetimer_Tick(object sender, EventArgs e)
         {
-            if (iFrameCounter % 2 == 0)
-            { //if the iframe counter is odd, transparency is set to half
-                playerBox.SpriteObject.Visible = false;
-            }
-            else
-            { //otherwise full
-                playerBox.SpriteObject.Visible= true;
-            }
-            iFrameCounter++;
-            if (iFrameCounter < 10)
-            { //less than 1 second, player is moved to the original spawn, and invisible
-                playerBox.SpriteObject.Visible = false;
-                playerBox.UpdatePos(5500, 8800);
-            } //remaining 2 sec of iframes do nothing special
-            if (iFrameCounter == 30)
-            { //after 3 seconds, iframes turn off and the counter resets
-                iframetimer.Stop();
-                iFrame = false;
-                iFrameCounter = 0;
+            switch (iFrameCounter)
+            {
+                case < 10:
+                    playerBox.UpdatePos(5500, 8800);
+                    iFrameCounter++;
+                    break;
+                case 10:
+                    dead = false;
+                    playerBox.SpriteObject.Visible = true;
+                    iFrameCounter++;
+                    break;
+                case > 10 and < 30:
+                    if(iFrameCounter % 2 == 0)
+                    {
+                        playerBox.SpriteObject.Visible = true;
+                    }
+                    else
+                    {
+                        playerBox.SpriteObject.Visible = false;
+                    }
+                    iFrameCounter++;
+                    break;
+                case 30:
+                    playerBox.SpriteObject.Visible = true;
+                    iframetimer.Stop();
+                    iFrame = false;
+                    iFrameCounter = 0;
+                    break;
             }
         }
 
