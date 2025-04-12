@@ -107,3 +107,5 @@ C:\Users\chees\Source\Repos\cis297final\final_project\bin\Debug\net8.0-windows\R
 C:\Users\louis\source\repos\ldeprez1\cis297final\final_project\bin\Debug\net8.0-windows\Resources\gunshot.wav
 C:\Users\louis\source\repos\ldeprez1\cis297final\final_project\bin\Debug\net8.0-windows\Resources\thatAsshole.png
 C:\Users\chees\Source\Repos\cis297final\final_project\bin\Debug\net8.0-windows\Resources\thatAsshole.png
+C:\Users\armon\source\repos\cis297final\final_project\bin\Debug\net8.0-windows\Resources\thatAsshole.png
+C:\Users\armon\source\repos\cis297final\final_project\bin\Debug\net8.0-windows\Resources\phaser.png

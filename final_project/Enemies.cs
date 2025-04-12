@@ -11,7 +11,7 @@ namespace final_project
 {
     abstract public class Enemy : GameEntity
     {
-        private static Random rnd = new Random();
+        public static Random rnd = new Random();
 
         protected int shootChance = 100; // 0 - 100
 
@@ -170,4 +170,48 @@ namespace final_project
             }
         }
     }
+    public class Phaser : Enemy
+    {
+        private int frameCounter = 0;
+        private const int teleportFrames = 30;
+        public Phaser(int StartX, int StartY, Control p) : base(StartX, StartY, new PictureBox(), 8, 8, 500, 0, 0)
+        {
+            SpriteObject.Parent = p;
+            RefreshPos();
+            SpriteObject.Image = Image.FromFile("Resources\\phaser.png");
+            SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
+            //SpriteObject.BackColor = Color.MediumPurple;
+
+        }
+        public void Teleport()
+        {
+            SpriteObject.Visible = false;
+            System.Windows.Forms.Timer flickerBack = new System.Windows.Forms.Timer();
+            flickerBack.Interval = 1;
+            flickerBack.Tick += (s, ev) =>
+            {
+                SpriteObject.Visible = true;
+                ((System.Windows.Forms.Timer)s!).Stop();
+                ((System.Windows.Forms.Timer)s!).Dispose();
+            };
+            flickerBack.Start();
+
+            double newX = rnd.Next(0, MAX_XCOORD - SpriteObject.Width * 100);
+            double newY = rnd.Next(0, MAX_YCOORD / 2);
+            UpdatePos(newX, newY);
+        }
+        public override void move()
+        {
+
+            frameCounter++;
+
+            if (frameCounter >= teleportFrames)
+            {
+                frameCounter = 0;
+                Teleport();
+            }
+
+        }
+    }
+
 }

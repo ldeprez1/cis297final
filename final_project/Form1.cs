@@ -101,6 +101,7 @@ namespace final_project
             //playerSprite.BringToFront();
             Waves.currentEnemies.Add(new ChaserEnemy(100, 200, Waves.parent, true));
             Waves.currentEnemies.Add(new ChaserEnemy(15000, 200, Waves.parent, false));
+            Waves.currentEnemies.Add(new Phaser(5000, 800, Waves.parent));
             ResizeThings();
 
 
