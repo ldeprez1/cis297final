@@ -186,7 +186,6 @@
             Name = "Form1";
             StartPosition = FormStartPosition.Manual;
             Text = "Galiga";
-            WindowState = FormWindowState.Minimized;
             ResizeEnd += Form1_SizeChanged;
             SizeChanged += ResizeHelp;
             KeyDown += Key_Down;
