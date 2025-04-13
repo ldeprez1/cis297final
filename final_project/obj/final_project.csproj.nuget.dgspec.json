@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\louis\\source\\repos\\ldeprez1\\cis297final\\final_project\\final_project.csproj": {}
+    "D:\\Lyla\\School\\CIS 297\\final project\\final_project\\final_project.csproj": {}
   },
   "projects": {
-    "C:\\Users\\louis\\source\\repos\\ldeprez1\\cis297final\\final_project\\final_project.csproj": {
+    "D:\\Lyla\\School\\CIS 297\\final project\\final_project\\final_project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\louis\\source\\repos\\ldeprez1\\cis297final\\final_project\\final_project.csproj",
+        "projectUniqueName": "D:\\Lyla\\School\\CIS 297\\final project\\final_project\\final_project.csproj",
         "projectName": "final_project",
-        "projectPath": "C:\\Users\\louis\\source\\repos\\ldeprez1\\cis297final\\final_project\\final_project.csproj",
-        "packagesPath": "C:\\Users\\louis\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\louis\\source\\repos\\ldeprez1\\cis297final\\final_project\\obj\\",
+        "projectPath": "D:\\Lyla\\School\\CIS 297\\final project\\final_project\\final_project.csproj",
+        "packagesPath": "C:\\Users\\Lyla\\.nuget\\packages\\",
+        "outputPath": "D:\\Lyla\\School\\CIS 297\\final project\\final_project\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\louis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lyla\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -69,7 +68,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

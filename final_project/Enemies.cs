@@ -177,15 +177,16 @@ namespace final_project
                     dx = (destX - xCoord) / distance;
                     dy = (destY - yCoord) / distance;
                     UpdatePosRelative(speed * dx, speed * dy);
-                    if (SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) ||
-                        (yCoord == destY)) shootPhase = 2;
+                    //if (SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) ||(yCoord == destY)) shootPhase = 2;
+                    if (yCoord > destY)
+                        shootPhase = 2;
+
                     break;
                 case 2:
                     //go back to yVal
-                    if(yCoord != yVal)
+                    if(yCoord > yVal + 200) // 200 for a bit of a buffer so if spawned at top they dont go partially offscreen
                     {
-                        if (yCoord > yVal) UpdatePosRelative(0, speed * -1);
-                        else UpdatePosRelative(0, speed);
+                       UpdatePosRelative(0, speed * -1);
                     } else
                     {
                         shootPhase = 0;
@@ -200,7 +201,7 @@ namespace final_project
                     { //switch speed if it goes offscreen
                         speed *= -1;
                     }
-                    yVal = yCoord;
+                   // yVal = yCoord; i dont think you need this line, just keep yval from the constructor it should never need to change
                     break;
 
             }
