@@ -30,7 +30,7 @@ namespace final_project
 
         public bool dead { get; private set; } = false; //please delete enemy objects when they are hit, but just in case
 
-        public void Shoot()
+        public virtual void Shoot()
         {
             if (bulletTimer < 1)
             {
@@ -151,9 +151,14 @@ namespace final_project
     }
     public class ChaserEnemy : Enemy
     {
+        double destX, destY;
         int speed;
-        public ChaserEnemy(int spawnY, int speed, Control p, bool mL): base ((mL? -800: 12000), spawnY, new PictureBox(), 8, 8, 350, speed, 0)
+        int shootPhase = 0;
+        double yVal;
+        bool canAttack = true;
+        public ChaserEnemy(int spawnY, int speed, Control p, bool mL) : base((mL ? -800 : 12000), spawnY, new PictureBox(), 8, 8, 350, speed, 0)
         { //mL, aka moving left, determines if starting on the left or right side of the screen. no reason to set manually :)
+            yVal = spawnY;
             SpriteObject.Parent = p;
             RefreshPos();
             this.speed = speed;
@@ -163,11 +168,57 @@ namespace final_project
         }
         public override void move()
         {
-            UpdatePos(xCoord + speed, 0);
-            if ((xCoord + width * 100 < 0 ) || (xCoord > MAX_XCOORD) )
-            { //switch speed if it goes offscreen
-                speed *= -1;
+            double dx = 0, dy = 0;
+                switch (shootPhase)
+            {
+                case 1:
+                    //calculate the next point to move to
+                    double distance = Math.Sqrt(Math.Pow(destX-xCoord,2)+Math.Pow(destY-yCoord, 2));
+                    dx = (destX - xCoord) / distance;
+                    dy = (destY - yCoord) / distance;
+                    UpdatePosRelative(speed * dx, speed * dy);
+                    if (SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) ||
+                        (yCoord == destY)) shootPhase = 2;
+                    break;
+                case 2:
+                    //go back to yVal
+                    if(yCoord != yVal)
+                    {
+                        if (yCoord > yVal) UpdatePosRelative(0, speed * -1);
+                        else UpdatePosRelative(0, speed);
+                    } else
+                    {
+                        shootPhase = 0;
+                        canAttack = true;
+                    }
+                        
+                    break;
+
+                default: //back and forth behavior
+                    UpdatePosRelative(speed, 0);
+                    if ((xCoord + width * 100 < 0) || (xCoord > MAX_XCOORD))
+                    { //switch speed if it goes offscreen
+                        speed *= -1;
+                    }
+                    yVal = yCoord;
+                    break;
+
             }
+
+        }
+        override public void Shoot()
+        {
+            if (canAttack)
+            {
+                if (rnd.Next(0, 1001) > 995)
+                {
+                    destX = playerBox.xCoord; //only change player position when in normal movement phase!!
+                    destY = playerBox.yCoord;
+                    shootPhase = 1;
+                    canAttack = false;
+                }
+            }
+            
         }
     }
     public class Phaser : Enemy

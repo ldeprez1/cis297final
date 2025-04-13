@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\armon\\source\\repos\\cis297final\\final_project\\final_project.csproj": {}
+    "C:\\Users\\louis\\source\\repos\\ldeprez1\\cis297final\\final_project\\final_project.csproj": {}
   },
   "projects": {
-    "C:\\Users\\armon\\source\\repos\\cis297final\\final_project\\final_project.csproj": {
+    "C:\\Users\\louis\\source\\repos\\ldeprez1\\cis297final\\final_project\\final_project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\armon\\source\\repos\\cis297final\\final_project\\final_project.csproj",
+        "projectUniqueName": "C:\\Users\\louis\\source\\repos\\ldeprez1\\cis297final\\final_project\\final_project.csproj",
         "projectName": "final_project",
-        "projectPath": "C:\\Users\\armon\\source\\repos\\cis297final\\final_project\\final_project.csproj",
-        "packagesPath": "C:\\Users\\armon\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\armon\\source\\repos\\cis297final\\final_project\\obj\\",
+        "projectPath": "C:\\Users\\louis\\source\\repos\\ldeprez1\\cis297final\\final_project\\final_project.csproj",
+        "packagesPath": "C:\\Users\\louis\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\louis\\source\\repos\\ldeprez1\\cis297final\\final_project\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\armon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\louis\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -45,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -69,7 +69,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -60,9 +60,8 @@ namespace final_project
         List<Powerup> powerups;
 
         //for player/players
-        private Player playerBox;
+        public static Player playerBox;
         List<Player> players = new List<Player>();
-
 
         public Form1()
         {
@@ -99,8 +98,8 @@ namespace final_project
             players = new List<Player>();
             players.Add(playerBox);
             //playerSprite.BringToFront();
-            Waves.currentEnemies.Add(new ChaserEnemy(100, 200, Waves.parent, true));
-            Waves.currentEnemies.Add(new ChaserEnemy(15000, 200, Waves.parent, false));
+            Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
+           Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
             Waves.currentEnemies.Add(new Phaser(5000, 800, Waves.parent));
             ResizeThings();
 
