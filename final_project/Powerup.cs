@@ -56,7 +56,7 @@ public class Powerup : GameEntity
     {
         if (active)
         {
-            base.UpdatePos(0, yCoord + v);
+            base.UpdatePosRelative(0, v);
         }
         OOB();
     }
