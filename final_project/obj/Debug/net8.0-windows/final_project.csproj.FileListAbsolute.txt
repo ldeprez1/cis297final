@@ -115,3 +115,4 @@ D:\Lyla\School\CIS 297\final project\final_project\bin\Debug\net8.0-windows\Reso
 D:\Lyla\School\CIS 297\final project\final_project\bin\Debug\net8.0-windows\Resources\phaser.png
 D:\Lyla\School\CIS 297\final project\final_project\bin\Debug\net8.0-windows\Resources\thatAsshole.png
 C:\Users\louis\source\repos\ldeprez1\cis297final\final_project\bin\Debug\net8.0-windows\Resources\assholeBeam.png
+C:\Users\louis\source\repos\ldeprez1\cis297final\final_project\bin\Debug\net8.0-windows\Resources\splitterSprite.png

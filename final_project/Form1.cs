@@ -101,14 +101,8 @@ namespace final_project
             //playerSprite.BringToFront();
            //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
            //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
-            //Waves.currentEnemies.Add(new Phaser(5000, 800, Waves.parent));
+           Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500 , 2500, 15, Waves.parent, true));
             ResizeThings();
-
-
-
-
-            //test code
-
         }
 
 
@@ -208,7 +202,7 @@ namespace final_project
                     {
                         killed.Add(enemy);
                         if(!piercingPower) remove.Add(bullet);
-                        if (Powerup.DoesSpawn(600))
+                        if (Powerup.DoesSpawn(enemy.score))
                         {
                             Powerup p = new Powerup(325, enemy.xCoord, enemy.yCoord, 0, enemy, enemy.SpriteObject.Parent, 4, 4);
                             p.SetPos(enemy.xCoord, enemy.yCoord);
@@ -218,19 +212,19 @@ namespace final_project
                     }
                 }
             }
-                foreach (Enemy enemy in killed)
-                {
-                    enemy.Hit();
-                    backgroundPanel.Controls.Remove(enemy.SpriteObject);
-                    Waves.currentEnemies.Remove(enemy);
-                }
-
+            foreach (Enemy enemy in killed)
+            {
+                enemy.Hit();
+                backgroundPanel.Controls.Remove(enemy.SpriteObject);
+                Waves.currentEnemies.Remove(enemy);
+            }
+            
             killed.Clear();
-                foreach (Bullet bullet in remove)
-                {
-                    backgroundPanel.Controls.Remove(bullet.SpriteObject);
-                    bullets.Remove(bullet);
-                }
+            foreach (Bullet bullet in remove)
+            {
+               backgroundPanel.Controls.Remove(bullet.SpriteObject);
+               bullets.Remove(bullet);
+            }
             remove.Clear();
             //label1.Text = $"Player bullet Pos: X:{playerBullet.xCoord} Y: {playerBullet.yCoord}";
             //bullets if for PlayerBullets. enemy bullets is for enemy bullets

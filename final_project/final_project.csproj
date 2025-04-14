@@ -46,6 +46,9 @@
     <None Update="Resources\ship_sprite.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\splitterSprite.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\thatAsshole.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

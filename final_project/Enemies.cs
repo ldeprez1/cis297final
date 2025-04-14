@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using static final_project.Form1;
+using static System.Windows.Forms.AxHost;
 
 namespace final_project
 {
@@ -17,15 +18,15 @@ namespace final_project
         protected int shootChance = 100; // 0 - 100
 
 
-        private const int randStart = 0;
-        private const int randEnd = 25;
+        public const int randStart = 0;
+        public const int randEnd = 25;
 
-        private static int bulletTimer = rnd.Next(0, randEnd);
+        public static int bulletTimer = rnd.Next(0, randEnd);
         public static List<Bullet> enemyBullets { get; } = new List<Bullet>();
         public static int GlobalScore { get; set; } = 0;
         public static Label? ScoreLabel { get; set; }
 
-        int score;
+        public int score;
         int vX { get; set; } 
         int vY { get; set; }
 
@@ -45,7 +46,7 @@ namespace final_project
             }
             bulletTimer -= 1;
         }
-        public void Hit() //call when you hit an enemy with a bullet
+        virtual public void Hit() //call when you hit an enemy with a bullet
         {
             if (!dead)
             {
@@ -299,6 +300,97 @@ namespace final_project
             }
 
         }
+    }
+
+    public class SplitterEnemy : Enemy
+    { //splitter enemy uses the same logic as the basic enemy for moving and being made. However, it is bigger, shoots 2 shots, and splits into 2 regular group enemies
+        int startX;
+        int endX;
+        bool moveRight = true;
+        int moveDown;
+        int speed;
+        public SplitterEnemy(int spawnx, int startx, int endx, int y, int speed, Control p, bool moveRight) : base(spawnx, y, new PictureBox(), 16, 16, 400, 0, 0)
+        {
+            this.moveRight = moveRight;
+            SpriteObject.Parent = p;
+            RefreshPos();
+            //SpriteObject.BackColor = Color.MediumPurple;
+            SpriteObject.Image = Image.FromFile("Resources\\splitterSprite.png");
+            SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.speed = speed;
+            startX = startx;
+            endX = endx - 10 * 100; //subtract size times 100
+        }
+        override public void move()
+        {
+
+            if (moveRight)
+            {
+                if (moveDown > 0)
+                {
+                    UpdatePosRelative(0, speed);
+                    if (yCoord < MAX_YCOORD - 1500 && yCoord > 0)
+                        moveDown--;
+                    if (yCoord > MAX_YCOORD)
+                        UpdatePos(xCoord, -800);
+                }
+                else if (xCoord < endX)
+                {
+                    UpdatePosRelative(speed, 0);
+                }
+                else
+                {
+                    moveRight = false;
+                    moveDown = (12 * 100) / speed;
+                }
+            }
+            else if (moveDown > 0)
+            {
+                if (yCoord < MAX_YCOORD - 1500 && yCoord > 0)
+                    moveDown--;
+                UpdatePosRelative(0, speed);
+                if (yCoord > MAX_YCOORD)
+                    UpdatePos(xCoord, -800);
+            }
+            else
+            {
+                if (xCoord > startX)
+                {
+                    UpdatePosRelative(speed * -1, 0);
+                }
+                else
+                {
+                    moveRight = true;
+                    moveDown = (12 * 100) / speed;
+                }
+            }
+        }
+        public override void Shoot()
+        {
+            shootChance = 50;
+            if (bulletTimer < 1)
+            {
+                if (rnd.Next(0, 101) < shootChance)
+                {
+                    Bullet enemyBullet1 = new Bullet((int)(xCoord - 10), (int)(yCoord + (height * 100)), 0, 150, SpriteObject.Parent, this, true);
+                    Bullet enemyBullet2 = new Bullet((int)(xCoord + 1500), (int)(yCoord + (height * 100)), 0, 150, SpriteObject.Parent, this, true);
+                    enemyBullets.Add(enemyBullet1);
+                    enemyBullets.Add(enemyBullet2);
+                }
+                bulletTimer = rnd.Next(randStart * Waves.currentEnemies.Count, randEnd * Waves.currentEnemies.Count);
+                return;
+            }
+            bulletTimer -= 1;
+        }
+        public override void Hit()
+        {
+            base.Hit();
+            GroupEnemy e1 = new GroupEnemy((int)xCoord - 10, startX, endX, (int)(yCoord + (height * 100)), speed * 2, SpriteObject.Parent, false);
+            GroupEnemy e2 = new GroupEnemy((int)xCoord + 1500, startX, endX, (int)(yCoord + (height * 100)), speed * 2, SpriteObject.Parent, true);
+            Waves.currentEnemies.Add(e1);
+            Waves.currentEnemies.Add(e2);
+        }
+
     }
 
 }
