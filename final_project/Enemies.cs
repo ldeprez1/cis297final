@@ -1,5 +1,6 @@
 ﻿using final_project.Properties;
 using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.VisualBasic.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace final_project
 
         protected int shootChance = 100; // 0 - 100
 
+        public bool boss = false;
+        public int health = 0;
 
         public const int randStart = 0;
         public const int randEnd = 25;
@@ -48,6 +51,13 @@ namespace final_project
         }
         virtual public void Hit() //call when you hit an enemy with a bullet
         {
+            if (boss && health > 0)
+            {
+                health--;
+                return;
+            }
+
+
             if (!dead)
             {
                 GlobalScore = GlobalScore + score;
@@ -393,4 +403,47 @@ namespace final_project
 
     }
 
+
+
+    public class Miniboss : Enemy
+    {
+        bool attacking = false;
+        int atkID = -1;
+        double yVal = 200;
+        bool rightMove;
+        int speed;
+
+        public Miniboss(Control p) : base(3500, 200, new PictureBox(), 50, 50, Math.Min(((int)(Math.Log2((float)Waves.waveNum) * 10)) * 100, 10000), 0, 0)
+        {
+            SpriteObject.Parent = p;
+            RefreshPos();
+            SpriteObject.Image = Image.FromFile("Resources\\phaser.png"); //replace
+            SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
+            boss = true;
+            health = Math.Min((int)(Math.Log2(Waves.waveNum / 2.0) * 5), 19); // max of 20 health
+            speed = (int)(Math.Log2(Waves.waveNum * 2)) * 10;
+            rightMove = rnd.Next(0, 2) == 0;
+            //test
+            health = 10;
+            speed = 30;
+        }
+        public override void move()
+        {
+            if(!attacking)
+            {
+                if(rightMove)
+                {
+                    UpdatePosRelative(speed, 0);
+                    if(xCoord > MAX_XCOORD - 5000)
+                        rightMove = false;
+                }
+                else
+                {
+                    UpdatePosRelative(speed * -1, 0);
+                    if (xCoord < 0)
+                        rightMove = true;
+                }
+            }
+        }
+    }
 }

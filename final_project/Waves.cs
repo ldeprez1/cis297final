@@ -8,7 +8,7 @@ namespace final_project
 {
     public static class Waves
     {
-        private static int waveNum = 0;
+        public static int waveNum = 0;
 
 
         public static Control? parent;
@@ -22,15 +22,18 @@ namespace final_project
         public static void nextWave()
         {
             waveNum++;
-            switch(waveNum)
+            switch (waveNum)
 
             {
-                case < 1: { waveNum = 0;  return; }
+                case < 1: { waveNum = 0; return; }
                 case 1: { wave1(); return; }
                 case 2: { wave2(); return; }
 
-                case int n when (n % 50 == 0): // if we want boss waves?
-                    return;
+
+
+                    //boss waves
+                case 5: { bossWave();  return; }
+                case int n when (n % 10 == 0): { bossWave(); return; }
 
                 default: // to be changed
                     { wave2(); return; }
@@ -46,7 +49,7 @@ namespace final_project
                 for (int i = 0; i < 6; i++)
                 {
                     int spawnPosX = 100 + 2100 * i;
-                    if((n % 2 == 0)) { spawnPosX -= 12000; }
+                    if ((n % 2 == 0)) { spawnPosX -= 12000; }
                     else { spawnPosX += 12000; }
                     currentEnemies.Add(new GroupEnemy(spawnPosX, 100, 11900, y + n * 1200, 30, parent, (n % 2 == 0)));
                 }
@@ -73,6 +76,9 @@ namespace final_project
         }
 
 
-
+        private static void bossWave()
+        {
+            currentEnemies.Add(new Miniboss(parent));
+        }
     }
 }

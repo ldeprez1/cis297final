@@ -102,6 +102,7 @@ namespace final_project
            //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
            //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
            Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500 , 2500, 15, Waves.parent, true));
+            Waves.currentEnemies.Add(new Miniboss(Waves.parent));
             ResizeThings();
         }
 
@@ -200,15 +201,33 @@ namespace final_project
                 {
                     if (bullet.SpriteObject.Bounds.IntersectsWith(enemy.SpriteObject.Bounds))
                     {
-                        killed.Add(enemy);
-                        if(!piercingPower) remove.Add(bullet);
-                        if (Powerup.DoesSpawn(enemy.score))
+                        if (enemy.boss)
                         {
-                            Powerup p = new Powerup(325, enemy.xCoord, enemy.yCoord, 0, enemy, enemy.SpriteObject.Parent, 4, 4);
-                            p.SetPos(enemy.xCoord, enemy.yCoord);
-                            p.active = true;
-                            powerups.Add(p);
+                            if(enemy.health == 0)
+                            {
+                                killed.Add(enemy);
+                            }
+                            else
+                            {
+                                enemy.Hit();
+                            }
                         }
+
+                        else
+                        {
+                            killed.Add(enemy);
+                            if (Powerup.DoesSpawn(enemy.score))
+                            {
+                                Powerup p = new Powerup(325, enemy.xCoord, enemy.yCoord, 0, enemy, enemy.SpriteObject.Parent, 4, 4);
+                                p.SetPos(enemy.xCoord, enemy.yCoord);
+                                p.active = true;
+                                powerups.Add(p);
+                            }
+                        }
+
+
+                        if (!piercingPower) remove.Add(bullet);
+
                     }
                 }
             }
