@@ -248,8 +248,9 @@ namespace final_project
             //unsure why they randomly decide to go offscreen. gonna add this here to remove them from the enemies list if they do. player gets no score. Bug into feature?
             if(yCoord < -100)
             {
-                Form1.killed.Add(this);
-                GlobalScore -= 350;
+                // Form1.killed.Add(this);
+                //GlobalScore -= 350;
+                speed *= -1;
             }
 
         }
