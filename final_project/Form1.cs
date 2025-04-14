@@ -99,9 +99,9 @@ namespace final_project
             players = new List<Player>();
             players.Add(playerBox);
             //playerSprite.BringToFront();
-           //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
-           //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
-           Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500 , 2500, 15, Waves.parent, true));
+           Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
+           Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
+           //Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500 , 2500, 15, Waves.parent, true));
             ResizeThings();
         }
 
