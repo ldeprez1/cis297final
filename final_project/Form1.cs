@@ -55,7 +55,8 @@ namespace final_project
 
         //for bullet checking
         List<Bullet> bullets;
-
+        public static List<Enemy> killed;
+        public static List<Bullet> remove;
         //for powerup movements
         List<Powerup> powerups;
 
@@ -69,7 +70,7 @@ namespace final_project
             mainTimer.Start();
 
             Waves.parent = this.backgroundPanel; //set parent for wave functions
-
+            killed = new List<Enemy>();
             //fix offsets
             HEIGHT_OFFSET = this.Height - this.backgroundPanel.Height;
             WIDTH_OFFSET = this.Width - this.backgroundPanel.Width;
@@ -85,7 +86,7 @@ namespace final_project
 
             //bullet setup
             bullets = new List<Bullet> { };
-
+            remove = new List<Bullet>();
             //powerup setup
             powerups = new List<Powerup>();
 
@@ -98,9 +99,9 @@ namespace final_project
             players = new List<Player>();
             players.Add(playerBox);
             //playerSprite.BringToFront();
-            Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
+           Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
            Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
-            Waves.currentEnemies.Add(new Phaser(5000, 800, Waves.parent));
+            //Waves.currentEnemies.Add(new Phaser(5000, 800, Waves.parent));
             ResizeThings();
 
 
@@ -178,7 +179,6 @@ namespace final_project
                 }
             }
             toRemove.Clear();
-            List<Bullet> remove = new List<Bullet>();
             foreach (Bullet bullet in bullets)
             { //updates all player bullet positions
                 bullet.UpdatePos();
@@ -187,9 +187,6 @@ namespace final_project
                     remove.Add(bullet);
                 }
             }
-
-
-            List<Enemy> killed = new List<Enemy>();
 
 
             foreach (Enemy enemy in Waves.currentEnemies)

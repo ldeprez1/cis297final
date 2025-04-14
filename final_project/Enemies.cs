@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using static final_project.Form1;
 
 namespace final_project
@@ -151,11 +152,14 @@ namespace final_project
     }
     public class ChaserEnemy : Enemy
     {
+        int bulletActiveFrames = 0;
         double destX, destY;
+        Bullet assholeBeam;
         int speed;
         int shootPhase = 0;
         double yVal;
         bool canAttack = true;
+        bool bulletActive = false;
         public ChaserEnemy(int spawnY, int speed, Control p, bool mL) : base((mL ? -800 : 12000), spawnY, new PictureBox(), 8, 8, 350, speed, 0)
         { //mL, aka moving left, determines if starting on the left or right side of the screen. no reason to set manually :)
             yVal = spawnY;
@@ -168,21 +172,37 @@ namespace final_project
         }
         public override void move()
         {
+            
             double dx = 0, dy = 0;
                 switch (shootPhase)
             {
                 case 1:
                     //calculate the next point to move to
-                    double distance = Math.Sqrt(Math.Pow(destX-xCoord,2)+Math.Pow(destY-yCoord, 2));
-                    dx = (destX - xCoord) / distance;
-                    dy = (destY - yCoord) / distance;
+                    double currDistance = Math.Sqrt(Math.Pow(destX-xCoord,2)+Math.Pow(destY-yCoord, 2));
+                    dx = (destX - xCoord) / currDistance;
+                    dy = (destY - yCoord) / currDistance;
                     UpdatePosRelative(speed * dx, speed * dy);
-                    //if (SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) ||(yCoord == destY)) shootPhase = 2;
                     if (yCoord > destY)
+                    {
                         shootPhase = 2;
-
+                    }
                     break;
                 case 2:
+                    if (!bulletActive)
+                    {
+                        assholeBeam = new Bullet((int)this.xCoord-300, (int)this.yCoord + (int)this.height, 0, 0, 15, 20, SpriteObject.Parent, this, true);
+                        assholeBeam.SpriteObject.BackColor = Color.FromArgb(0, 0, 0, 0);
+                        Enemy.enemyBullets.Add(assholeBeam);
+                        assholeBeam.SpriteObject.Image = Image.FromFile("Resources\\assholeBeam.png");
+                        assholeBeam.SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
+                        bulletActive = true;
+                    }
+                    
+                   
+                    shootPhase = 3;
+                    break;
+
+                case 3:
                     //go back to yVal
                     if(yCoord > yVal + 200) // 200 for a bit of a buffer so if spawned at top they dont go partially offscreen
                     {
@@ -201,9 +221,24 @@ namespace final_project
                     { //switch speed if it goes offscreen
                         speed *= -1;
                     }
-                   // yVal = yCoord; i dont think you need this line, just keep yval from the constructor it should never need to change
                     break;
-
+            }
+            if (bulletActive)
+            {
+                bulletActiveFrames++;
+                if(bulletActiveFrames >= 25)
+                {
+                    assholeBeam.SetPos(-1000, -1000); //idkwhy, collision seems to stay in tact when it gets despawned??? so i'm moving it just to get rid of it
+                    remove.Add(assholeBeam);
+                    bulletActive = false;
+                    bulletActiveFrames = 0;
+                }
+            }
+            //unsure why they randomly decide to go offscreen. gonna add this here to remove them from the enemies list if they do. player gets no score. Bug into feature?
+            if(yCoord < -100)
+            {
+                Form1.killed.Add(this);
+                GlobalScore -= 350;
             }
 
         }
@@ -214,7 +249,7 @@ namespace final_project
                 if (rnd.Next(0, 1001) > 995)
                 {
                     destX = playerBox.xCoord; //only change player position when in normal movement phase!!
-                    destY = playerBox.yCoord;
+                    destY = playerBox.yCoord - 1000;
                     shootPhase = 1;
                     canAttack = false;
                 }
