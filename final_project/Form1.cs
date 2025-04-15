@@ -481,6 +481,18 @@ namespace final_project
 
             }
             allBullets.Clear();
+            List<Enemy> allEnemies = new List<Enemy>(); //resetting enemies
+            foreach(Enemy en in Waves.currentEnemies)
+            {
+                allEnemies.Add(en);
+            }
+            foreach(Enemy en in allEnemies)
+            {
+                backgroundPanel.Controls.Remove(en.SpriteObject);
+                Waves.currentEnemies.Remove(en);
+            }
+            allEnemies.Clear();
+            Waves.resetWaves();
             playerBox.UpdatePos(5500, 8800);
             iFrame = false;
             piercingPower = false;
