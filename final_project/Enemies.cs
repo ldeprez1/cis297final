@@ -18,6 +18,9 @@ namespace final_project
 
         protected int shootChance = 100; // 0 - 100
 
+
+        public static Label? livesText;
+
         public bool boss = false;
         public int health = 0;
 
@@ -27,9 +30,11 @@ namespace final_project
         public static int bulletTimer = rnd.Next(0, randEnd);
         public static List<Bullet> enemyBullets { get; } = new List<Bullet>();
         public static int GlobalScore { get; set; } = 0;
+        private static int livesScore = 0;
         public static Label? ScoreLabel { get; set; }
 
         public int score;
+
         int vX { get; set; } 
         int vY { get; set; }
 
@@ -61,6 +66,16 @@ namespace final_project
             if (!dead)
             {
                 GlobalScore = GlobalScore + score;
+                livesScore = livesScore + score;
+
+                if(livesScore >= 16000)
+                {
+                    livesScore -= 16000;
+                    playerBox.lives++;
+                    livesText.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
+                }
+
+
                 if (ScoreLabel != null)
                     ScoreLabel.Text = "SCORE\r\n" + GlobalScore;
 

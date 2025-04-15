@@ -12,6 +12,7 @@ public class Player : GameEntity
     public const double PlayerWidth = 10;  // Width of the player sprite
     public const double PlayerHeight = 10; // Height of the player sprite
     public const double playerSpeed = 80;
+    public int lives = 9;
     bool playerCanShoot = true;
     System.Windows.Forms.Timer playerShoot = new System.Windows.Forms.Timer();
     static SoundPlayer gunshot = new SoundPlayer("Resources\\gunshot.wav");

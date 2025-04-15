@@ -26,7 +26,6 @@ namespace final_project
         static public int playerScore = 0;
 
         //for when player is hit
-        int lives = 9;
         int iFrameCounter = 0;
         public bool dead = false;
         public bool iFrame = false;
@@ -83,6 +82,7 @@ namespace final_project
 
             //Enemy class setup
             Enemy.ScoreLabel = scoreLabel;
+            Enemy.livesText = livesLabel;
 
             //bullet setup
             bullets = new List<Bullet> { };
@@ -103,6 +103,9 @@ namespace final_project
            //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
            Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500 , 2500, 15, Waves.parent, true));
             Waves.currentEnemies.Add(new Miniboss(Waves.parent));
+           Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
+           Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
+           //Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500 , 2500, 15, Waves.parent, true));
             ResizeThings();
         }
 
@@ -150,7 +153,7 @@ namespace final_project
         }
         private void RunGameLogic()
         {
-            if (lives == 0)
+            if (playerBox.lives == 0)
             { //immediately stops this entire thing if lives becomes 0
                 gameState = 2;
                 return;
@@ -190,8 +193,8 @@ namespace final_project
                 enemy.Shoot();
                 if (enemy.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame) //check for collisions between player and enemies
                 {
-                    lives--;
-                    livesLabel.Text = $"Lives: {Environment.NewLine} {lives}";
+                    playerBox.lives--;
+                    livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
                     playerBox.SpriteObject.Visible = false;
                     iframetimer.Start();
                     iFrame = true;
@@ -255,8 +258,8 @@ namespace final_project
                 bullet.UpdatePos();
                 if (bullet.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame)
                 {
-                    lives--;
-                    livesLabel.Text = $"Lives: {Environment.NewLine} {lives}";
+                    playerBox.lives--;
+                    livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
                     iframetimer.Start();
                     playerBox.SpriteObject.Visible = false;
                     dead = true;
@@ -453,8 +456,8 @@ namespace final_project
         private void startGameButton_Click(object sender, EventArgs e)
         { //reset ANY AND ALL VARIABLES, other than gamestate, which it sets to 1
             gameState = 1;
-            lives = 9;
-            livesLabel.Text = $"Lives: {Environment.NewLine} {lives}";
+            playerBox.lives = 9;
+            livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
             playerScore = 0;
             List<Bullet> allBullets = new List<Bullet>();
             foreach (Bullet b in bullets) //removing bullets on screen
@@ -486,6 +489,7 @@ namespace final_project
             firing = true;
 
         }
+
     }
 
 }
