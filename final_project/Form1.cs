@@ -47,6 +47,7 @@ namespace final_project
 
         //for powerups
         public bool piercingPower = false;
+        public bool sheild = false;
 
 
         //for custom fonts
@@ -162,11 +163,16 @@ namespace final_project
             foreach (Powerup powerup in powerups)
             { //update position of any active powerups. Active status is false by default, can be manually set. check for Active is in the class itself :>
                 powerup.UpdatePos();
+                if(!powerup.active) toRemove.Add(powerup);
                 if (powerup.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds))
                 {
                     toRemove.Add(powerup);
                     switch (powerup.type)
                     {
+                        case 1: //sheild
+                            sheild = true;
+                            playerBox.SpriteObject.BackColor = Color.FromArgb(127, 224, 177, 7);
+                            break;
                         default:
                             //case 0 and default case, piercing
                             piercingPower = true;
@@ -219,10 +225,15 @@ namespace final_project
                         else
                         {
                             killed.Add(enemy);
-                            if (Powerup.DoesSpawn(enemy.score))
-                            {
+                            if (Powerup.DoesSpawn(enemy.score, 2501))
+                            { //chance for a piercing powerup to spawn
                                 Powerup p = new Powerup(325, enemy.xCoord, enemy.yCoord, 0, enemy, enemy.SpriteObject.Parent, 4, 4);
-                                p.SetPos(enemy.xCoord, enemy.yCoord);
+                                p.active = true;
+                                powerups.Add(p);
+                            }
+                            if(Powerup.DoesSpawn(enemy.score, 5001))
+                            { //sheild powerup spawn
+                                Powerup p = new Powerup(350, enemy.xCoord, enemy.yCoord, 1, enemy, enemy.SpriteObject.Parent, 4, 4);
                                 p.active = true;
                                 powerups.Add(p);
                             }
@@ -256,14 +267,25 @@ namespace final_project
             foreach (Bullet bullet in Enemy.enemyBullets)
             { //updates enemy bullets and then checks for collisions
                 bullet.UpdatePos();
+                
                 if (bullet.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame)
                 {
-                    playerBox.lives--;
-                    livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
-                    iframetimer.Start();
-                    playerBox.SpriteObject.Visible = false;
-                    dead = true;
-                    iFrame = true;
+                    if (sheild)
+                    {
+                        playerBox.SpriteObject.BackColor = Color.FromArgb(0, 0, 0, 0);
+                        iFrame = true;
+                        iFrameCounter = 10;
+                        sheild = false;
+                        iframetimer.Enabled = true;
+                    } else
+                    {
+                        playerBox.lives--;
+                        livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
+                        iframetimer.Start();
+                        playerBox.SpriteObject.Visible = false;
+                        dead = true;
+                        iFrame = true;
+                    }
                     Hit = bullet;
                 }
                 if (!(bullet.WallCheck()))
@@ -496,6 +518,7 @@ namespace final_project
             playerBox.UpdatePos(5500, 8800);
             iFrame = false;
             piercingPower = false;
+            sheild = false;
             foreach (Player p in players)
                 p.resetShoot();
             firing = true;

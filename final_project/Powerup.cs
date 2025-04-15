@@ -28,12 +28,7 @@ public class Powerup : GameEntity
         this.v = v; xPos = x; yPos = y;
         SetPos(x, y);
         active = false;
-        switch (type)
-        { //assign different colors to different powerups
-            default:
-                SpriteObject.BackColor = Color.FromArgb(255, 0, 184, 37);
-                break;
-        }
+        colorPick();
         this.source = source;
         SpriteObject.Parent = parent;
     }
@@ -43,14 +38,22 @@ public class Powerup : GameEntity
         active = false;
         SetPos(x, y);
         this.type = type;
+        colorPick();
+        
+        this.source = source;
+        SpriteObject.Parent = parent;
+    }
+    private void colorPick()
+    {
         switch (type)
         { //assign different colors to different powerups
-            default:
+            case 1: //shield
+                SpriteObject.BackColor = Color.FromArgb(255, 224, 177, 7);
+                break;
+            default: //piercing
                 SpriteObject.BackColor = Color.FromArgb(255, 0, 184, 37);
                 break;
         }
-        this.source = source;
-        SpriteObject.Parent = parent;
     }
     public void UpdatePos()
     {
@@ -66,7 +69,7 @@ public class Powerup : GameEntity
         yPos = y;
         base.UpdatePos(xPos, yPos);
     }
-    static public bool DoesSpawn(int hit)
+    static public bool DoesSpawn(int hit, int compare)
     {
         if (rnd.Next(0, 1001) >= hit)
         {
