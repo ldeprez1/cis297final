@@ -158,7 +158,8 @@ namespace final_project
                     labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
                     scorePanel.Visible = true;
                     playerSprite.Visible=true;
-                    labelGameStart.Text = "GAME OVER! Try Again?";
+                    labelGameStart.Text = "GAME OVER!";
+                    startGameButton.Text = "TRY AGAIN?";
                     break;
                 default:
                    showTitle();

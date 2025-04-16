@@ -67,6 +67,7 @@
             // 
             // startGameButton
             // 
+            startGameButton.AutoSize = true;
             startGameButton.Location = new Point(192, 198);
             startGameButton.Margin = new Padding(2);
             startGameButton.Name = "startGameButton";
@@ -197,6 +198,7 @@
             KeyDown += Key_Down;
             KeyUp += Key_Up;
             backgroundPanel.ResumeLayout(false);
+            backgroundPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)playerSprite).EndInit();
             scorePanel.ResumeLayout(false);
             panel1.ResumeLayout(false);
