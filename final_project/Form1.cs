@@ -49,7 +49,7 @@ namespace final_project
         public bool piercingPower = false;
         public bool sheild = false;
         public static bool trishot = false;
-
+        public bool copy = false;
 
         //for custom fonts
         PrivateFontCollection customFonts;
@@ -63,6 +63,7 @@ namespace final_project
 
         //for player/players
         public static Player playerBox;
+        public Player playerCopy = null;
         List<Player> players = new List<Player>();
 
         public Form1()
@@ -98,6 +99,8 @@ namespace final_project
 
             //player setup
             playerBox = new Player(5500, 8800, playerSprite);
+            //playerCopy = new Player(6500, 8800, playerCopySprite);
+            playerCopySprite.Enabled = false;
             players = new List<Player>();
             players.Add(playerBox);
             //playerSprite.BringToFront();
@@ -128,17 +131,26 @@ namespace final_project
             if (moveUp) playerBox.Move(Keys.Up);
             if (moveDown) playerBox.Move(Keys.Down);
 
+            if (copy && playerCopy != null)
+            {
+                if (moveLeft) playerCopy.Move(Keys.Left);
+                if (moveRight) playerCopy.Move(Keys.Right);
+                if (moveUp) playerCopy.Move(Keys.Up);
+                if (moveDown) playerCopy.Move(Keys.Down);
+            }
+
             if (Waves.currentEnemies.Count == 0)
                 Waves.nextWave();
         }
         public void showTitle()
         {
             backgroundPanel.BringToFront();
-            labelGameStart.BringToFront(); 
-            startGameButton.BringToFront(); 
+            labelGameStart.BringToFront();
+            startGameButton.BringToFront();
             labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
             scorePanel.Visible = false;
             playerSprite.Visible = false;
+            playerCopySprite.Visible = false;
             labelGameStart.Text = "Galaga-Like";
         }
         private void CheckGameState()
@@ -148,21 +160,23 @@ namespace final_project
                 case 1:
                     labelGameStart.Visible = false; startGameButton.Visible = false; startGameButton.Enabled = false;
                     scorePanel.Visible = true;
-                    playerSprite.Visible=true;
+                    playerSprite.Visible = true;
+                    playerCopySprite.Visible = false;
                     backgroundPanel.SendToBack();
                     RunGameLogic();
                     break;
                 case 2:
                     backgroundPanel.BringToFront();
-                    labelGameStart.BringToFront(); startGameButton.BringToFront(); 
+                    labelGameStart.BringToFront(); startGameButton.BringToFront();
                     labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
                     scorePanel.Visible = true;
-                    playerSprite.Visible=true;
+                    playerSprite.Visible = true;
+                    playerCopySprite.Visible = true;
                     labelGameStart.Text = "GAME OVER!";
                     startGameButton.Text = "TRY AGAIN?";
                     break;
                 default:
-                   showTitle();
+                    showTitle();
                     break;
             }
         }
@@ -173,7 +187,8 @@ namespace final_project
                 gameState = 2;
                 return;
             }
-            List<Powerup> toRemove = new List<Powerup>();
+            
+                List<Powerup> toRemove = new List<Powerup>();
             foreach (Powerup powerup in powerups)
             { //update position of any active powerups. Active status is false by default, can be manually set. check for Active is in the class itself :>
                 powerup.UpdatePos();
@@ -183,6 +198,10 @@ namespace final_project
                     toRemove.Add(powerup);
                     switch (powerup.type)
                     {
+                        case 3:
+                            copy = true ;
+                            doubleTimer.Enabled = true;
+                            break;
                         case 2://trishot
                             trishot = true;
                             trishotTimer.Enabled = true;
@@ -261,6 +280,12 @@ namespace final_project
                                 p.active = true;
                                 powerups.Add(p);
                             }
+                            if (Powerup.DoesSpawn(enemy.score, 501))
+                            {
+                                Powerup p = new Powerup(200, enemy.xCoord, enemy.yCoord, 3, enemy, enemy.SpriteObject.Parent, 4, 4);
+                                p.active = true;
+                                powerups.Add(p);
+                            }
                         }
 
 
@@ -310,7 +335,25 @@ namespace final_project
                         playerBox.SpriteObject.Visible = false;
                         dead = true;
                         iFrame = true;
+
+                        if (copy && playerCopy != null)
+                        {
+                            backgroundPanel.Controls.Remove(playerCopy.SpriteObject);
+                            playerCopySprite.Visible = false;
+                            playerCopy = null;
+                            copy = false;
+                        }
                     }
+                    Hit = bullet;
+                }
+                if (copy && playerCopy != null && bullet.SpriteObject.Bounds.IntersectsWith(playerCopy.SpriteObject.Bounds))
+                {
+                    // Remove the player copy if hit
+                    backgroundPanel.Controls.Remove(playerCopy.SpriteObject);
+                    playerCopySprite.Visible = false;
+                    playerCopy = null;
+                    copy = false;
+
                     Hit = bullet;
                 }
                 if (!(bullet.WallCheck()))
@@ -339,22 +382,37 @@ namespace final_project
             {
                 moveLeft = true;
                 playerBox.Move(Keys.Left);
-
+                if (copy && playerCopy != null)
+                {
+                    playerCopy.Move(Keys.Left);
+                }
             }
             if (e.KeyCode == Keys.Right)
             {
                 moveRight = true;
                 playerBox.Move(Keys.Right);
+                if (copy && playerCopy != null)
+                {
+                    playerCopy.Move(Keys.Right);
+                }
             }
             if (e.KeyCode == Keys.Up)
             {
                 moveUp = true;
                 playerBox.Move(Keys.Up);
+                if (copy && playerCopy != null)
+                {
+                    playerCopy.Move(Keys.Up);
+                }
             }
             if (e.KeyCode == Keys.Down)
             {
                 moveDown = true;
                 playerBox.Move(Keys.Down);
+                if (copy && playerCopy != null)
+                {
+                    playerCopy.Move(Keys.Down);
+                }
             }
             if (e.KeyCode == Keys.Space)
             {
@@ -362,6 +420,10 @@ namespace final_project
                 if (!dead)
                 {
                     playerBox.FireBullet(bullets);
+                    if (copy && playerCopy != null)
+                    {
+                        playerCopy.FireBullet(bullets);
+                    }
                 }
 
             }
@@ -393,6 +455,13 @@ namespace final_project
             if (moveRight) playerBox.Move(Keys.Right);
             if (moveUp) playerBox.Move(Keys.Up);
             if (moveDown) playerBox.Move(Keys.Down);
+            if (copy && playerCopy != null)
+            {
+                if (moveLeft) playerCopy.Move(Keys.Left);
+                if (moveRight) playerCopy.Move(Keys.Right);
+                if (moveUp) playerCopy.Move(Keys.Up);
+                if (moveDown) playerCopy.Move(Keys.Down);
+            }
         }
 
 
@@ -526,7 +595,7 @@ namespace final_project
             playerBox.lives = 5;
             livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
             playerScore = 0;
-            scoreLabel.Text= $"Score: {Environment.NewLine} {playerScore}";
+            scoreLabel.Text = $"Score: {Environment.NewLine} {playerScore}";
             List<Bullet> allBullets = new List<Bullet>();
             foreach (Bullet b in bullets) //removing bullets on screen
             {
@@ -571,12 +640,29 @@ namespace final_project
             trishot = false;
             sheild = false;
             iFrameCounter = 0;
+            copy = false;
+
+            if (playerCopy != null)
+            {
+                backgroundPanel.Controls.Remove(playerCopy.SpriteObject);
+                playerCopy = null;
+                playerCopySprite.Visible = false;
+            }
         }
 
         private void trishotTimer_Tick(object sender, EventArgs e)
         {
             trishot = false;
             trishotTimer.Enabled = false;
+        }
+
+        private void doubleTick(object sender, EventArgs e)
+        {
+            copy = false;
+            playerCopySprite.Visible = true;
+            playerCopy = new Player(playerBox.xCoord + 800, playerBox.yCoord, playerCopySprite);
+            doubleTimer.Enabled = false;
+
         }
     }
 

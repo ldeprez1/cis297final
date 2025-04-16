@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             fontDialog1 = new FontDialog();
             backgroundPanel = new Panel();
+            playerCopySprite = new PictureBox();
             startGameButton = new Button();
             playerSprite = new PictureBox();
             labelGameStart = new Label();
@@ -44,7 +45,9 @@
             iframetimer = new System.Windows.Forms.Timer(components);
             piercingTimer = new System.Windows.Forms.Timer(components);
             trishotTimer = new System.Windows.Forms.Timer(components);
+            doubleTimer = new System.Windows.Forms.Timer(components);
             backgroundPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)playerCopySprite).BeginInit();
             ((System.ComponentModel.ISupportInitialize)playerSprite).BeginInit();
             scorePanel.SuspendLayout();
             panel1.SuspendLayout();
@@ -53,6 +56,7 @@
             // backgroundPanel
             // 
             backgroundPanel.BackColor = SystemColors.ActiveCaptionText;
+            backgroundPanel.Controls.Add(playerCopySprite);
             backgroundPanel.Controls.Add(startGameButton);
             backgroundPanel.Controls.Add(playerSprite);
             backgroundPanel.Controls.Add(labelGameStart);
@@ -64,6 +68,15 @@
             backgroundPanel.Name = "backgroundPanel";
             backgroundPanel.Size = new Size(501, 462);
             backgroundPanel.TabIndex = 1;
+            // 
+            // playerCopySprite
+            // 
+            playerCopySprite.Location = new Point(330, 292);
+            playerCopySprite.Name = "playerCopySprite";
+            playerCopySprite.Size = new Size(80, 45);
+            playerCopySprite.SizeMode = PictureBoxSizeMode.StretchImage;
+            playerCopySprite.TabIndex = 9;
+            playerCopySprite.TabStop = false;
             // 
             // startGameButton
             // 
@@ -80,7 +93,7 @@
             // playerSprite
             // 
             playerSprite.BackColor = Color.Transparent;
-            playerSprite.Location = new Point(214, 271);
+            playerSprite.Location = new Point(70, 269);
             playerSprite.Margin = new Padding(5, 4, 5, 4);
             playerSprite.Name = "playerSprite";
             playerSprite.Size = new Size(114, 68);
@@ -181,6 +194,11 @@
             trishotTimer.Interval = 5000;
             trishotTimer.Tick += trishotTimer_Tick;
             // 
+            // doubleTimer
+            // 
+            doubleTimer.Interval = 50;
+            doubleTimer.Tick += doubleTick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -199,6 +217,7 @@
             KeyUp += Key_Up;
             backgroundPanel.ResumeLayout(false);
             backgroundPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)playerCopySprite).EndInit();
             ((System.ComponentModel.ISupportInitialize)playerSprite).EndInit();
             scorePanel.ResumeLayout(false);
             panel1.ResumeLayout(false);
@@ -221,5 +240,7 @@
         private Button startGameButton;
         private Panel panel1;
         private System.Windows.Forms.Timer trishotTimer;
+        private PictureBox playerCopySprite;
+        private System.Windows.Forms.Timer doubleTimer;
     }
 }
