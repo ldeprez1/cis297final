@@ -526,6 +526,7 @@ namespace final_project
             playerBox.lives = 5;
             livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
             playerScore = 0;
+            scoreLabel.Text= $"Score: {Environment.NewLine} {playerScore}";
             List<Bullet> allBullets = new List<Bullet>();
             foreach (Bullet b in bullets) //removing bullets on screen
             {
