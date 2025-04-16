@@ -299,15 +299,15 @@ namespace final_project
         public void Teleport()
         {
             SpriteObject.Visible = false;
-            System.Windows.Forms.Timer flickerBack = new System.Windows.Forms.Timer();
-            flickerBack.Interval = 1;
-            flickerBack.Tick += (s, ev) =>
+            System.Windows.Forms.Timer flicker = new System.Windows.Forms.Timer();
+            flicker.Interval = 1;
+            flicker.Tick += (s, ev) =>
             {
                 SpriteObject.Visible = true;
                 ((System.Windows.Forms.Timer)s!).Stop();
                 ((System.Windows.Forms.Timer)s!).Dispose();
             };
-            flickerBack.Start();
+            flicker.Start();
 
             double newX = rnd.Next(0, MAX_XCOORD - SpriteObject.Width * 100);
             double newY = rnd.Next(0, MAX_YCOORD / 2);
@@ -432,7 +432,7 @@ namespace final_project
         {
             SpriteObject.Parent = p;
             RefreshPos();
-            SpriteObject.Image = Image.FromFile("Resources\\phaser.png"); //replace
+            SpriteObject.Image = Image.FromFile("Resources\\miniboss.png"); 
             SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
             boss = true;
             health = Math.Min((int)(Math.Log2(Waves.waveNum / 2.0) * 5), 19); // max of 20 health
