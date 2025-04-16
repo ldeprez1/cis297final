@@ -71,7 +71,7 @@ public class Powerup : GameEntity
     }
     static public bool DoesSpawn(int hit, int compare)
     {
-        if (rnd.Next(0, compare) >= hit)
+        if (rnd.Next(0, compare) <= hit)
         {
             return (true);
         }
