@@ -252,7 +252,7 @@ namespace final_project
             if (bulletActive)
             {
                 bulletActiveFrames++;
-                if(bulletActiveFrames >= 25)
+                if(bulletActiveFrames >= 25 || dead)
                 {
                     assholeBeam.SetPos(-1000, -1000); //idkwhy, collision seems to stay in tact when it gets despawned??? so i'm moving it just to get rid of it
                     remove.Add(assholeBeam);
@@ -267,7 +267,6 @@ namespace final_project
                 //GlobalScore -= 350;
                 speed *= -1;
             }
-
         }
         override public void Shoot()
         {

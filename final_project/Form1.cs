@@ -481,6 +481,7 @@ namespace final_project
             {
                 case < 10:
                     playerBox.UpdatePos(5500, 8800);
+                    playerBox.SpriteObject.Visible = false;
                     iFrameCounter++;
                     break;
                 case 10:
@@ -568,6 +569,7 @@ namespace final_project
             firing = true;
             trishot = false;
             sheild = false;
+            iFrameCounter = 0;
         }
 
         private void trishotTimer_Tick(object sender, EventArgs e)
