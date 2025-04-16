@@ -131,25 +131,37 @@ namespace final_project
             if (Waves.currentEnemies.Count == 0)
                 Waves.nextWave();
         }
-
+        public void showTitle()
+        {
+            backgroundPanel.BringToFront();
+            labelGameStart.BringToFront(); 
+            startGameButton.BringToFront(); 
+            labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
+            scorePanel.Visible = false;
+            playerSprite.Visible = false;
+            labelGameStart.Text = "Galaga-Like";
+        }
         private void CheckGameState()
         { //checks GameState. Default, Zero, is to START THE GAME. One Calls to update all sprite locations and run collision calculations. 2 is GAME OVER
             switch (gameState)
             {
                 case 1:
                     labelGameStart.Visible = false; startGameButton.Visible = false; startGameButton.Enabled = false;
+                    scorePanel.Visible = true;
+                    playerSprite.Visible=true;
                     backgroundPanel.SendToBack();
                     RunGameLogic();
                     break;
                 case 2:
                     backgroundPanel.BringToFront();
-                    labelGameStart.BringToFront(); startGameButton.BringToFront(); labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
+                    labelGameStart.BringToFront(); startGameButton.BringToFront(); 
+                    labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
+                    scorePanel.Visible = true;
+                    playerSprite.Visible=true;
                     labelGameStart.Text = "GAME OVER! Try Again?";
                     break;
                 default:
-                    backgroundPanel.BringToFront();
-                    labelGameStart.BringToFront(); startGameButton.BringToFront(); labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
-                    labelGameStart.Text = "Welcome to Galaga-Like!";
+                   showTitle();
                     break;
             }
         }
@@ -431,7 +443,26 @@ namespace final_project
                     }
                 }
             }
+            // Calculate central area for label and button
+            int centerY = backgroundPanel.Top + (backgroundPanel.Height / 2);
 
+            // Resize and center labelGameStart
+            labelGameStart.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.05f, FontStyle.Bold);
+            //labelGameStart.AutoSize = false;
+            labelGameStart.Size = new Size((int)(backgroundPanel.Width * 0.8), (int)(backgroundPanel.Height * 0.1));
+            labelGameStart.TextAlign = ContentAlignment.MiddleCenter;
+            labelGameStart.Location = new Point(
+                (this.backgroundPanel.Width - labelGameStart.Width) / 2,
+                centerY - labelGameStart.Height - 10 // slight offset upward
+            );
+
+            // Resize and center startGameButton just below the label
+            startGameButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Regular);
+            startGameButton.Size = new Size((int)(backgroundPanel.Width * 0.5), (int)(backgroundPanel.Height * 0.08));
+            startGameButton.Location = new Point(
+                (this.backgroundPanel.Width - startGameButton.Width) / 2,
+                labelGameStart.Bottom + 10
+            );
             if (scorePanel.Height > 0 && customFonts != null)
             {
                 livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.17)), livesLabel.Font.Style);
