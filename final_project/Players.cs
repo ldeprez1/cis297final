@@ -94,6 +94,13 @@ public class Player : GameEntity
 
         if (playerCanShoot && bullets.Count < 3)
         {
+            if (trishot)
+            {
+                Bullet lBullet = new Bullet((int)(playerX + (width * 50 - Bullet.bulletSizeX * 50)), (int)playerY - (Bullet.bulletSizeY * 100), -100, -150, SpriteObject.Parent, this, true);
+                Bullet rBullet = new Bullet((int)(playerX + (width * 50 - Bullet.bulletSizeX * 50)), (int)playerY - (Bullet.bulletSizeY * 100), 100, -150, SpriteObject.Parent, this, true);
+                bullets.Add(lBullet);
+                bullets.Add(rBullet);
+            }
             Bullet playerBullet = new Bullet((int)(playerX + (width * 50 - Bullet.bulletSizeX * 50)), (int)playerY - (Bullet.bulletSizeY * 100), 0, -150, SpriteObject.Parent, this, true);
             bullets.Add(playerBullet);
             gunshot.Play();

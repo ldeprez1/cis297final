@@ -43,6 +43,7 @@
             mainTimer = new System.Windows.Forms.Timer(components);
             iframetimer = new System.Windows.Forms.Timer(components);
             piercingTimer = new System.Windows.Forms.Timer(components);
+            trishotTimer = new System.Windows.Forms.Timer(components);
             backgroundPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)playerSprite).BeginInit();
             scorePanel.SuspendLayout();
@@ -106,7 +107,7 @@
             scorePanel.Location = new Point(0, 611);
             scorePanel.Margin = new Padding(8, 6, 8, 6);
             scorePanel.Name = "scorePanel";
-            scorePanel.Padding = new Padding(3, 3, 3, 3);
+            scorePanel.Padding = new Padding(3);
             scorePanel.Size = new Size(814, 128);
             scorePanel.TabIndex = 1;
             // 
@@ -174,6 +175,11 @@
             piercingTimer.Interval = 5000;
             piercingTimer.Tick += piercingTimer_Tick;
             // 
+            // trishotTimer
+            // 
+            trishotTimer.Interval = 5000;
+            trishotTimer.Tick += trishotTimer_Tick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
@@ -212,5 +218,6 @@
         private System.Windows.Forms.Timer piercingTimer;
         private Button startGameButton;
         private Panel panel1;
+        private System.Windows.Forms.Timer trishotTimer;
     }
 }

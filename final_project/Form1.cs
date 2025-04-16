@@ -48,6 +48,7 @@ namespace final_project
         //for powerups
         public bool piercingPower = false;
         public bool sheild = false;
+        public static bool trishot = false;
 
 
         //for custom fonts
@@ -94,19 +95,19 @@ namespace final_project
             //FONT setup
             customFonts = new PrivateFontCollection();
             customFonts.AddFontFile("Resources\\ka1.ttf");
-            
+
             //player setup
             playerBox = new Player(5500, 8800, playerSprite);
             players = new List<Player>();
             players.Add(playerBox);
             //playerSprite.BringToFront();
-           //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
-           //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
-           Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500 , 2500, 15, Waves.parent, true));
+            //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
+            //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
+            Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500, 2500, 15, Waves.parent, true));
             Waves.currentEnemies.Add(new Miniboss(Waves.parent));
-           Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
-           Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
-           //Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500 , 2500, 15, Waves.parent, true));
+            Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
+            Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
+            //Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500 , 2500, 15, Waves.parent, true));
             ResizeThings();
         }
 
@@ -163,12 +164,16 @@ namespace final_project
             foreach (Powerup powerup in powerups)
             { //update position of any active powerups. Active status is false by default, can be manually set. check for Active is in the class itself :>
                 powerup.UpdatePos();
-                if(!powerup.active) toRemove.Add(powerup);
+                if (!powerup.active) toRemove.Add(powerup);
                 if (powerup.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds))
                 {
                     toRemove.Add(powerup);
                     switch (powerup.type)
                     {
+                        case 2://trishot
+                            trishot = true;
+                            trishotTimer.Enabled = true;
+                            break;
                         case 1: //sheild
                             sheild = true;
                             playerBox.SpriteObject.BackColor = Color.FromArgb(127, 224, 177, 7);
@@ -212,7 +217,7 @@ namespace final_project
                     {
                         if (enemy.boss)
                         {
-                            if(enemy.health == 0)
+                            if (enemy.health == 0)
                             {
                                 killed.Add(enemy);
                             }
@@ -231,9 +236,15 @@ namespace final_project
                                 p.active = true;
                                 powerups.Add(p);
                             }
-                            if(Powerup.DoesSpawn(enemy.score, 5001))
+                            if (Powerup.DoesSpawn(enemy.score, 5001))
                             { //sheild powerup spawn
                                 Powerup p = new Powerup(350, enemy.xCoord, enemy.yCoord, 1, enemy, enemy.SpriteObject.Parent, 4, 4);
+                                p.active = true;
+                                powerups.Add(p);
+                            }
+                            if (Powerup.DoesSpawn(enemy.score, 501))
+                            {
+                                Powerup p = new Powerup(200, enemy.xCoord, enemy.yCoord, 2, enemy, enemy.SpriteObject.Parent, 4, 4);
                                 p.active = true;
                                 powerups.Add(p);
                             }
@@ -251,12 +262,12 @@ namespace final_project
                 backgroundPanel.Controls.Remove(enemy.SpriteObject);
                 Waves.currentEnemies.Remove(enemy);
             }
-            
+
             killed.Clear();
             foreach (Bullet bullet in remove)
             {
-               backgroundPanel.Controls.Remove(bullet.SpriteObject);
-               bullets.Remove(bullet);
+                backgroundPanel.Controls.Remove(bullet.SpriteObject);
+                bullets.Remove(bullet);
             }
             remove.Clear();
             //label1.Text = $"Player bullet Pos: X:{playerBullet.xCoord} Y: {playerBullet.yCoord}";
@@ -267,7 +278,7 @@ namespace final_project
             foreach (Bullet bullet in Enemy.enemyBullets)
             { //updates enemy bullets and then checks for collisions
                 bullet.UpdatePos();
-                
+
                 if (bullet.SpriteObject.Bounds.IntersectsWith(playerBox.SpriteObject.Bounds) && !iFrame)
                 {
                     if (sheild)
@@ -277,7 +288,8 @@ namespace final_project
                         iFrameCounter = 10;
                         sheild = false;
                         iframetimer.Enabled = true;
-                    } else
+                    }
+                    else
                     {
                         playerBox.lives--;
                         livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
@@ -307,7 +319,7 @@ namespace final_project
 
 
         }
-        
+
         private void Key_Down(object sender, KeyEventArgs e) // When Key is pressed
         {
             if (e.KeyCode == Keys.Left)
@@ -327,7 +339,7 @@ namespace final_project
                 playerBox.Move(Keys.Up);
             }
             if (e.KeyCode == Keys.Down)
-            {   
+            {
                 moveDown = true;
                 playerBox.Move(Keys.Down);
             }
@@ -338,10 +350,10 @@ namespace final_project
                 {
                     playerBox.FireBullet(bullets);
                 }
-                
+
             }
 
-            
+
         }
 
         private void Key_Up(object sender, KeyEventArgs e) // When Key is let go
@@ -363,7 +375,7 @@ namespace final_project
             {
                 moveDown = false;
             }
-          
+
             if (moveLeft) playerBox.Move(Keys.Left);
             if (moveRight) playerBox.Move(Keys.Right);
             if (moveUp) playerBox.Move(Keys.Up);
@@ -445,7 +457,7 @@ namespace final_project
                     iFrameCounter++;
                     break;
                 case > 10 and < 30:
-                    if(iFrameCounter % 2 == 0)
+                    if (iFrameCounter % 2 == 0)
                     {
                         playerBox.SpriteObject.Visible = true;
                     }
@@ -473,12 +485,12 @@ namespace final_project
             piercingTimer.Enabled = false;
         }
 
-        
+
 
         private void startGameButton_Click(object sender, EventArgs e)
         { //reset ANY AND ALL VARIABLES, other than gamestate, which it sets to 1
             gameState = 1;
-            playerBox.lives = 9;
+            playerBox.lives = 5;
             livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
             playerScore = 0;
             List<Bullet> allBullets = new List<Bullet>();
@@ -504,11 +516,11 @@ namespace final_project
             }
             allBullets.Clear();
             List<Enemy> allEnemies = new List<Enemy>(); //resetting enemies
-            foreach(Enemy en in Waves.currentEnemies)
+            foreach (Enemy en in Waves.currentEnemies)
             {
                 allEnemies.Add(en);
             }
-            foreach(Enemy en in allEnemies)
+            foreach (Enemy en in allEnemies)
             {
                 backgroundPanel.Controls.Remove(en.SpriteObject);
                 Waves.currentEnemies.Remove(en);
@@ -522,9 +534,15 @@ namespace final_project
             foreach (Player p in players)
                 p.resetShoot();
             firing = true;
-
+            trishot = false;
+            sheild = false;
         }
 
+        private void trishotTimer_Tick(object sender, EventArgs e)
+        {
+            trishot = false;
+            trishotTimer.Enabled = false;
+        }
     }
 
 }
