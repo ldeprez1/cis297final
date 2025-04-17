@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,6 +34,7 @@ namespace final_project
                 case 6: { wave6(); return; }
                 case 7: { wave7(); return; }
                 case 8: { wave8(); return; }
+                case 9: { wave2D(); return; }
 
 
 
@@ -41,7 +43,18 @@ namespace final_project
                 case int n when (n % 10 == 0): { bossWave(); return; }
 
                 default: // to be changed
-                    { wave2D(); return; }
+                    {
+                        switch (Enemy.rnd.Next(3, 9))
+                        {
+                            case 3: { wave3(); return; }
+                            case 4: { wave4(); return; }
+                            case 5: { wave2D(); return; }
+                            case 6: { wave6(); return; }
+                            case 7: { wave7(); return; }
+                            case 8: { wave8(); return; }
+                        }
+                        return;
+                    }
             }
 
             //code goes here
@@ -94,7 +107,7 @@ namespace final_project
         }
         private static void wave2D()
         { //for infinite difficulty scaling
-            addRowGroup(1000, 2, 30 * waveNum);
+            addRowGroup(1000, 2, 10 * waveNum);
         }
         private static void wave3()
         {
