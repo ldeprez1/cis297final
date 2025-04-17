@@ -19,7 +19,7 @@ namespace final_project
         */
 
 
-
+        //checks GameState. Default, Zero, is to START THE GAME. One Calls to update all sprite locations and run collision calculations. 2 is GAME OVER. 3 is do nothing
         int gameState = 0;
 
         //current score of the player
@@ -123,7 +123,29 @@ namespace final_project
 
         private void mainEventTimer(object sender, EventArgs e)
         {
-            CheckGameState();
+            switch (gameState)
+            {
+                case 0:
+                    showTitle();
+                    gameState = 3;
+                    break;
+                case 1:
+                    RunGameLogic();
+                    break;
+                case 2:
+                    backgroundPanel.BringToFront();
+                    labelGameStart.BringToFront(); startGameButton.BringToFront();
+                    labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
+                    scorePanel.Visible = true;
+                    playerSprite.Visible = true;
+                    playerCopySprite.Visible = true;
+                    labelGameStart.Text = "GAME OVER!";
+                    startGameButton.Text = "TRY AGAIN?";
+                    iFrameCounter = 30;
+                    gameState = 3;
+                break;
+            }
+
 
             //move player
             if (moveLeft) playerBox.Move(Keys.Left);
@@ -153,33 +175,29 @@ namespace final_project
             playerCopySprite.Visible = false;
             labelGameStart.Text = "Galaga-Like";
         }
-        private void CheckGameState()
-        { //checks GameState. Default, Zero, is to START THE GAME. One Calls to update all sprite locations and run collision calculations. 2 is GAME OVER
-            switch (gameState)
-            {
-                case 1:
-                    labelGameStart.Visible = false; startGameButton.Visible = false; startGameButton.Enabled = false;
-                    scorePanel.Visible = true;
-                   // playerSprite.Visible = true;
-                    //playerCopySprite.Visible = false;
-                    backgroundPanel.SendToBack();
-                    RunGameLogic();
-                    break;
-                case 2:
-                    backgroundPanel.BringToFront();
-                    labelGameStart.BringToFront(); startGameButton.BringToFront();
-                    labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
-                    scorePanel.Visible = true;
-                   // playerSprite.Visible = true;
-                    //playerCopySprite.Visible = true;
-                    labelGameStart.Text = "GAME OVER!";
-                    startGameButton.Text = "TRY AGAIN?";
-                    break;
-                default:
-                    showTitle();
-                    break;
-            }
-        }
+        //private void CheckGameState()
+        //{ //checks GameState. Default, Zero, is to START THE GAME. One Calls to update all sprite locations and run collision calculations. 2 is GAME OVER
+        //    switch (gameState)
+        //    {
+        //        case 1:
+
+        //            break;
+        //        case 2:
+        //            backgroundPanel.BringToFront();
+        //            labelGameStart.BringToFront(); startGameButton.BringToFront();
+        //            labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
+        //            scorePanel.Visible = true;
+        //            playerSprite.Visible = true;
+        //            playerCopySprite.Visible = true;
+        //            labelGameStart.Text = "GAME OVER!";
+        //            startGameButton.Text = "TRY AGAIN?";
+        //            iFrameCounter = 30;
+        //            break;
+        //        default:
+        //            showTitle();
+        //            break;
+        //    }
+        //}
         private void RunGameLogic()
         {
             if (playerBox.lives == 0)
@@ -578,6 +596,7 @@ namespace final_project
                 case 30:
                     playerBox.SpriteObject.Visible = true;
                     iframetimer.Stop();
+                    dead = false;
                     iFrame = false;
                     iFrameCounter = 0;
                     break;
@@ -648,7 +667,6 @@ namespace final_project
             firing = true;
             trishot = false;
             sheild = false;
-            iFrameCounter = 0;
             copy = false;
 
             if (playerCopy != null)
@@ -657,6 +675,13 @@ namespace final_project
                 playerCopy = null;
                 playerCopySprite.Visible = false;
             }
+
+
+            labelGameStart.Visible = false; startGameButton.Visible = false; startGameButton.Enabled = false;
+            scorePanel.Visible = true;
+            playerSprite.Visible = true;
+            playerCopySprite.Visible = false;
+            backgroundPanel.SendToBack();
         }
 
         private void trishotTimer_Tick(object sender, EventArgs e)
