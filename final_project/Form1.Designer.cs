@@ -196,7 +196,7 @@
             // 
             // doubleTimer
             // 
-            doubleTimer.Interval = 50;
+            doubleTimer.Interval = 5000;
             doubleTimer.Tick += doubleTick;
             // 
             // Form1

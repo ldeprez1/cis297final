@@ -161,7 +161,7 @@ namespace final_project
                     labelGameStart.Visible = false; startGameButton.Visible = false; startGameButton.Enabled = false;
                     scorePanel.Visible = true;
                     playerSprite.Visible = true;
-                    playerCopySprite.Visible = false;
+                    //playerCopySprite.Visible = false;
                     backgroundPanel.SendToBack();
                     RunGameLogic();
                     break;
@@ -200,7 +200,14 @@ namespace final_project
                     {
                         case 3:
                             copy = true ;
-                            doubleTimer.Enabled = true;
+                            doubleTimer.Enabled = true ;
+                            if (playerCopy == null)
+                            {
+                                playerCopy = new Player(playerBox.xCoord + 800, playerBox.yCoord, playerCopySprite);
+                                playerCopySprite.Visible = true;
+                                playerCopySprite.Enabled = true;
+                                backgroundPanel.Controls.Add(playerCopy.SpriteObject);
+                            }
                             break;
                         case 2://trishot
                             trishot = true;
@@ -280,7 +287,7 @@ namespace final_project
                                 p.active = true;
                                 powerups.Add(p);
                             }
-                            if (Powerup.DoesSpawn(enemy.score, 501))
+                            if (Powerup.DoesSpawn(enemy.score, 5))
                             {
                                 Powerup p = new Powerup(200, enemy.xCoord, enemy.yCoord, 3, enemy, enemy.SpriteObject.Parent, 4, 4);
                                 p.active = true;
@@ -356,6 +363,7 @@ namespace final_project
 
                     Hit = bullet;
                 }
+
                 if (!(bullet.WallCheck()))
                 {
                     remove.Add(bullet);
@@ -455,6 +463,7 @@ namespace final_project
             if (moveRight) playerBox.Move(Keys.Right);
             if (moveUp) playerBox.Move(Keys.Up);
             if (moveDown) playerBox.Move(Keys.Down);
+
             if (copy && playerCopy != null)
             {
                 if (moveLeft) playerCopy.Move(Keys.Left);
@@ -659,9 +668,10 @@ namespace final_project
         private void doubleTick(object sender, EventArgs e)
         {
             copy = false;
-            playerCopySprite.Visible = true;
-            playerCopy = new Player(playerBox.xCoord + 800, playerBox.yCoord, playerCopySprite);
             doubleTimer.Enabled = false;
+            playerCopySprite.Enabled = false;
+            playerCopySprite.Visible = false;
+            playerCopy = null;
 
         }
     }
