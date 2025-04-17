@@ -160,7 +160,7 @@ namespace final_project
                 case 1:
                     labelGameStart.Visible = false; startGameButton.Visible = false; startGameButton.Enabled = false;
                     scorePanel.Visible = true;
-                    playerSprite.Visible = true;
+                   // playerSprite.Visible = true;
                     //playerCopySprite.Visible = false;
                     backgroundPanel.SendToBack();
                     RunGameLogic();
@@ -170,8 +170,8 @@ namespace final_project
                     labelGameStart.BringToFront(); startGameButton.BringToFront();
                     labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
                     scorePanel.Visible = true;
-                    playerSprite.Visible = true;
-                    playerCopySprite.Visible = true;
+                   // playerSprite.Visible = true;
+                    //playerCopySprite.Visible = true;
                     labelGameStart.Text = "GAME OVER!";
                     startGameButton.Text = "TRY AGAIN?";
                     break;
@@ -328,7 +328,7 @@ namespace final_project
                 {
                     if (sheild)
                     {
-                        playerBox.SpriteObject.BackColor = Color.FromArgb(0, 0, 0, 0);
+                        //playerBox.SpriteObject.BackColor = Color.FromArgb(0, 0, 0, 0);
                         iFrame = true;
                         iFrameCounter = 10;
                         sheild = false;
@@ -337,11 +337,12 @@ namespace final_project
                     else
                     {
                         playerBox.lives--;
+                        iFrameCounter = 0;
                         livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
-                        iframetimer.Start();
                         playerBox.SpriteObject.Visible = false;
                         dead = true;
                         iFrame = true;
+                        iframetimer.Start();
 
                         if (copy && playerCopy != null)
                         {
@@ -559,13 +560,10 @@ namespace final_project
             {
                 case < 10:
                     playerBox.UpdatePos(5500, 8800);
-                    playerBox.SpriteObject.Visible = false;
-                    iFrameCounter++;
                     break;
                 case 10:
                     dead = false;
                     playerBox.SpriteObject.Visible = true;
-                    iFrameCounter++;
                     break;
                 case > 10 and < 30:
                     if (iFrameCounter % 2 == 0)
@@ -576,7 +574,6 @@ namespace final_project
                     {
                         playerBox.SpriteObject.Visible = false;
                     }
-                    iFrameCounter++;
                     break;
                 case 30:
                     playerBox.SpriteObject.Visible = true;
@@ -584,7 +581,10 @@ namespace final_project
                     iFrame = false;
                     iFrameCounter = 0;
                     break;
+
             }
+
+            iFrameCounter++;
         }
 
         private void piercingTimer_Tick(object sender, EventArgs e)

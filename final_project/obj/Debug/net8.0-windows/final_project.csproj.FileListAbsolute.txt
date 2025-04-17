@@ -122,3 +122,4 @@ C:\Users\chees\Source\Repos\cis297final\final_project\bin\Debug\net8.0-windows\R
 C:\Users\armon\Source\Repos\cis297final\final_project\bin\Debug\net8.0-windows\Resources\assholeBeam.png
 C:\Users\armon\Source\Repos\cis297final\final_project\bin\Debug\net8.0-windows\Resources\splitterSprite.png
 C:\Users\armon\Source\Repos\cis297final\final_project\bin\Debug\net8.0-windows\Resources\miniboss.png
+C:\Users\chees\Source\Repos\cis297final\final_project\bin\Debug\net8.0-windows\Resources\miniboss.png
