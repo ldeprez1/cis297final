@@ -545,7 +545,6 @@ namespace final_project
             int centerY = backgroundPanel.Top + (backgroundPanel.Height / 2);
 
             // Resize and center labelGameStart
-            labelGameStart.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.05f, FontStyle.Bold);
             //labelGameStart.AutoSize = false;
             labelGameStart.Size = new Size((int)(backgroundPanel.Width * 0.8), (int)(backgroundPanel.Height * 0.1));
             labelGameStart.TextAlign = ContentAlignment.MiddleCenter;
@@ -555,7 +554,7 @@ namespace final_project
             );
 
             // Resize and center startGameButton just below the label
-            startGameButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Regular);
+           
             startGameButton.Size = new Size((int)(backgroundPanel.Width * 0.5), (int)(backgroundPanel.Height * 0.08));
             startGameButton.Location = new Point(
                 (this.backgroundPanel.Width - startGameButton.Width) / 2,
@@ -563,6 +562,11 @@ namespace final_project
             );
             if (scorePanel.Height > 0 && customFonts != null)
             {
+                startGameButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Regular);
+                labelGameStart.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.05f, FontStyle.Bold);
+
+
+
                 livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.17)), livesLabel.Font.Style);
                 livesLabel.Padding = new Padding(((int)(scorePanel.Width * 0.17)), ((int)(scorePanel.Height * 0.1)), 0, 0);
 
