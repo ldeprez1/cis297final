@@ -44,13 +44,14 @@ namespace final_project
 
                 default: // to be changed
                     {
-                        switch (Enemy.rnd.Next(3, 9))
+                        switch (Enemy.rnd.Next(2, 9))
                         {
-                            case 3: { wave3(); return; }
+                            case 2: { wave2D(); return; }
+                            case 3: { wave3D(); return; }
                             case 4: { wave4(); return; }
-                            case 5: { wave2D(); return; }
-                            case 6: { wave6(); return; }
-                            case 7: { wave7(); return; }
+                            case 5: { wave5(); return; } //needs coding
+                            case 6: { wave6D(); return; }
+                            case 7: { wave7D(); return; }
                             case 8: { wave8(); return; }
                         }
                         return;
@@ -107,7 +108,7 @@ namespace final_project
         }
         private static void wave2D()
         { //for infinite difficulty scaling
-            addRowGroup(1000, 2, 10 * waveNum);
+            addRowGroup(1000, 2, (int)(30 * Math.Log2(waveNum)));
         }
         private static void wave3()
         {
@@ -115,6 +116,13 @@ namespace final_project
             currentEnemies.Add(new ChaserEnemy(0, 200, parent, true));
             currentEnemies.Add(new ChaserEnemy(0, 200, parent, false));
         }
+        private static void wave3D()
+        {
+            addRowGroup(1000, 1, (int)(10 * Math.Log2(waveNum)));
+            currentEnemies.Add(new ChaserEnemy(0, 200, parent, true));
+            currentEnemies.Add(new ChaserEnemy(0, 200, parent, false));
+        }
+
         private static void wave4()
         {
             currentEnemies.Add(new ChaserEnemy(0, 200, parent, true));
@@ -127,18 +135,40 @@ namespace final_project
             currentEnemies.Add(new ChaserEnemy(0, 200, parent, false));
         }
 
+
+        private static void wave5()
+        {
+            //put something here for rand
+        }
+
         private static void wave6()
         {
             addRowGroup(1000, 3, 60);
             currentEnemies.Add(new Phaser(100, 100, parent));
             currentEnemies.Add(new Phaser(11900, 100, parent));
         }
+
+        private static void wave6D()
+        {
+            addRowGroup(1000, 3, (int)(20 * Math.Log2(waveNum)));
+            currentEnemies.Add(new Phaser(100, 100, parent));
+            currentEnemies.Add(new Phaser(11900, 100, parent));
+        }
+
         private static void wave7()
         {
             addRowGroup(3000, 1, 75);
             currentEnemies.Add(new SplitterEnemy(-100, 100, 11900, 100, 45, parent, true));
             currentEnemies.Add(new SplitterEnemy(12100, 100, 11900, 100, 45, parent, false));
         }
+
+        private static void wave7D()
+        {
+            addRowGroup(3000, 1, (int)(25 * Math.Log2(waveNum)));
+            currentEnemies.Add(new SplitterEnemy(-100, 100, 11900, 100, 45, parent, true));
+            currentEnemies.Add(new SplitterEnemy(12100, 100, 11900, 100, 45, parent, false));
+        }
+
         private static void wave8()
         {
             Random rnd = new Random();
