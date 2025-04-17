@@ -138,7 +138,10 @@ namespace final_project
                     labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
                     scorePanel.Visible = true;
                     playerSprite.Visible = true;
-                    playerCopySprite.Visible = true;
+                    if(copy && playerCopy != null) 
+                        {
+                            playerCopySprite.Visible = true;
+                        }
                     labelGameStart.Text = "GAME OVER!";
                     startGameButton.Text = "TRY AGAIN?";
                     iFrameCounter = 30;
