@@ -160,7 +160,7 @@ namespace final_project
                 case 1:
                     labelGameStart.Visible = false; startGameButton.Visible = false; startGameButton.Enabled = false;
                     scorePanel.Visible = true;
-                    playerSprite.Visible = true;
+                    if(!iFrame)playerSprite.Visible = true;
                     //playerCopySprite.Visible = false;
                     backgroundPanel.SendToBack();
                     RunGameLogic();
