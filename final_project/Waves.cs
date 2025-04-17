@@ -23,6 +23,7 @@ namespace final_project
         public static void nextWave()
         {
             waveNum++;
+
             switch (waveNum)
 
             {
