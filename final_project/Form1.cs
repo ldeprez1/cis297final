@@ -346,7 +346,7 @@ namespace final_project
                 {
                     if (sheild)
                     {
-                        //playerBox.SpriteObject.BackColor = Color.FromArgb(0, 0, 0, 0);
+                        playerBox.SpriteObject.BackColor = Color.FromArgb(0, 0, 0, 0);
                         iFrame = true;
                         iFrameCounter = 10;
                         sheild = false;
