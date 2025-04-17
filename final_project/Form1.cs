@@ -19,7 +19,7 @@ namespace final_project
         */
 
 
-
+        //checks GameState. Default, Zero, is to START THE GAME. One Calls to update all sprite locations and run collision calculations. 2 is GAME OVER. 3 is do nothing
         int gameState = 0;
 
         //current score of the player
@@ -123,7 +123,32 @@ namespace final_project
 
         private void mainEventTimer(object sender, EventArgs e)
         {
-            CheckGameState();
+            switch (gameState)
+            {
+                case 0:
+                    showTitle();
+                    gameState = 3;
+                    break;
+                case 1:
+                    RunGameLogic();
+                    break;
+                case 2:
+                    backgroundPanel.BringToFront();
+                    labelGameStart.BringToFront(); startGameButton.BringToFront();
+                    labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
+                    scorePanel.Visible = true;
+                    playerSprite.Visible = true;
+                    if(copy && playerCopy != null) 
+                        {
+                            playerCopySprite.Visible = true;
+                        }
+                    labelGameStart.Text = "GAME OVER!";
+                    startGameButton.Text = "TRY AGAIN?";
+                    iFrameCounter = 30;
+                    gameState = 3;
+                break;
+            }
+
 
             //move player
             if (moveLeft) playerBox.Move(Keys.Left);
@@ -153,33 +178,29 @@ namespace final_project
             playerCopySprite.Visible = false;
             labelGameStart.Text = "Galaga-Like";
         }
-        private void CheckGameState()
-        { //checks GameState. Default, Zero, is to START THE GAME. One Calls to update all sprite locations and run collision calculations. 2 is GAME OVER
-            switch (gameState)
-            {
-                case 1:
-                    labelGameStart.Visible = false; startGameButton.Visible = false; startGameButton.Enabled = false;
-                    scorePanel.Visible = true;
-                    if(!iFrame)playerSprite.Visible = true;
-                    //playerCopySprite.Visible = false;
-                    backgroundPanel.SendToBack();
-                    RunGameLogic();
-                    break;
-                case 2:
-                    backgroundPanel.BringToFront();
-                    labelGameStart.BringToFront(); startGameButton.BringToFront();
-                    labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
-                    scorePanel.Visible = true;
-                    playerSprite.Visible = true;
-                    playerCopySprite.Visible = true;
-                    labelGameStart.Text = "GAME OVER!";
-                    startGameButton.Text = "TRY AGAIN?";
-                    break;
-                default:
-                    showTitle();
-                    break;
-            }
-        }
+        //private void CheckGameState()
+        //{ //checks GameState. Default, Zero, is to START THE GAME. One Calls to update all sprite locations and run collision calculations. 2 is GAME OVER
+        //    switch (gameState)
+        //    {
+        //        case 1:
+
+        //            break;
+        //        case 2:
+        //            backgroundPanel.BringToFront();
+        //            labelGameStart.BringToFront(); startGameButton.BringToFront();
+        //            labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
+        //            scorePanel.Visible = true;
+        //            playerSprite.Visible = true;
+        //            playerCopySprite.Visible = true;
+        //            labelGameStart.Text = "GAME OVER!";
+        //            startGameButton.Text = "TRY AGAIN?";
+        //            iFrameCounter = 30;
+        //            break;
+        //        default:
+        //            showTitle();
+        //            break;
+        //    }
+        //}
         private void RunGameLogic()
         {
             if (playerBox.lives == 0)
@@ -337,11 +358,12 @@ namespace final_project
                     else
                     {
                         playerBox.lives--;
+                        iFrameCounter = 0;
                         livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
-                        iframetimer.Start();
                         playerBox.SpriteObject.Visible = false;
                         dead = true;
                         iFrame = true;
+                        iframetimer.Start();
 
                         if (copy && playerCopy != null)
                         {
@@ -526,7 +548,6 @@ namespace final_project
             int centerY = backgroundPanel.Top + (backgroundPanel.Height / 2);
 
             // Resize and center labelGameStart
-            labelGameStart.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.05f, FontStyle.Bold);
             //labelGameStart.AutoSize = false;
             labelGameStart.Size = new Size((int)(backgroundPanel.Width * 0.8), (int)(backgroundPanel.Height * 0.1));
             labelGameStart.TextAlign = ContentAlignment.MiddleCenter;
@@ -536,7 +557,7 @@ namespace final_project
             );
 
             // Resize and center startGameButton just below the label
-            startGameButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Regular);
+           
             startGameButton.Size = new Size((int)(backgroundPanel.Width * 0.5), (int)(backgroundPanel.Height * 0.08));
             startGameButton.Location = new Point(
                 (this.backgroundPanel.Width - startGameButton.Width) / 2,
@@ -544,6 +565,11 @@ namespace final_project
             );
             if (scorePanel.Height > 0 && customFonts != null)
             {
+                startGameButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Regular);
+                labelGameStart.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.05f, FontStyle.Bold);
+
+
+
                 livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.17)), livesLabel.Font.Style);
                 livesLabel.Padding = new Padding(((int)(scorePanel.Width * 0.17)), ((int)(scorePanel.Height * 0.1)), 0, 0);
 
@@ -559,13 +585,10 @@ namespace final_project
             {
                 case < 10:
                     playerBox.UpdatePos(5500, 8800);
-                    playerBox.SpriteObject.Visible = false;
-                    iFrameCounter++;
                     break;
                 case 10:
                     dead = false;
                     playerBox.SpriteObject.Visible = true;
-                    iFrameCounter++;
                     break;
                 case > 10 and < 30:
                     if (iFrameCounter % 2 == 0)
@@ -576,15 +599,18 @@ namespace final_project
                     {
                         playerBox.SpriteObject.Visible = false;
                     }
-                    iFrameCounter++;
                     break;
                 case 30:
                     playerBox.SpriteObject.Visible = true;
                     iframetimer.Stop();
+                    dead = false;
                     iFrame = false;
                     iFrameCounter = 0;
                     break;
+
             }
+
+            iFrameCounter++;
         }
 
         private void piercingTimer_Tick(object sender, EventArgs e)
@@ -648,7 +674,6 @@ namespace final_project
             firing = true;
             trishot = false;
             sheild = false;
-            iFrameCounter = 0;
             copy = false;
 
             if (playerCopy != null)
@@ -657,6 +682,13 @@ namespace final_project
                 playerCopy = null;
                 playerCopySprite.Visible = false;
             }
+
+
+            labelGameStart.Visible = false; startGameButton.Visible = false; startGameButton.Enabled = false;
+            scorePanel.Visible = true;
+            playerSprite.Visible = true;
+            playerCopySprite.Visible = false;
+            backgroundPanel.SendToBack();
         }
 
         private void trishotTimer_Tick(object sender, EventArgs e)
