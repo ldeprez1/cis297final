@@ -252,10 +252,9 @@ namespace final_project
             if (bulletActive)
             {
                 bulletActiveFrames++;
-                if(bulletActiveFrames >= 25 || dead)
+                if((bulletActiveFrames >= 25 || dead) && assholeBeam!= null)
                 {
-                    assholeBeam.SetPos(-1000, -1000); //idkwhy, collision seems to stay in tact when it gets despawned??? so i'm moving it just to get rid of it
-                    remove.Add(assholeBeam);
+                    deleteBullet();
                     bulletActive = false;
                     bulletActiveFrames = 0;
                 }
@@ -268,6 +267,24 @@ namespace final_project
                 speed *= -1;
             }
         }
+
+        private void deleteBullet()
+        {
+            if (assholeBeam != null)
+            {
+                if (assholeBeam.SpriteObject.Parent != null)
+                    assholeBeam.SpriteObject.Parent.Controls.Remove(assholeBeam.SpriteObject);
+                enemyBullets.Remove(assholeBeam);
+                assholeBeam = null;
+            }
+        }
+
+        public override void Hit()
+        {
+            base.Hit();
+            if (bulletActive) { deleteBullet(); return; }
+        }
+
         override public void Shoot()
         {
             if (canAttack)

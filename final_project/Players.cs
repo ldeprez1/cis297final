@@ -92,7 +92,7 @@ public class Player : GameEntity
 
         //PictureBox bulletSprite = new PictureBox();
 
-        if (playerCanShoot && bullets.Count < 3)
+        if (playerCanShoot && bullets.Count < 4)
         {
             if (trishot)
             {

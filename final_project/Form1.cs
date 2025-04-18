@@ -1,4 +1,5 @@
 using final_project.Properties;
+using System;
 using System.Drawing.Text;
 using System.Media;
 using System.Runtime.CompilerServices;
@@ -247,6 +248,14 @@ namespace final_project
                     }
                 }
             }
+
+            foreach(Powerup p in toRemove)
+            {
+                p.SpriteObject.Parent.Controls.Remove(p.SpriteObject);
+                powerups.Remove(p);
+            }
+
+
             toRemove.Clear();
             foreach (Bullet bullet in bullets)
             { //updates all player bullet positions
