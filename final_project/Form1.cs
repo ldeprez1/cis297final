@@ -107,10 +107,10 @@ namespace final_project
             //playerSprite.BringToFront();
             //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
             //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
-            Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500, 2500, 15, Waves.parent, true));
-            Waves.currentEnemies.Add(new Miniboss(Waves.parent));
-            Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
-            Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
+            //Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500, 2500, 15, Waves.parent, true));
+            Waves.currentEnemies.Add(new Miniboss(Waves.parent)); //keep this one for the title it looks cool :>
+            //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
+            //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
             //Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500 , 2500, 15, Waves.parent, true));
             ResizeThings();
         }
