@@ -254,6 +254,7 @@ namespace final_project
                 p.SpriteObject.Parent.Controls.Remove(p.SpriteObject);
                 powerups.Remove(p);
             }
+            toRemove.Clear();
 
 
             toRemove.Clear();
