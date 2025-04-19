@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Galvaders")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0afaaa92ff8bb9ddb6622d7156881d6ab8aadad3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2a775aa6f3ac851ca2d073574ea70448aab99ebb")]
 [assembly: System.Reflection.AssemblyProductAttribute("Galvaders")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Galvaders")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

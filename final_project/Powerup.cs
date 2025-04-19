@@ -48,7 +48,7 @@ public class Powerup : GameEntity
         switch (type)
         { //assign different colors to different powerups
             case 3:
-                SpriteObject.BackColor = Color.Teal;
+                SpriteObject.BackColor = Color.FromArgb(255, 0, 184, 37);
                 break;
             case 2:
                 //Spread Multishot
@@ -58,7 +58,7 @@ public class Powerup : GameEntity
                 SpriteObject.BackColor = Color.FromArgb(255, 224, 177, 7);
                 break;
             default: //piercing
-                SpriteObject.BackColor = Color.FromArgb(255, 0, 184, 37);
+                SpriteObject.BackColor = Color.Teal;
                 break;
         }
     }
