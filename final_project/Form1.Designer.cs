@@ -102,6 +102,7 @@
             // 
             // finalScore
             // 
+            finalScore.BackColor = SystemColors.ActiveCaptionText;
             finalScore.ForeColor = SystemColors.ButtonHighlight;
             finalScore.Location = new Point(177, 176);
             finalScore.Name = "finalScore";

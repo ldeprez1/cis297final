@@ -601,7 +601,7 @@ namespace final_project
             }
 
 
-            finalScore.Size = new Size((int)(backgroundPanel.Width * 0.9), (int)(backgroundPanel.Height * 0.5));
+            finalScore.Size = new Size((int)(backgroundPanel.Width * 0.5), (int)(backgroundPanel.Height * 0.15));
             finalScore.Location = new Point(
                 (this.backgroundPanel.Width - finalScore.Width)/2,
                 startGameButton.Bottom + 10
