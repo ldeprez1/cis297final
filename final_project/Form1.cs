@@ -1,4 +1,4 @@
-using final_project.Properties;
+using Galvaders.Properties;
 using System;
 using System.Drawing.Text;
 using System.Media;

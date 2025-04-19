@@ -1,4 +1,4 @@
-﻿using final_project.Properties;
+﻿using Galvaders.Properties;
 using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.VisualBasic.Logging;
 using System;
