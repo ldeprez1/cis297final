@@ -66,6 +66,7 @@ namespace final_project
         public Player playerCopy = null;
         List<Player> players = new List<Player>();
 
+        static SoundPlayer death = new SoundPlayer("Resources\\death.wav");
         public Form1()
         {
             InitializeComponent();
@@ -375,6 +376,7 @@ namespace final_project
                     else
                     {
                         playerBox.lives--;
+                        death.Play();
                         iFrameCounter = 0;
                         livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
                         playerBox.SpriteObject.Visible = false;
