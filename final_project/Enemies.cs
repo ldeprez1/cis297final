@@ -297,7 +297,7 @@ namespace final_project
     {
         private int frameCounter = 0;
         private const int teleportFrames = 30;
-        public Phaser(int StartX, int StartY, Control p) : base(StartX, StartY, new PictureBox(), 8, 8, 500)
+        public Phaser(int StartX, int StartY, Control p) : base(StartX, StartY, new PictureBox(), 8, 8, 250)
         {
             SpriteObject.Parent = p;
             RefreshPos();

@@ -4,6 +4,7 @@ using System.Drawing.Text;
 using System.Media;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using static final_project.Form1;
 
 namespace final_project
@@ -23,8 +24,6 @@ namespace final_project
         //checks GameState. Default, Zero, is to START THE GAME. One Calls to update all sprite locations and run collision calculations. 2 is GAME OVER. 3 is do nothing
         int gameState = 0;
 
-        //current score of the player
-        static public int playerScore = 0;
 
         //for when player is hit
         int iFrameCounter = 0;
@@ -112,6 +111,12 @@ namespace final_project
             //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
             //Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
             //Waves.currentEnemies.Add(new SplitterEnemy(0, 500, 11500 , 2500, 15, Waves.parent, true));
+            this.Width = (int)(Screen.FromControl(this).WorkingArea.Width * 0.75);
+            this.Height = (int)(Screen.FromControl(this).WorkingArea.Height * 0.75);
+
+            this.Location = new Point((int)(Screen.FromControl(this).WorkingArea.Width * 0.125), (int)(Screen.FromControl(this).WorkingArea.Height * 0.125));
+
+
             ResizeThings();
         }
 
@@ -145,7 +150,7 @@ namespace final_project
                             playerCopySprite.Visible = true;
                         }
                     labelGameStart.Text = "GAME OVER!";
-                    finalScore.Text = $"Score:{playerScore}";
+                    finalScore.Text = $"Score:{Enemy.GlobalScore}";
                     startGameButton.Text = "TRY AGAIN?";
                     iFrameCounter = 30;
                     gameState = 3; 
@@ -176,11 +181,9 @@ namespace final_project
             labelGameStart.BringToFront();
             startGameButton.BringToFront();
             labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
-            finalScore.Visible = true;
             scorePanel.Visible = false;
             playerSprite.Visible = false;
             playerCopySprite.Visible = false;
-            labelGameStart.Text = "Galaga-Like";
         }
         //private void CheckGameState()
         //{ //checks GameState. Default, Zero, is to START THE GAME. One Calls to update all sprite locations and run collision calculations. 2 is GAME OVER
@@ -310,19 +313,19 @@ namespace final_project
                                 p.active = true;
                                 powerups.Add(p);
                             }
-                            if (Powerup.DoesSpawn(enemy.score, 5001))
+                            if (Powerup.DoesSpawn(enemy.score, 4001))
                             { //sheild powerup spawn
                                 Powerup p = new Powerup(350, enemy.xCoord, enemy.yCoord, 1, enemy, enemy.SpriteObject.Parent, 4, 4);
                                 p.active = true;
                                 powerups.Add(p);
                             }
-                            if (Powerup.DoesSpawn(enemy.score, 501))
+                            if (Powerup.DoesSpawn(enemy.score, 1501))
                             {
                                 Powerup p = new Powerup(200, enemy.xCoord, enemy.yCoord, 2, enemy, enemy.SpriteObject.Parent, 4, 4);
                                 p.active = true;
                                 powerups.Add(p);
                             }
-                            if (Powerup.DoesSpawn(enemy.score, 5))
+                            if (Powerup.DoesSpawn(enemy.score, 500))
                             {
                                 Powerup p = new Powerup(200, enemy.xCoord, enemy.yCoord, 3, enemy, enemy.SpriteObject.Parent, 4, 4);
                                 p.active = true;
@@ -587,7 +590,7 @@ namespace final_project
             if (scorePanel.Height > 0 && customFonts != null)
             {
                 startGameButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Regular);
-                labelGameStart.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.05f, FontStyle.Bold);
+                labelGameStart.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.04f, FontStyle.Bold);
                 finalScore.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Bold);
 
 
@@ -650,8 +653,8 @@ namespace final_project
             gameState = 1;
             playerBox.lives = 5;
             livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
-            playerScore = 0;
-            scoreLabel.Text = $"Score: {Environment.NewLine} {playerScore}";
+            Enemy.GlobalScore = 0;
+            scoreLabel.Text = $"Score: {Environment.NewLine} {Enemy.GlobalScore}";
             List<Bullet> allBullets = new List<Bullet>();
             foreach (Bullet b in bullets) //removing bullets on screen
             {
@@ -710,6 +713,7 @@ namespace final_project
             playerSprite.Visible = true;
             playerCopySprite.Visible = false;
             backgroundPanel.SendToBack();
+            ResizeThings();
         }
 
         private void trishotTimer_Tick(object sender, EventArgs e)
