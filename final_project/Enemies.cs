@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using static final_project.Form1;
 using static System.Windows.Forms.AxHost;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace final_project
 {
@@ -35,8 +36,6 @@ namespace final_project
 
         public int score;
 
-        int vX { get; set; } 
-        int vY { get; set; }
 
         public bool dead { get; private set; } = false; //please delete enemy objects when they are hit, but just in case
 
@@ -86,20 +85,14 @@ namespace final_project
             }
         }
 
-        public Enemy(double x, double y, PictureBox sprite, double width, double height, int score, int vX, int vY) : base(x, y, sprite, width, height)
+        public Enemy(double x, double y, PictureBox sprite, double width, double height, int score) : base(x, y, sprite, width, height)
         {
-            this.vX = vX;
-            this.vY = vY;
             this.score = score;
         }
 
         public Enemy(PictureBox sprite, double width, double height, int score) : base(sprite, width, height)
         {
             this.score = score;
-        }
-        public void UpdatePos()
-        { //velocity change
-            base.UpdatePos(xCoord + vX, yCoord + vY);
         }
 
         abstract public void move();
@@ -115,7 +108,7 @@ namespace final_project
         int moveDown;
         int speed;
 
-        public GroupEnemy(int spawnx, int startx, int endx, int y, int speed, Control p, bool moveRight) : base(spawnx, y, new PictureBox(), 8, 8, 100, 0, 0)
+        public GroupEnemy(int spawnx, int startx, int endx, int y, int speed, Control p, bool moveRight) : base(spawnx, y, new PictureBox(), 8, 8, 100)
         {
             this.moveRight = moveRight;
             SpriteObject.Parent = p;
@@ -186,7 +179,7 @@ namespace final_project
         double yVal;
         bool canAttack = true;
         bool bulletActive = false;
-        public ChaserEnemy(int spawnY, int speed, Control p, bool mL) : base((mL ? -800 : 12000), spawnY, new PictureBox(), 8, 8, 350, speed, 0)
+        public ChaserEnemy(int spawnY, int speed, Control p, bool mL) : base((mL ? -800 : 12000), spawnY, new PictureBox(), 8, 8, 350)
         { //mL, aka moving left, determines if starting on the left or right side of the screen. no reason to set manually :)
             yVal = spawnY;
             SpriteObject.Parent = p;
@@ -304,7 +297,7 @@ namespace final_project
     {
         private int frameCounter = 0;
         private const int teleportFrames = 30;
-        public Phaser(int StartX, int StartY, Control p) : base(StartX, StartY, new PictureBox(), 8, 8, 500, 0, 0)
+        public Phaser(int StartX, int StartY, Control p) : base(StartX, StartY, new PictureBox(), 8, 8, 500)
         {
             SpriteObject.Parent = p;
             RefreshPos();
@@ -326,7 +319,7 @@ namespace final_project
             };
             flicker.Start();
 
-            double newX = rnd.Next(0, MAX_XCOORD - SpriteObject.Width * 100);
+            double newX = rnd.Next(0, MAX_XCOORD - (int)(width * 100));
             double newY = rnd.Next(0, MAX_YCOORD / 2);
             UpdatePos(newX, newY);
         }
@@ -342,6 +335,8 @@ namespace final_project
             }
 
         }
+
+       
     }
 
     public class SplitterEnemy : Enemy
@@ -351,7 +346,7 @@ namespace final_project
         bool moveRight = true;
         int moveDown;
         int speed;
-        public SplitterEnemy(int spawnx, int startx, int endx, int y, int speed, Control p, bool moveRight) : base(spawnx, y, new PictureBox(), 16, 16, 400, 0, 0)
+        public SplitterEnemy(int spawnx, int startx, int endx, int y, int speed, Control p, bool moveRight) : base(spawnx, y, new PictureBox(), 16, 16, 400)
         {
             this.moveRight = moveRight;
             SpriteObject.Parent = p;
@@ -440,24 +435,21 @@ namespace final_project
     public class Miniboss : Enemy
     {
         bool attacking = false;
-        int atkID = -1;
+        int atkCounter = 5;
         double yVal = 200;
         bool rightMove;
         int speed;
 
-        public Miniboss(Control p) : base(3500, 200, new PictureBox(), 50, 50, Math.Min(((int)(Math.Log2((float)Waves.waveNum) * 10)) * 100, 10000), 0, 0)
+        public Miniboss(Control p) : base(3500, 200, new PictureBox(), 50, 50, Math.Min(((int)(Math.Log2((float)Waves.waveNum) * 10)) * 100, 10000))
         {
             SpriteObject.Parent = p;
             RefreshPos();
             SpriteObject.Image = Image.FromFile("Resources\\miniboss.png"); 
             SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
             boss = true;
-            health = Math.Min((int)(Math.Log2(Waves.waveNum / 2.0) * 5), 19); // max of 20 health
+            health = Math.Min((int)(Math.Log2(Waves.waveNum / 2.0) * 5), 29); // max of 30 health
             speed = (int)(Math.Log2(Waves.waveNum * 2)) * 10;
             rightMove = rnd.Next(0, 2) == 0;
-            //test
-            health = 10;
-            speed = 30;
         }
         public override void move()
         {
@@ -477,5 +469,83 @@ namespace final_project
                 }
             }
         }
+
+        override public void Shoot()
+        {
+            base.Shoot();
+
+            if (Waves.currentEnemies.Count < 2)
+            {
+                if (atkCounter <= 0)
+                {
+
+
+                    switch (rnd.Next(0, Math.Min((Waves.waveNum / 5), 2)))
+                    {
+                        case 0:
+                            Waves.currentEnemies.Add(new Boulder(SpriteObject.Parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -1000, 2 * (int)(10 * Math.Log2(Waves.waveNum))));
+                            Waves.currentEnemies.Add(new Boulder(SpriteObject.Parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -3000, 2 * (int)(10 * Math.Log2(Waves.waveNum))));
+                            Waves.currentEnemies.Add(new Boulder(SpriteObject.Parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -5000, 2 * (int)(10 * Math.Log2(Waves.waveNum))));
+                            Waves.currentEnemies.Add(new Boulder(SpriteObject.Parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -7000, 2 * (int)(10 * Math.Log2(Waves.waveNum))));
+                            Waves.currentEnemies.Add(new Boulder(SpriteObject.Parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -9000, 2 * (int)(10 * Math.Log2(Waves.waveNum))));
+                            break;
+                        case 1:
+                            Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, true));
+                            Waves.currentEnemies.Add(new ChaserEnemy(0, 200, Waves.parent, false));
+                            Waves.currentEnemies.Add(new ChaserEnemy(500, 150, Waves.parent, true));
+                            Waves.currentEnemies.Add(new ChaserEnemy(500, 150, Waves.parent, false));
+                            break;
+                    }
+
+                    atkCounter = rnd.Next(0, 20);
+
+                }
+                else
+                {
+                    atkCounter--;
+                }
+
+            }
+
+        }
     }
+
+
+
+    public class Boulder : Enemy
+    {
+        int speed;
+          
+        public Boulder(Control p, double x, double y, int s) :  base(x, y, new PictureBox(), 10, 10, 50)
+        {
+            SpriteObject.Parent = p;
+            RefreshPos();
+            SpriteObject.Image = Image.FromFile("Resources\\miniboss.png");
+            SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
+            speed = s;
+            boss = true;
+            health = 4;
+        }
+
+        public override void Shoot()
+        {
+            return;
+        }
+
+        public override void move()
+        {
+            UpdatePosRelative(0, speed);
+            if(yCoord > MAX_YCOORD)
+            {
+                score = 0; //no score if goes offscreen
+                health = 0;
+                Hit();
+                if(SpriteObject.Parent != null)
+                    SpriteObject.Parent.Controls.Remove(SpriteObject);
+                Waves.currentEnemies.Remove(this);
+            }
+        }
+
+    }
+
 }

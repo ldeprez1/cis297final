@@ -22,8 +22,7 @@ namespace final_project
 
         public static void nextWave()
         {
-            waveNum++;
-
+            waveNum = 5;
             switch (waveNum)
 
             {
@@ -140,6 +139,26 @@ namespace final_project
         private static void wave5()
         {
             //put something here for rand
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -1000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -3000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -5000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -7000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -9000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -1000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -3000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -5000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -7000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -9000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -11000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -13000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -15000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -17000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -19000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -11000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -13000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -15000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -17000, 2 * (int)(10 * Math.Log2(waveNum))));
+            currentEnemies.Add(new Boulder(parent, Enemy.rnd.Next(0, GameEntity.MAX_XCOORD - 1000), -19000, 2 * (int)(10 * Math.Log2(waveNum))));
         }
 
         private static void wave6()

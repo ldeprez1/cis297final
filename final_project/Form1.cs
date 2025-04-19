@@ -251,7 +251,7 @@ namespace final_project
 
             foreach(Powerup p in toRemove)
             {
-                p.SpriteObject.Parent.Controls.Remove(p.SpriteObject);
+                backgroundPanel.Controls.Remove(p.SpriteObject);
                 powerups.Remove(p);
             }
             toRemove.Clear();
@@ -268,7 +268,7 @@ namespace final_project
             }
 
 
-            foreach (Enemy enemy in Waves.currentEnemies)
+            foreach (Enemy enemy in Waves.currentEnemies.ToList())
             { //updates all enemy positions and then compares each enemy with player bullets
                 enemy.move();
                 enemy.Shoot();
