@@ -19,7 +19,7 @@ namespace final_project
         higher score enemy = higher chance
 
         */
-
+        bool credits = false;
 
         //checks GameState. Default, Zero, is to START THE GAME. One Calls to update all sprite locations and run collision calculations. 2 is GAME OVER. 3 is do nothing
         int gameState = 0;
@@ -142,20 +142,20 @@ namespace final_project
                 case 2:
                     backgroundPanel.BringToFront();
                     labelGameStart.BringToFront(); startGameButton.BringToFront(); finalScore.BringToFront();
-                    labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true; 
+                    labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
                     finalScore.Visible = true;
                     scorePanel.Visible = true;
                     playerSprite.Visible = true;
-                    if(copy && playerCopy != null) 
-                        {
-                            playerCopySprite.Visible = true;
-                        }
+                    if (copy && playerCopy != null)
+                    {
+                        playerCopySprite.Visible = true;
+                    }
                     labelGameStart.Text = "GAME OVER!";
                     finalScore.Text = $"Score:{Enemy.GlobalScore}";
                     startGameButton.Text = "TRY AGAIN?";
                     iFrameCounter = 30;
-                    gameState = 3; 
-                break;
+                    gameState = 3;
+                    break;
             }
 
 
@@ -217,8 +217,8 @@ namespace final_project
                 gameState = 2;
                 return;
             }
-            
-                List<Powerup> toRemove = new List<Powerup>();
+
+            List<Powerup> toRemove = new List<Powerup>();
             foreach (Powerup powerup in powerups)
             { //update position of any active powerups. Active status is false by default, can be manually set. check for Active is in the class itself :>
                 powerup.UpdatePos();
@@ -229,8 +229,8 @@ namespace final_project
                     switch (powerup.type)
                     {
                         case 3:
-                            copy = true ;
-                            doubleTimer.Enabled = true ;
+                            copy = true;
+                            doubleTimer.Enabled = true;
                             if (playerCopy == null)
                             {
                                 playerCopy = new Player(playerBox.xCoord + 800, playerBox.yCoord, playerCopySprite);
@@ -257,7 +257,7 @@ namespace final_project
                 }
             }
 
-            foreach(Powerup p in toRemove)
+            foreach (Powerup p in toRemove)
             {
                 backgroundPanel.Controls.Remove(p.SpriteObject);
                 powerups.Remove(p);
@@ -576,24 +576,51 @@ namespace final_project
             );
 
             // Resize and center startGameButton just below the label
-           
+
             startGameButton.Size = new Size((int)(backgroundPanel.Width * 0.5), (int)(backgroundPanel.Height * 0.08));
             startGameButton.Location = new Point(
                 (this.backgroundPanel.Width - startGameButton.Width) / 2,
                 labelGameStart.Bottom + 10
             );
 
-            finalScore.Size = new Size((int)(backgroundPanel.Width * 0.9), (int)(backgroundPanel.Height * 0.1));
+
+            //resize and center credits button
+            if(credits == true)
+            {
+                CreditsButton.Size = new Size((int)(backgroundPanel.Width * 0.25), (int)(backgroundPanel.Height * 0.04));
+                CreditsButton.Location = new Point(
+                    (this.backgroundPanel.Width - CreditsButton.Width) / 2,
+                    (int)(backgroundPanel.Bottom * 0.75));
+            }
+            else
+            {
+                CreditsButton.Size = new Size((int)(backgroundPanel.Width * 0.5), (int)(backgroundPanel.Height * 0.08));
+                CreditsButton.Location = new Point(
+                    (this.backgroundPanel.Width - CreditsButton.Width) / 2,
+                    startGameButton.Bottom + 10);
+            }
+
+
+            finalScore.Size = new Size((int)(backgroundPanel.Width * 0.9), (int)(backgroundPanel.Height * 0.5));
             finalScore.Location = new Point(
-                (this.backgroundPanel.Width - finalScore.Width),
+                (this.backgroundPanel.Width - finalScore.Width)/2,
                 startGameButton.Bottom + 10
             );
 
             if (scorePanel.Height > 0 && customFonts != null)
             {
                 startGameButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Regular);
+                if(credits == true)
+                {
+                    CreditsButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.0175f, FontStyle.Regular);
+                    finalScore.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.015f, FontStyle.Bold);
+                }
+                else
+                {
+                    CreditsButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Regular);
+                    finalScore.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Bold);
+                }
                 labelGameStart.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.04f, FontStyle.Bold);
-                finalScore.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Bold);
 
 
                 livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.17)), livesLabel.Font.Style);
@@ -710,7 +737,7 @@ namespace final_project
             }
 
 
-            labelGameStart.Visible = false; startGameButton.Visible = false; startGameButton.Enabled = false;
+            labelGameStart.Visible = false; startGameButton.Visible = false; startGameButton.Enabled = false; CreditsButton.Visible = false; CreditsButton.Enabled = false;
             scorePanel.Visible = true;
             playerSprite.Visible = true;
             playerCopySprite.Visible = false;
@@ -732,6 +759,26 @@ namespace final_project
             playerCopySprite.Visible = false;
             playerCopy = null;
 
+        }
+
+        private void CreditsButton_Click(object sender, EventArgs e)
+        {
+            if (credits == false)
+            {
+                credits = true;
+                startGameButton.Visible = false;
+                finalScore.Visible = true;
+                CreditsButton.Text = "Main Menu";
+            }
+            else
+            {
+                credits = false;
+                startGameButton.Visible = true;
+                finalScore.Visible= false;
+                CreditsButton.Text = "Credits";
+            }
+            ResizeThings();
+            return;
         }
     }
 
