@@ -520,7 +520,7 @@ namespace final_project
         {
             SpriteObject.Parent = p;
             RefreshPos();
-            SpriteObject.Image = Image.FromFile("Resources\\miniboss.png");
+            SpriteObject.Image = Image.FromFile("Resources\\boulder.png");
             SpriteObject.SizeMode = PictureBoxSizeMode.StretchImage;
             speed = s;
             boss = true;

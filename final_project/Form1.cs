@@ -135,8 +135,9 @@ namespace final_project
                     break;
                 case 2:
                     backgroundPanel.BringToFront();
-                    labelGameStart.BringToFront(); startGameButton.BringToFront();
-                    labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
+                    labelGameStart.BringToFront(); startGameButton.BringToFront(); finalScore.BringToFront();
+                    labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true; 
+                    finalScore.Visible = true;
                     scorePanel.Visible = true;
                     playerSprite.Visible = true;
                     if(copy && playerCopy != null) 
@@ -144,9 +145,10 @@ namespace final_project
                             playerCopySprite.Visible = true;
                         }
                     labelGameStart.Text = "GAME OVER!";
+                    finalScore.Text = $"Score:{playerScore}";
                     startGameButton.Text = "TRY AGAIN?";
                     iFrameCounter = 30;
-                    gameState = 3;
+                    gameState = 3; 
                 break;
             }
 
@@ -174,6 +176,7 @@ namespace final_project
             labelGameStart.BringToFront();
             startGameButton.BringToFront();
             labelGameStart.Visible = true; startGameButton.Visible = true; startGameButton.Enabled = true;
+            finalScore.Visible = true;
             scorePanel.Visible = false;
             playerSprite.Visible = false;
             playerCopySprite.Visible = false;
@@ -204,6 +207,7 @@ namespace final_project
         //}
         private void RunGameLogic()
         {
+            finalScore.Visible = false;
             if (playerBox.lives == 0)
             { //immediately stops this entire thing if lives becomes 0
                 gameState = 2;
@@ -573,11 +577,18 @@ namespace final_project
                 (this.backgroundPanel.Width - startGameButton.Width) / 2,
                 labelGameStart.Bottom + 10
             );
+
+            finalScore.Size = new Size((int)(backgroundPanel.Width * 0.9), (int)(backgroundPanel.Height * 0.1));
+            finalScore.Location = new Point(
+                (this.backgroundPanel.Width - finalScore.Width),
+                startGameButton.Bottom + 10
+            );
+
             if (scorePanel.Height > 0 && customFonts != null)
             {
                 startGameButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Regular);
                 labelGameStart.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.05f, FontStyle.Bold);
-
+                finalScore.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Bold);
 
 
                 livesLabel.Font = new Font(customFonts.Families[0], ((float)(scorePanel.Height * 0.17)), livesLabel.Font.Style);
