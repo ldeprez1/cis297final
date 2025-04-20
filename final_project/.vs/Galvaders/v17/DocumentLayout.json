@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{A5418C41-A1C9-4940-9DC9-DA1B7CD1A67D}|Galvaders.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A5418C41-A1C9-4940-9DC9-DA1B7CD1A67D}|Galvaders.csproj|d:\\lyla\\school\\cis 297\\final project\\final_project\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{A5418C41-A1C9-4940-9DC9-DA1B7CD1A67D}|Galvaders.csproj|D:\\Lyla\\School\\CIS 297\\final project\\final_project\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{A5418C41-A1C9-4940-9DC9-DA1B7CD1A67D}|Galvaders.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
@@ -64,7 +64,7 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "D:\\Lyla\\School\\CIS 297\\final project\\final_project\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAAEwCAAAAAAAAAAAkwGYCAACAAAAAAAAAAA==",
+              "ViewState": "AgIAAAsBAAAAAAAAAAAmwCABAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-19T08:26:32.723Z",
               "EditorCaption": ""
@@ -79,8 +79,7 @@
               "RelativeToolTip": "Enemies.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T08:26:20.434Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-19T08:26:20.434Z"
             },
             {
               "$type": "Document",

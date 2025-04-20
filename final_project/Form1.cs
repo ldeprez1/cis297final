@@ -286,6 +286,7 @@ namespace final_project
                     livesLabel.Text = $"Lives: {Environment.NewLine} {playerBox.lives}";
                     playerBox.SpriteObject.Visible = false;
                     iframetimer.Start();
+                    death.Play();
                     iFrame = true;
                     dead = true;
                 }
@@ -614,12 +615,14 @@ namespace final_project
                 {
                     CreditsButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.0175f, FontStyle.Regular);
                     finalScore.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.0125f, FontStyle.Bold);
+
                 }
                 else
                 {
                     CreditsButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Regular);
-                    finalScore.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.035f, FontStyle.Bold);
+                    finalScore.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.02f, FontStyle.Bold);
                 }
+
                 labelGameStart.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.04f, FontStyle.Bold);
 
 
