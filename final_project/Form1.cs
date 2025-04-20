@@ -613,7 +613,7 @@ namespace final_project
                 if(credits == true)
                 {
                     CreditsButton.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.0175f, FontStyle.Regular);
-                    finalScore.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.015f, FontStyle.Bold);
+                    finalScore.Font = new Font(customFonts.Families[0], backgroundPanel.Height * 0.0125f, FontStyle.Bold);
                 }
                 else
                 {
